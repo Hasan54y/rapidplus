@@ -7,6 +7,6 @@
   "desktop": {
     "version": "1.0.0",
     "url": "https://rapidplusbrowser.online/download.html#windows",
-    "notes": "First release for Windows."
+    "notes": "Fixes tab closing, adds clear data by time period, fullscreen video and other fixes."
   }
 }

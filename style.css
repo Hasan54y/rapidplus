@@ -34,7 +34,7 @@ header.nav::before{content:"";position:absolute;inset:0;z-index:-1;backdrop-filt
 .burger:hover{background:var(--bg2)}
 .burger .close{display:none}
 .nav.open .burger .open{display:none}.nav.open .burger .close{display:inline-block}
-@media(max-width:860px){
+@media(max-width:1000px){
   .burger{display:inline-flex}
   .links{position:fixed;top:var(--nav-h);left:0;right:0;bottom:0;background:var(--bg);flex-direction:column;align-items:stretch;padding:14px 20px 100px;gap:4px;transform:translateY(-8px);opacity:0;visibility:hidden;transition:.18s ease;overflow-y:auto}
   .nav.open .links{transform:none;opacity:1;visibility:visible}
@@ -185,3 +185,5 @@ footer{border-top:1px solid var(--line);padding:40px 0 100px;color:var(--muted);
 .plancard{background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:16px}
 .planname{font-size:22px;font-weight:800;letter-spacing:-.4px;margin-top:2px}
 .links a.signin-link{font-weight:600}
+
+[id]{scroll-margin-top:76px}

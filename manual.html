@@ -182,8 +182,17 @@
       <li><kbd>Ctrl+T</kbd> new tab · <kbd>Ctrl+W</kbd> close tab · <kbd>Ctrl+Shift+N</kbd> private tab · <kbd>Ctrl+Tab</kbd> next tab · <kbd>Ctrl+1–9</kbd> jump to a tab</li>
       <li><kbd>Ctrl+L</kbd> address bar · <kbd>Ctrl+R</kbd> or <kbd>F5</kbd> reload · <kbd>Alt+←</kbd> / <kbd>Alt+→</kbd> back / forward</li>
       <li><kbd>Ctrl+F</kbd> find in page · <kbd>Ctrl+D</kbd> bookmark · <kbd>Ctrl+H</kbd> history · <kbd>Ctrl+J</kbd> downloads · <kbd>Ctrl+P</kbd> print</li>
-      <li><kbd>Ctrl++</kbd> / <kbd>Ctrl+-</kbd> / <kbd>Ctrl+0</kbd> zoom · <kbd>F12</kbd> developer tools</li>
+      <li><kbd>Ctrl++</kbd> / <kbd>Ctrl+-</kbd> / <kbd>Ctrl+0</kbd> zoom · <kbd>F12</kbd> developer tools · <kbd>Ctrl+Shift+Delete</kbd> clear browsing data</li>
     </ul>
+    <h3>Clear browsing data by time</h3>
+    <p>Open <b>Settings → Privacy &amp; data → Clear browsing data</b> (or press <kbd>Ctrl+Shift+Delete</kbd>). Pick a <b>time range</b> (last hour, last 24 hours, last 7 days, last 4 weeks or all time) and what to clear: browsing history, the download list, cookies and site data, cached files and saved passwords.</p>
+    <ul>
+      <li>History, the download list and saved passwords are removed by date.</li>
+      <li>Cookies and site data are removed for the <b>sites you visited</b> in that time range, so you will be signed out of them.</li>
+      <li>Cached files are always cleared completely, whatever the time range.</li>
+    </ul>
+    <h3>Tabs and windows</h3>
+    <p>Close a tab with its <b>×</b>, a middle-click, or <kbd>Ctrl+W</kbd>. Closing the last tab closes the window, like Chrome. Your open tabs come back next time you start Rapid+.</p>
     <h3>How it differs from Android</h3>
     <ul>
       <li>The Windows version is currently <b>free</b>, with no trial or subscription.</li>
@@ -211,9 +220,9 @@
 function set(o){n.classList.toggle('open',o);b.setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':''}
 b.addEventListener('click',function(){set(!n.classList.contains('open'))});
 document.querySelectorAll('#links a').forEach(function(a){a.addEventListener('click',function(){set(false)})});
-window.addEventListener('resize',function(){if(innerWidth>860)set(false)});
+window.addEventListener('resize',function(){if(innerWidth>1000)set(false)});
 document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
-if(//index.html$/.test(location.pathname)){history.replaceState(null,'','/'+location.search+location.hash)}
+if(location.pathname.slice(-11)==='/index.html'){history.replaceState(null,'','/'+location.search+location.hash)}
 try{var u=localStorage.getItem('rp_user');if(u){var a=document.getElementById('navAuth');a.href='account.html';a.lastChild.textContent='Account'}}catch(e){}})();
 </script>
 </body></html>

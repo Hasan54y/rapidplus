@@ -44,9 +44,9 @@
 function set(o){n.classList.toggle('open',o);b.setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':''}
 b.addEventListener('click',function(){set(!n.classList.contains('open'))});
 document.querySelectorAll('#links a').forEach(function(a){a.addEventListener('click',function(){set(false)})});
-window.addEventListener('resize',function(){if(innerWidth>860)set(false)});
+window.addEventListener('resize',function(){if(innerWidth>1000)set(false)});
 document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
-if(//index.html$/.test(location.pathname)){history.replaceState(null,'','/'+location.search+location.hash)}
+if(location.pathname.slice(-11)==='/index.html'){history.replaceState(null,'','/'+location.search+location.hash)}
 try{var u=localStorage.getItem('rp_user');if(u){var a=document.getElementById('navAuth');a.href='account.html';a.lastChild.textContent='Account'}}catch(e){}})();
 </script>
 </body></html>
