@@ -3,5 +3,10 @@
   "versionName": "1.0",
   "notes": "First release.",
   "url": "https://rapidplusbrowser.online/download.html",
-  "minVersionCode": 0
+  "minVersionCode": 0,
+  "desktop": {
+    "version": "1.0.0",
+    "url": "https://rapidplusbrowser.online/download.html#windows",
+    "notes": "First release for Windows."
+  }
 }

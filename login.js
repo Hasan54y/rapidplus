@@ -51,8 +51,27 @@ if (!configured) {
   $("tabSignup").onclick = () => setMode("signup");
   if (new URLSearchParams(location.search).get("mode") === "signup") setMode("signup");
 
+  // The Rapid+ desktop app opens this page with ?app=desktop&port=N&state=S. After sign-in we hand the ID token back to
+  // the app's one-shot listener on 127.0.0.1 (it verifies the token itself), then show a "you can close this" page.
+  const params = new URLSearchParams(location.search);
+  const desktop = params.get("app") === "desktop" && /^\d{4,5}$/.test(params.get("port") || "") && +params.get("port") >= 1024 && +params.get("port") <= 65535
+    && /^[0-9a-f]{32}$/.test(params.get("state") || "")
+    ? { port: params.get("port"), state: params.get("state") } : null;
+  if (desktop) $("box").querySelector("#google") && ($("msg").textContent = "Sign in to continue in the Rapid+ app.", $("msg").className = "alert info", show($("msg"), true));
+
   // Already signed in? Skip the form.
-  onAuthStateChanged(auth, u => { if (u) { remember(u); location.replace(nextUrl()); } });
+  onAuthStateChanged(auth, async u => {
+    if (!u) return;
+    remember(u);
+    if (desktop) {
+      try {
+        const token = await u.getIdToken(true);
+        location.replace("http://127.0.0.1:" + desktop.port + "/callback?state=" + encodeURIComponent(desktop.state) + "&token=" + encodeURIComponent(token));
+      } catch (e) { say("Couldn't finish signing in. Please try again."); }
+      return;
+    }
+    location.replace(nextUrl());
+  });
 
   $("google").onclick = async () => {
     say("");
