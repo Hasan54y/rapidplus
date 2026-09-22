@@ -1,18 +1,16 @@
 // Shared Firebase setup for the sign-in and account pages. Loaded only on those pages, not on the whole site.
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
 const cfg = window.RAPID_FIREBASE || {};
 export const configured = !!cfg.apiKey && !String(cfg.apiKey).startsWith("PASTE") && !String(cfg.projectId).startsWith("PASTE");
 
-let app = null, auth = null, db = null;
+let app = null, auth = null;
 if (configured) {
   app = initializeApp(cfg);
   auth = getAuth(app);
-  db = getFirestore(app);
 }
-export { auth, db };
+export { auth };
 
 const KEY = "rp_user";
 /** Only a display hint for the header ("Account" vs "Sign in"); the real check is Firebase on the account page. */
