@@ -1,12 +1,12 @@
 {
   "versionCode": 2,
   "versionName": "1.0",
-  "notes": "First release.",
+  "notes": "Sign in to Google like in Chrome; clear browsing data by time period.",
   "url": "https://rapidplusbrowser.online/download.html",
   "minVersionCode": 0,
   "desktop": {
     "version": "1.0.0",
     "url": "https://rapidplusbrowser.online/download.html#windows",
-    "notes": "First release for Windows."
+    "notes": "Sign in to Google like in Chrome; clear data by time; website login prompts."
   }
 }
