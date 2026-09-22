@@ -1,12 +1,12 @@
 {
   "versionCode": 2,
   "versionName": "1.0",
-  "notes": "Clear browsing data by time period; Rapid+ is free.",
+  "notes": "First release.",
   "url": "https://rapidplusbrowser.online/download.html",
   "minVersionCode": 0,
   "desktop": {
     "version": "1.0.0",
     "url": "https://rapidplusbrowser.online/download.html#windows",
-    "notes": "Free to use. Adds optional sign-in, website login prompts and clear data by time."
+    "notes": "First release for Windows."
   }
 }
