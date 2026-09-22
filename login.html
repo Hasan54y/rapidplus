@@ -29,16 +29,16 @@
   <div class="center"><div class="ico" style="margin:0 auto 12px"><svg class="i " viewBox="0 -960 960 960" aria-hidden="true"><path d="M372-523q-42-42-42-108t42-108q42-42 108-42t108 42q42 42 42 108t-42 108q-42 42-108 42t-108-42ZM160-220v-34q0-38 19-65t49-41q67-30 128.5-45T480-420q62 0 123 15.5T731-360q31 14 50 41t19 65v34q0 25-17.5 42.5T740-160H220q-25 0-42.5-17.5T160-220Z"/></svg></div><h1 class="authtitle">Sign in to Rapid+</h1><p class="sub" style="margin:0 auto 20px;font-size:15px">An account is required to start a plan.</p></div>
   <div class="alert info" id="setup" hidden><b>Sign-in isn’t switched on yet.</b> Please check back soon, or message us on Telegram <a href="https://t.me/hasanmahmud_dev">@hasanmahmud_dev</a>.</div>
   <div id="box">
-    <button class="btn gbtn" id="google" type="button"><svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4.1 7.1-10.1 7.1-17.5z"/><path fill="#FBBC05" d="M10.5 28.7c-.5-1.4-.8-3-.8-4.7s.3-3.3.8-4.7l-7.9-6.1C.9 16.400 0 20.100 0 24s.9 7.600 2.600 10.800l7.900-6.100z"/><path fill="#34A853" d="M24 48c6.500 0 11.900-2.100 15.900-5.800l-7.500-5.800c-2.100 1.400-4.800 2.300-8.400 2.300-6.300 0-11.600-4.100-13.500-9.800l-7.900 6.100C6.500 42.600 14.600 48 24 48z"/></svg><span>Continue with Google</span></button>
+    <button class="btn gbtn" id="google" type="button" disabled><svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4.1 7.1-10.1 7.1-17.5z"/><path fill="#FBBC05" d="M10.5 28.7c-.5-1.4-.8-3-.8-4.7s.3-3.3.8-4.7l-7.9-6.1C.9 16.400 0 20.100 0 24s.9 7.600 2.600 10.800l7.900-6.100z"/><path fill="#34A853" d="M24 48c6.500 0 11.900-2.100 15.900-5.800l-7.500-5.800c-2.100 1.400-4.800 2.300-8.400 2.300-6.300 0-11.600-4.100-13.500-9.800l-7.900 6.100C6.500 42.600 14.600 48 24 48z"/></svg><span>Continue with Google</span></button>
     <div class="or"><span>or use email</span></div>
     <div class="tabs" role="tablist"><button type="button" role="tab" id="tabSignin" class="on" aria-selected="true">Sign in</button><button type="button" role="tab" id="tabSignup" aria-selected="false">Create account</button></div>
     <div id="msg" class="alert" role="alert" hidden></div>
-    <form id="emailForm" novalidate>
+    <form id="emailForm" novalidate onsubmit="return false">
       <label class="field" id="nameRow" hidden><span>Name</span><input id="name" type="text" autocomplete="name" maxlength="60"></label>
       <label class="field"><span>Email</span><input id="email" type="email" autocomplete="email" inputmode="email" required></label>
       <label class="field"><span>Password</span><input id="password" type="password" autocomplete="current-password" minlength="8" required></label>
       <div id="forgotRow" class="right"><a href="#" id="forgot">Forgot password?</a></div>
-      <button class="btn primary wide" id="submit" type="submit">Sign in</button>
+      <button class="btn primary wide" id="submit" type="submit" disabled>Sign in</button>
     </form>
   </div>
   <p class="fine center">By continuing you agree to the <a href="terms.html">Terms</a> and <a href="privacy.html">Privacy Policy</a>.</p>

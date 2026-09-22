@@ -7,6 +7,6 @@
   "desktop": {
     "version": "1.0.0",
     "url": "https://rapidplusbrowser.online/download.html#windows",
-    "notes": "Adds website login prompts and clear data by time; fixes tab closing and fullscreen video."
+    "notes": "Adds optional sign-in, website login prompts and clear data by time; fixes tab closing and fullscreen video."
   }
 }

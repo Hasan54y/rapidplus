@@ -12,6 +12,7 @@ function say(text, kind = "err") {
 async function render(user) {
   remember(user);
   show($("loading"), false); show($("view"), true);
+  document.documentElement.dataset.authReady = "1";
   $("who").textContent = user.displayName || user.email;
   $("email").textContent = user.email || "";
   const av = $("avatar");

@@ -7,6 +7,8 @@ import {
 const $ = id => document.getElementById(id);
 const msg = $("msg"), form = $("emailForm"), submit = $("submit");
 let mode = "signin";
+// While an account is being created we finish saving the name and sending the verification email before leaving.
+let creating = false;
 
 const ERRORS = {
   "auth/invalid-credential": "That email and password don't match.",
@@ -60,8 +62,7 @@ if (!configured) {
   if (desktop) $("box").querySelector("#google") && ($("msg").textContent = "Sign in to continue in the Rapid+ app.", $("msg").className = "alert info", show($("msg"), true));
 
   // Already signed in? Skip the form.
-  onAuthStateChanged(auth, async u => {
-    if (!u) return;
+  const done = async u => {
     remember(u);
     if (desktop) {
       try {
@@ -71,7 +72,8 @@ if (!configured) {
       return;
     }
     location.replace(nextUrl());
-  });
+  };
+  onAuthStateChanged(auth, u => { if (u && !creating) done(u); });
 
   $("google").onclick = async () => {
     say("");
@@ -87,16 +89,25 @@ if (!configured) {
     submit.disabled = true;
     try {
       if (mode === "signup") {
-        if (pw.length < 8) { say(ERRORS["auth/weak-password"]); return; }
-        const cred = await createUserWithEmailAndPassword(auth, email, pw);
-        const name = $("name").value.trim();
-        if (name) await updateProfile(cred.user, { displayName: name });
-        try { await sendEmailVerification(cred.user); } catch (e) {}
+        if (pw.length < 8) { say(ERRORS["auth/weak-password"]); return; } // "finally" re-enables the button
+        creating = true;
+        try {
+          const cred = await createUserWithEmailAndPassword(auth, email, pw);
+          const name = $("name").value.trim();
+          if (name) await updateProfile(cred.user, { displayName: name });
+          try { await sendEmailVerification(cred.user); } catch (e) {}
+          creating = false;
+          await done(cred.user);
+        } finally { creating = false; }
       } else {
         await signInWithEmailAndPassword(auth, email, pw);
       }
     } catch (e) { fail(e); } finally { submit.disabled = false; }
   };
+
+  $("google").disabled = false;
+  submit.disabled = false;
+  document.documentElement.dataset.authReady = "1";
 
   $("forgot").onclick = async ev => {
     ev.preventDefault();
