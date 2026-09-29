@@ -5,8 +5,8 @@
   "url": "https://rapidplusbrowser.online/download.html",
   "minVersionCode": 0,
   "desktop": {
-    "version": "1.0.0",
+    "version": "1.0.1",
     "url": "https://rapidplusbrowser.online/download.html#windows",
-    "notes": "Sign in to Google like in Chrome; clear data by time; website login prompts."
+    "notes": "Suggestion favicons and popular sites, a tab-preview switcher, right-click save for images/videos, a tab right-click menu, a VPN/user-agent toolbar indicator, and real pause/resume/cancel for downloads."
   }
 }
