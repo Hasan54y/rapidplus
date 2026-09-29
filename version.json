@@ -1,7 +1,7 @@
 {
-  "versionCode": 3,
+  "versionCode": 4,
   "versionName": "1.0",
-  "notes": "Maintenance update: updated app components.",
+  "notes": "Faster suggestions with site icons, a live tab preview switcher, long-press to save images/videos, and real pause/resume/cancel for downloads.",
   "url": "https://rapidplusbrowser.online/download.html",
   "minVersionCode": 0,
   "desktop": {
