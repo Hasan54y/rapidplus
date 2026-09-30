@@ -5,8 +5,8 @@
   "url": "https://rapidplusbrowser.online/download.html",
   "minVersionCode": 0,
   "desktop": {
-    "version": "1.0.1",
+    "version": "1.0.5",
     "url": "https://rapidplusbrowser.online/download.html#windows",
-    "notes": "Suggestion favicons and popular sites, a tab-preview switcher, right-click save for images/videos, a tab right-click menu, a VPN/user-agent toolbar indicator, and real pause/resume/cancel for downloads."
+    "notes": "Fixes VPN mode falling back to a direct connection after restarting the app, pinned tabs unpinning themselves on restart, and missing Cut/Copy/Paste on right-click in the address bar and other text fields."
   }
 }
