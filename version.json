@@ -5,8 +5,8 @@
   "url": "https://rapidplusbrowser.online/download.html",
   "minVersionCode": 0,
   "desktop": {
-    "version": "1.0.5",
+    "version": "1.0.6",
     "url": "https://rapidplusbrowser.online/download.html#windows",
-    "notes": "Fixes VPN mode falling back to a direct connection after restarting the app, pinned tabs unpinning themselves on restart, and missing Cut/Copy/Paste on right-click in the address bar and other text fields."
+    "notes": "Adds a custom user-agent option: pick Custom in the user-agent switcher (toolbar popover or Settings) and enter any user-agent string you need."
   }
 }
