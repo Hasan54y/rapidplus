@@ -22,7 +22,7 @@ if (!configured) {
   show($("loading"), false); show($("setup"), true);
 } else {
   onAuthStateChanged(auth, user => {
-    if (!user) { forget(); location.replace("login.html?next=account.html"); return; }
+    if (!user) { forget(); location.replace("login?next=account"); return; }
     render(user);
   });
 

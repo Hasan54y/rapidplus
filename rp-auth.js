@@ -24,7 +24,7 @@ export function forget() {
 /** Where to go after signing in. Only our own pages are allowed, so a crafted ?next= can't send people elsewhere. */
 export function nextUrl() {
   const n = new URLSearchParams(location.search).get("next") || "";
-  return ["account.html", "pricing.html", "download.html"].includes(n) ? n : "account.html";
+  return ["account", "pricing", "download"].includes(n) ? n : "account";
 }
 
 export function show(el, on) { el.hidden = !on; }
