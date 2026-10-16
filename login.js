@@ -59,10 +59,24 @@ if (!configured) {
   const desktop = params.get("app") === "desktop" && /^\d{4,5}$/.test(params.get("port") || "") && +params.get("port") >= 1024 && +params.get("port") <= 65535
     && /^[0-9a-f]{32}$/.test(params.get("state") || "")
     ? { port: params.get("port"), state: params.get("state") } : null;
-  // The Android app opens this page in its own in-app tab (it's a browser, not a separate webview) and watches
-  // for navigation to /app-callback, so there's no port to hand back here — just a state to round-trip.
+  // The Android app opens this page in a real Chrome Custom Tab (Google's sign-in refuses to run inside an
+  // embedded WebView), then hands off to the app via a custom-scheme redirect — no port needed, just a state
+  // to round-trip. "hint" is the Google account the user already signed in to Rapid+ with on this profile, so
+  // this is framed as continuing that same sign-in rather than a second, separate one.
   const android = params.get("app") === "android" && /^[0-9a-f]{32}$/.test(params.get("state") || "") ? { state: params.get("state") } : null;
-  if (desktop || android) $("box").querySelector("#google") && ($("msg").textContent = "Sign in to continue in the Rapid+ app.", $("msg").className = "alert info", show($("msg"), true));
+  const hint = params.get("hint") || "";
+  if (desktop || android) {
+    $("msg").textContent = hint ? `Continue with ${hint} to sync your bookmarks.` : "Sign in to continue in the Rapid+ app.";
+    $("msg").className = "alert info";
+    show($("msg"), true);
+  }
+  if (hint) {
+    // Only Google makes sense here — the hinted account came from Google sign-in, so don't offer an unrelated
+    // email/password identity that would just reintroduce "two accounts" confusion.
+    show(document.querySelector(".or"), false);
+    show($("tabSignin").parentElement, false);
+    show(form, false);
+  }
 
   // Already signed in? Skip the form.
   const done = async u => {
@@ -79,7 +93,9 @@ if (!configured) {
       try {
         const token = await u.getIdToken(true);
         const qs = "?state=" + encodeURIComponent(android.state) + "&token=" + encodeURIComponent(token) + "&refresh=" + encodeURIComponent(u.refreshToken || "");
-        location.replace("/app-callback" + qs);
+        // A custom scheme, not an https:// page: Chrome hands this straight to Android's intent system, which
+        // routes it to the app's own callback activity — no intermediate page needed.
+        location.replace("rapidplus://auth-callback" + qs);
       } catch (e) { say("Couldn't finish signing in. Please try again."); }
       return;
     }
@@ -90,7 +106,9 @@ if (!configured) {
   $("google").onclick = async () => {
     say("");
     try {
-      await signInWithPopup(auth, new GoogleAuthProvider());
+      const provider = new GoogleAuthProvider();
+      if (hint) provider.setCustomParameters({ login_hint: hint });
+      await signInWithPopup(auth, provider);
     } catch (e) { fail(e); }
   };
 
