@@ -1,12 +1,12 @@
 {
-  "versionCode": 5,
-  "versionName": "1.0",
-  "notes": "Faster suggestions with site icons, a live tab preview switcher, long-press to save images/videos, and real pause/resume/cancel for downloads.",
+  "versionCode": 7,
+  "versionName": "1.1",
+  "notes": "Test a proxy before you save it, lock any profile with your fingerprint or face, read articles distraction-free with Reader mode (now with on-device translation), and sync your bookmarks across devices by signing in to your Rapid+ account.",
   "url": "https://rapidplusbrowser.online/download",
   "minVersionCode": 0,
   "desktop": {
-    "version": "1.0.6",
+    "version": "1.1.0",
     "url": "https://rapidplusbrowser.online/download#windows",
-    "notes": "Adds a custom user-agent option: pick Custom in the user-agent switcher (toolbar popover or Settings) and enter any user-agent string you need."
+    "notes": "Test a proxy before you save it, read articles distraction-free with Reader mode, and sync your bookmarks across devices by signing in to your Rapid+ account."
   }
 }
