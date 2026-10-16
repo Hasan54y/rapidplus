@@ -1,12 +1,12 @@
 {
-  "versionCode": 7,
+  "versionCode": 9,
   "versionName": "1.1",
-  "notes": "Test a proxy before you save it, lock any profile with your fingerprint or face, read articles distraction-free with Reader mode (now with on-device translation), and sync your bookmarks across devices by signing in to your Rapid+ account.",
+  "notes": "A more premium look and feel throughout the app, plus fixes: Google sign-in for sync now works correctly, sync rides on that same Google sign-in instead of being a separate confusing one, and sites that don't support a secure connection can be reached again with a one-tap warning.",
   "url": "https://rapidplusbrowser.online/download",
   "minVersionCode": 0,
   "desktop": {
-    "version": "1.1.0",
+    "version": "1.1.1",
     "url": "https://rapidplusbrowser.online/download#windows",
-    "notes": "Test a proxy before you save it, read articles distraction-free with Reader mode, and sync your bookmarks across devices by signing in to your Rapid+ account."
+    "notes": "Fixes bookmark sync, which wasn't working, and folds \"Sign in to sync\" into the same Google sign-in instead of a separate one."
   }
 }
