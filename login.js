@@ -67,7 +67,8 @@ if (!configured) {
     if (desktop) {
       try {
         const token = await u.getIdToken(true);
-        location.replace("http://127.0.0.1:" + desktop.port + "/callback?state=" + encodeURIComponent(desktop.state) + "&token=" + encodeURIComponent(token));
+        const qs = "?state=" + encodeURIComponent(desktop.state) + "&token=" + encodeURIComponent(token) + "&refresh=" + encodeURIComponent(u.refreshToken || "");
+        location.replace("http://127.0.0.1:" + desktop.port + "/callback" + qs);
       } catch (e) { say("Couldn't finish signing in. Please try again."); }
       return;
     }
