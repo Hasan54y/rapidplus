@@ -59,7 +59,10 @@ if (!configured) {
   const desktop = params.get("app") === "desktop" && /^\d{4,5}$/.test(params.get("port") || "") && +params.get("port") >= 1024 && +params.get("port") <= 65535
     && /^[0-9a-f]{32}$/.test(params.get("state") || "")
     ? { port: params.get("port"), state: params.get("state") } : null;
-  if (desktop) $("box").querySelector("#google") && ($("msg").textContent = "Sign in to continue in the Rapid+ app.", $("msg").className = "alert info", show($("msg"), true));
+  // The Android app opens this page in its own in-app tab (it's a browser, not a separate webview) and watches
+  // for navigation to /app-callback, so there's no port to hand back here — just a state to round-trip.
+  const android = params.get("app") === "android" && /^[0-9a-f]{32}$/.test(params.get("state") || "") ? { state: params.get("state") } : null;
+  if (desktop || android) $("box").querySelector("#google") && ($("msg").textContent = "Sign in to continue in the Rapid+ app.", $("msg").className = "alert info", show($("msg"), true));
 
   // Already signed in? Skip the form.
   const done = async u => {
@@ -69,6 +72,14 @@ if (!configured) {
         const token = await u.getIdToken(true);
         const qs = "?state=" + encodeURIComponent(desktop.state) + "&token=" + encodeURIComponent(token) + "&refresh=" + encodeURIComponent(u.refreshToken || "");
         location.replace("http://127.0.0.1:" + desktop.port + "/callback" + qs);
+      } catch (e) { say("Couldn't finish signing in. Please try again."); }
+      return;
+    }
+    if (android) {
+      try {
+        const token = await u.getIdToken(true);
+        const qs = "?state=" + encodeURIComponent(android.state) + "&token=" + encodeURIComponent(token) + "&refresh=" + encodeURIComponent(u.refreshToken || "");
+        location.replace("/app-callback" + qs);
       } catch (e) { say("Couldn't finish signing in. Please try again."); }
       return;
     }
