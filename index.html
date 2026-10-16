@@ -59,6 +59,16 @@
   <div class="center"><a class="more" href="features">All features <svg class="i " viewBox="0 -960 960 960" aria-hidden="true"><path d="M686-450H190q-13 0-21.5-8.5T160-480q0-13 8.5-21.5T190-510h496L459-737q-9-9-9-21t9-21q9-9 21-9t21 9l278 278q5 5 7 10t2 11q0 6-2 11t-7 10L501-181q-9 9-21 9t-21-9q-9-9-9-21t9-21l227-227Z"/></svg></a></div>
 </div></section>
 
+<section><div class="wrap">
+  <div class="center"><div class="eyebrow">What's new</div><h2 class="title">Recently added</h2><p class="sub">Android 1.1 (versionCode 9) · Windows 1.1.1</p></div>
+  <div class="grid">
+    <div class="card"><h3>Reader mode + translate<span class="tag-new">NEW</span></h3><p>Strip ads and clutter from any article with one tap, then translate it on the spot if it's not in your language.</p></div>
+    <div class="card"><h3>Cross-device bookmark sync<span class="tag-new">NEW</span></h3><p>Sign in to Google once, flip one toggle, and your bookmarks follow you to your other Rapid+ devices.</p></div>
+    <div class="card"><h3>Biometric lock per profile<span class="tag-new">NEW</span></h3><p>Require your fingerprint, face or screen lock before switching into a chosen profile.</p></div>
+    <div class="card"><h3>Safer sign-in &amp; browsing</h3><p>Google sign-in now opens in a secure browser tab, and a site without HTTPS shows a warning instead of failing outright.</p></div>
+  </div>
+</div></section>
+
 <section class="alt"><div class="wrap split">
   <div>
     <div class="eyebrow">Privacy</div><h2 class="title">Your data stays on your phone</h2>
@@ -90,6 +100,19 @@
   <a href="https://www.trustpilot.com/review/rapidplusbrowser.online" target="_blank" rel="noopener">Trustpilot</a>
 </div>
 </div></section>
+
+<section><div class="wrap">
+  <div class="center"><div class="eyebrow">Community</div><h2 class="title">What people are saying</h2><p class="sub">Real, unmoderated notes from visitors — the good and the bad. No sign-in needed, your name is optional.</p></div>
+  <div class="fb-slider" id="fbSlider" hidden><div class="fb-track" id="fbTrack"></div></div>
+  <p class="sub center" id="fbEmpty" style="margin:8px auto 0">No feedback yet — be the first to share yours below.</p>
+  <form class="fb-form" id="fbForm">
+    <div class="field"><span>Your name (optional)</span><input id="fbName" type="text" maxlength="60" placeholder="Anonymous" autocomplete="name"></div>
+    <div class="field"><span>Your feedback</span><textarea id="fbMessage" required maxlength="500" rows="3" placeholder="Tell us what you think of Rapid+..."></textarea></div>
+    <div id="fbStatus" class="alert" hidden></div>
+    <button class="btn primary wide" type="submit">Share feedback</button>
+  </form>
+</div></section>
+
 <section><div class="wrap"><div class="cta-band"><h2>Ready to try Rapid+?</h2><p>Free for Android and Windows. No account needed.</p><a class="play-badge " href="https://play.google.com/store/apps/details?id=com.rapidplus.browser"><img src="assets/google-play-badge.png" alt="Get it on Google Play"></a></div></div></section>
 </main>
 <footer><div class="wrap">
@@ -112,4 +135,6 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)})
 if(/.html$/.test(location.pathname)){var cp=location.pathname.replace(/index.html$/,'').replace(/.html$/,'')||'/';history.replaceState(null,'',cp+location.search+location.hash)}
 try{var u=localStorage.getItem('rp_user');if(u){var a=document.getElementById('navAuth');a.href='account.html';a.lastChild.textContent='Account'}}catch(e){}})();
 </script>
+<script src="firebase-config.js"></script>
+<script type="module" src="feedback.js"></script>
 </body></html>
