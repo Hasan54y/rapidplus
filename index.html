@@ -60,12 +60,12 @@
 </div></section>
 
 <section><div class="wrap">
-  <div class="center"><div class="eyebrow">What's new</div><h2 class="title">Recently added</h2><p class="sub">Android 1.1 (versionCode 9) · Windows 1.1.1</p></div>
+  <div class="center"><div class="eyebrow">What's new</div><h2 class="title">Recently added</h2><p class="sub">Android 1.1 (versionCode 13) · Windows 1.1.1</p></div>
   <div class="grid">
-    <div class="card"><h3>Reader mode + translate<span class="tag-new">NEW</span></h3><p>Strip ads and clutter from any article with one tap, then translate it on the spot if it's not in your language.</p></div>
-    <div class="card"><h3>Cross-device bookmark sync<span class="tag-new">NEW</span></h3><p>Sign in to Google once, flip one toggle, and your bookmarks follow you to your other Rapid+ devices.</p></div>
-    <div class="card"><h3>Biometric lock per profile<span class="tag-new">NEW</span></h3><p>Require your fingerprint, face or screen lock before switching into a chosen profile.</p></div>
-    <div class="card"><h3>Safer sign-in &amp; browsing</h3><p>Google sign-in now opens in a secure browser tab, and a site without HTTPS shows a warning instead of failing outright.</p></div>
+    <div class="card"><h3>Persistent back button<span class="tag-new">NEW</span></h3><p>A back button now lives right in the toolbar, not buried in the menu.</p></div>
+    <div class="card"><h3>Reader mode + translate</h3><p>Strip ads and clutter from any article with one tap, then translate it on the spot if it's not in your language.</p></div>
+    <div class="card"><h3>Cross-device bookmark sync</h3><p>Sign in to Google once, flip one toggle, and your bookmarks follow you to your other Rapid+ devices.</p></div>
+    <div class="card"><h3>Biometric lock per profile</h3><p>Require your fingerprint, face or screen lock before switching into a chosen profile.</p></div>
   </div>
 </div></section>
 
@@ -112,8 +112,9 @@
     <button class="btn primary wide" type="submit">Share feedback</button>
   </form>
 </div></section>
-
 <section><div class="wrap"><div class="cta-band"><h2>Ready to try Rapid+?</h2><p>Free for Android and Windows. No account needed.</p><a class="play-badge " href="https://play.google.com/store/apps/details?id=com.rapidplus.browser"><img src="assets/google-play-badge.png" alt="Get it on Google Play"></a></div></div></section>
+<script src="firebase-config.js"></script>
+<script type="module" src="feedback.js"></script>
 </main>
 <footer><div class="wrap">
   <div class="fgrid">
@@ -135,6 +136,4 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)})
 if(/.html$/.test(location.pathname)){var cp=location.pathname.replace(/index.html$/,'').replace(/.html$/,'')||'/';history.replaceState(null,'',cp+location.search+location.hash)}
 try{var u=localStorage.getItem('rp_user');if(u){var a=document.getElementById('navAuth');a.href='account.html';a.lastChild.textContent='Account'}}catch(e){}})();
 </script>
-<script src="firebase-config.js"></script>
-<script type="module" src="feedback.js"></script>
 </body></html>

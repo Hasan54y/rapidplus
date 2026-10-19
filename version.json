@@ -1,7 +1,7 @@
 {
-  "versionCode": 9,
+  "versionCode": 13,
   "versionName": "1.1",
-  "notes": "A more premium look and feel throughout the app, plus fixes: Google sign-in for sync now works correctly, sync rides on that same Google sign-in instead of being a separate confusing one, and sites that don't support a secure connection can be reached again with a one-tap warning.",
+  "notes": "Added a persistent back button in the toolbar. Fixed: dark mode made Settings text invisible (white on white) — now fully readable. Fixed: switching dark mode could occasionally freeze the screen black.",
   "url": "https://rapidplusbrowser.online/download",
   "minVersionCode": 0,
   "desktop": {
