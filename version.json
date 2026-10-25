@@ -1,7 +1,7 @@
 {
-  "versionCode": 13,
-  "versionName": "1.1",
-  "notes": "Added a persistent back button in the toolbar. Fixed: dark mode made Settings text invisible (white on white) — now fully readable. Fixed: switching dark mode could occasionally freeze the screen black.",
+  "versionCode": 16,
+  "versionName": "1.2",
+  "notes": "Introducing Rapid+ Pro: unlimited profiles, saved proxies, full sync (passwords, history, open tabs), scheduled auto-clear, custom avatars, a built-in ad & tracker blocker, and developer mode. Redesigned toolbar and start page with a new \"For you\" feed of news, videos and blogs. Added a quick site-info panel and a new look and logo.",
   "url": "https://rapidplusbrowser.online/download",
   "minVersionCode": 0,
   "desktop": {
