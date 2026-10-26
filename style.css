@@ -90,10 +90,6 @@ h2.title{font-size:clamp(26px,4.2vw,40px);letter-spacing:-.8px;line-height:1.12;
 .card ul{margin:10px 0 0;padding-left:18px;color:var(--muted);font-size:14.5px}
 .more{display:inline-flex;align-items:center;gap:6px;font-weight:700;margin-top:18px}
 .split{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
-.shots-scroll{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 2px 18px;-webkit-overflow-scrolling:touch}
-.shots-scroll img{flex:0 0 auto;scroll-snap-align:start;width:220px;border-radius:20px;border:1px solid var(--line);box-shadow:var(--shadow);background:var(--card)}
-@media(min-width:860px){.shots-scroll img{width:250px}}
-
 /* Promo popup: deliberately its own gold/violet palette (not the site's accent tokens), matching the
    in-app Pro paywall so the offer reads as the same premium thing wherever you meet it. */
 .promo-overlay{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;background:rgba(10,8,20,.6);backdrop-filter:blur(3px);padding:20px}
