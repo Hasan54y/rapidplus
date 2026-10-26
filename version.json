@@ -1,7 +1,7 @@
 {
-  "versionCode": 16,
-  "versionName": "1.2",
-  "notes": "Introducing Rapid+ Pro: unlimited profiles, saved proxies, full sync (passwords, history, open tabs), scheduled auto-clear, custom avatars, a built-in ad & tracker blocker, and developer mode. Redesigned toolbar and start page with a new \"For you\" feed of news, videos and blogs. Added a quick site-info panel and a new look and logo.",
+  "versionCode": 29,
+  "versionName": "1.3",
+  "notes": "Rapid+ Pro now has monthly, 6-month and yearly plans (from $2.08/month), plus a free trial for everyone — 1 month for new installs, 3 months for existing users. Redesigned Settings into a Chrome-style navigable menu. Fixed pages loading zoomed out, the start page breaking on long site names, and SSL warnings flickering on unrelated page assets. Link/image long-press menu: preview, copy, download and share. Smart segmented downloads for faster large files.",
   "url": "https://rapidplusbrowser.online/download",
   "minVersionCode": 0,
   "desktop": {
