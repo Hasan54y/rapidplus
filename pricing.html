@@ -44,10 +44,15 @@
     </ul>
     <a class="btn primary" href="download"><svg class="i " viewBox="0 -960 960 960" aria-hidden="true"><path d="M469-327q-5-2-10-7L308-485q-9-9.27-8.5-21.64.5-12.36 9.11-21.36 9.39-9 21.89-9t21.5 9l98 99v-341q0-12.75 8.68-21.38 8.67-8.62 21.5-8.62 12.82 0 21.32 8.62 8.5 8.63 8.5 21.38v341l99-99q8.8-9 20.9-8.5 12.1.5 21.49 9.5 8.61 9 8.61 21.5t-9 21.5L501-334q-5 5-10.13 7-5.14 2-11 2-5.87 0-10.87-2ZM220-160q-24 0-42-18t-18-42v-113q0-12.75 8.68-21.38 8.67-8.62 21.5-8.62 12.82 0 21.32 8.62 8.5 8.63 8.5 21.38v113h520v-113q0-12.75 8.68-21.38 8.67-8.62 21.5-8.62 12.82 0 21.32 8.62 8.5 8.63 8.5 21.38v113q0 24-18 42t-42 18H220Z"/></svg> Download free</a>
   </div>
-  <div class="card pricing center">
+  <div class="card pricing pro center">
     <h3 style="margin-top:0">Rapid+ Pro (Android only)</h3>
-    <div class="price">From $2.08/mo</div>
-    <p class="meta" style="margin-top:-6px">Monthly $3 · 6 months $15 <i>(save 16%)</i> · Yearly $25 <i>(save 30%, best value)</i></p>
+    <div class="plan-select" role="tablist" aria-label="Choose a billing plan">
+      <button type="button" class="plan-opt" role="tab" data-per="3.00" data-total="3.00" data-period="month" data-save="" aria-selected="false" tabindex="-1"><span class="plan-name">Monthly</span><span class="plan-sub">$3.00/mo</span></button>
+      <button type="button" class="plan-opt" role="tab" data-per="2.50" data-total="15.00" data-period="6 months" data-save="Save 16%" aria-selected="false" tabindex="-1"><span class="plan-name">6 Months</span><span class="plan-sub">$2.50/mo</span></button>
+      <button type="button" class="plan-opt is-selected" role="tab" data-per="2.08" data-total="25.00" data-period="year" data-save="Save 30% · Best value" aria-selected="true" tabindex="0"><span class="plan-name">Yearly</span><span class="plan-sub">$2.08/mo</span></button>
+    </div>
+    <div class="price" id="proPrice">$2.08<small>/mo</small></div>
+    <p class="meta" id="proBilled" style="margin-top:-6px">Billed $25.00 every year · Save 30% · Best value</p>
     <ul class="checks">
       <li><svg class="i " viewBox="0 -960 960 960" aria-hidden="true"><path d="m421-389-98-98q-9-9-22-9t-23 10q-9 9-9 22t9 22l122 123q9 9 21 9t21-9l239-239q10-10 10-23t-10-23q-10-9-23.5-8.5T635-603L421-389Zm59 309q-82 0-155-31.5t-127.5-86Q143-252 111.5-325T80-480q0-83 31.5-156t86-127Q252-817 325-848.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 82-31.5 155T763-197.5q-54 54.5-127 86T480-80Z"/></svg><span>Unlimited profiles</span></li>
       <li><svg class="i " viewBox="0 -960 960 960" aria-hidden="true"><path d="m421-389-98-98q-9-9-22-9t-23 10q-9 9-9 22t9 22l122 123q9 9 21 9t21-9l239-239q10-10 10-23t-10-23q-10-9-23.5-8.5T635-603L421-389Zm59 309q-82 0-155-31.5t-127.5-86Q143-252 111.5-325T80-480q0-83 31.5-156t86-127Q252-817 325-848.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 82-31.5 155T763-197.5q-54 54.5-127 86T480-80Z"/></svg><span>Multiple saved proxies with quick-switch</span></li>
@@ -58,7 +63,8 @@
       <li><svg class="i " viewBox="0 -960 960 960" aria-hidden="true"><path d="m421-389-98-98q-9-9-22-9t-23 10q-9 9-9 22t9 22l122 123q9 9 21 9t21-9l239-239q10-10 10-23t-10-23q-10-9-23.5-8.5T635-603L421-389Zm59 309q-82 0-155-31.5t-127.5-86Q143-252 111.5-325T80-480q0-83 31.5-156t86-127Q252-817 325-848.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 82-31.5 155T763-197.5q-54 54.5-127 86T480-80Z"/></svg><span>Developer mode (remote debugging)</span></li>
       <li><svg class="i " viewBox="0 -960 960 960" aria-hidden="true"><path d="m421-389-98-98q-9-9-22-9t-23 10q-9 9-9 22t9 22l122 123q9 9 21 9t21-9l239-239q10-10 10-23t-10-23q-10-9-23.5-8.5T635-603L421-389Zm59 309q-82 0-155-31.5t-127.5-86Q143-252 111.5-325T80-480q0-83 31.5-156t86-127Q252-817 325-848.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 82-31.5 155T763-197.5q-54 54.5-127 86T480-80Z"/></svg><span>Cancel anytime in Google Play</span></li>
     </ul>
-    <p class="meta">Subscribe from inside the Android app, under Settings → Rapid+ Pro.</p>
+    <a class="play-badge" href="https://play.google.com/store/apps/details?id=com.rapidplus.browser"><img src="assets/google-play-badge.png" alt="Get it on Google Play"></a>
+    <p class="meta">Pick a plan above to see the price, then choose the same one inside the app under Settings → Rapid+ Pro when you subscribe.</p>
     <p class="meta">New installs get a free 1-month trial, no card needed. Use code <b>RAPID10</b> for 10% off, valid through 31 December 2026.</p>
   </div>
 </div></div></section>
@@ -90,5 +96,19 @@ window.addEventListener('resize',function(){if(innerWidth>1000)set(false)});
 document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
 if(/.html$/.test(location.pathname)){var cp=location.pathname.replace(/index.html$/,'').replace(/.html$/,'')||'/';history.replaceState(null,'',cp+location.search+location.hash)}
 try{var u=localStorage.getItem('rp_user');if(u){var a=document.getElementById('navAuth');a.href='account.html';a.lastChild.textContent='Account'}}catch(e){}})();
+</script>
+<script>
+(function(){
+  var opts=document.querySelectorAll('.plan-opt'),priceEl=document.getElementById('proPrice'),billedEl=document.getElementById('proBilled');
+  if(!opts.length)return;
+  function select(btn){
+    opts.forEach(function(o){o.classList.remove('is-selected');o.setAttribute('aria-selected','false');o.tabIndex=-1});
+    btn.classList.add('is-selected');btn.setAttribute('aria-selected','true');btn.tabIndex=0;
+    var per=btn.dataset.per,total=btn.dataset.total,period=btn.dataset.period,save=btn.dataset.save;
+    priceEl.innerHTML='$'+per+'<small>/mo</small>';
+    billedEl.textContent='Billed $'+total+' every '+period+(save?' · '+save:'');
+  }
+  opts.forEach(function(btn){btn.addEventListener('click',function(){select(btn)})});
+})();
 </script>
 </body></html>
