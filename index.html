@@ -131,17 +131,16 @@
   <div class="promo-card">
     <button class="promo-close" id="promoClose" aria-label="Close">&times;</button>
     <div class="promo-badge">Limited-time offer</div>
-    <h3>Rapid+ Pro, for less</h3>
-    <p>Every new install gets a free month of Pro, no card needed. On top of that, use the code below for 10% off any plan — valid through 31 December 2026.</p>
-    <div class="promo-code"><b id="promoCodeText">RAPID10</b><button id="promoCopyBtn" type="button">Copy</button></div>
-    <a class="btn primary" href="pricing">See Pro pricing</a>
-    <div class="promo-fine">Redeem the code from Google Play &gt; Redeem code, during checkout.</div>
+    <h3>A free month of Rapid+ Pro</h3>
+    <p>Every new install gets a full month of Pro, free — no card needed. Install before 25 November 2026 to get it.</p>
+    <a class="btn primary" href="download">Get Rapid+ Pro</a>
+    <div class="promo-fine">The free trial starts automatically the first time you open the app.</div>
   </div>
 </div>
 
 <script>
 (function(){
-  var PROMO_EXPIRES = new Date('2026-12-31T23:59:59');
+  var PROMO_EXPIRES = new Date('2026-11-25T23:59:59');
   if (new Date() > PROMO_EXPIRES) return;
   var KEY = 'rp_promo_dismissed_at', overlay = document.getElementById('promoOverlay');
   if (!overlay) return;
@@ -156,14 +155,6 @@
   setTimeout(function(){ overlay.classList.add('open'); }, 1400);
   document.getElementById('promoClose').addEventListener('click', dismiss);
   overlay.addEventListener('click', function(e){ if (e.target === overlay) dismiss(); });
-  document.getElementById('promoCopyBtn').addEventListener('click', function(){
-    var code = document.getElementById('promoCodeText').textContent;
-    var btn = this;
-    function done(){ btn.textContent = 'Copied'; setTimeout(function(){ btn.textContent = 'Copy'; }, 1600); }
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(code).then(done).catch(done);
-    } else { done(); }
-  });
 })();
 </script>
 <script>
