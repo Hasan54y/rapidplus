@@ -81,4 +81,6 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)})
 if(/.html$/.test(location.pathname)){var cp=location.pathname.replace(/index.html$/,'').replace(/.html$/,'')||'/';history.replaceState(null,'',cp+location.search+location.hash)}
 })();
 </script>
+<script src="firebase-config.js"></script>
+<script type="module" src="analytics.js"></script>
 </body></html>

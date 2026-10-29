@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Site Admin</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" href="assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="style.css">
+<style>
+  body{background:var(--bg2)}
+  .adminwrap{max-width:980px;margin:0 auto;padding:40px 20px 80px}
+  .login-box{max-width:360px;margin:80px auto;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:30px;box-shadow:var(--shadow)}
+  .login-box h1{font-size:20px;margin:0 0 18px;text-align:center}
+  .login-box label{display:block;font-size:13px;color:var(--muted);margin:14px 0 5px;font-weight:600}
+  .login-box input{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:10px;font:inherit;background:var(--bg)}
+  .login-box button{width:100%;margin-top:18px}
+  .login-err{color:#d33;font-size:13px;margin-top:10px;text-align:center;min-height:16px}
+  .adtop{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+  .adtop h1{font-size:24px;margin:0}
+  .stats4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px}
+  @media(max-width:700px){.stats4{grid-template-columns:1fr 1fr}}
+  .stat-tile{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;text-align:center}
+  .stat-tile b{display:block;font-size:28px;color:var(--accent)}
+  .stat-tile span{font-size:12.5px;color:var(--muted)}
+  .ad-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:18px}
+  .ad-card h3{margin:0 0 14px;font-size:15px}
+  .barrow{display:flex;align-items:center;gap:10px;margin-bottom:9px;font-size:13.5px}
+  .barrow .lbl{width:170px;flex:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text)}
+  .barrow .bar{flex:1;height:10px;background:var(--bg2);border-radius:6px;overflow:hidden}
+  .barrow .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:6px}
+  .barrow .n{width:46px;text-align:right;color:var(--muted);flex:none}
+  .ad-note{font-size:12.5px;color:var(--muted);text-align:center;margin-top:10px}
+  [hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="adminwrap">
+
+  <div id="loginView" class="login-box">
+    <h1>Site Admin</h1>
+    <form id="loginForm">
+      <label for="email">Email</label>
+      <input id="email" type="email" autocomplete="username" required>
+      <label for="pass">Password</label>
+      <input id="pass" type="password" autocomplete="current-password" required>
+      <button type="submit" class="btn primary">Sign in</button>
+      <div class="login-err" id="loginErr"></div>
+    </form>
+  </div>
+
+  <div id="dashView" hidden>
+    <div class="adtop">
+      <h1>Site Admin</h1>
+      <button class="btn" id="signOutBtn">Sign out</button>
+    </div>
+
+    <div class="stats4">
+      <div class="stat-tile"><b id="statViews">–</b><span>Page views</span></div>
+      <div class="stat-tile"><b id="statAndroid">–</b><span>Android download clicks</span></div>
+      <div class="stat-tile"><b id="statWindows">–</b><span>Windows download clicks</span></div>
+      <div class="stat-tile"><b id="statUnique">–</b><span>Pages visited</span></div>
+    </div>
+
+    <div class="ad-card">
+      <h3>Top pages</h3>
+      <div id="topPages"></div>
+    </div>
+
+    <div class="ad-card">
+      <h3>Views per day (last 14 days)</h3>
+      <div id="byDay"></div>
+    </div>
+
+    <div class="ad-card">
+      <h3>Device</h3>
+      <div id="byDevice"></div>
+    </div>
+
+    <div class="ad-card">
+      <h3>Top referrers</h3>
+      <div id="byRef"></div>
+    </div>
+
+    <p class="ad-note">Based on the most recent 5,000 events.</p>
+  </div>
+
+</div>
+
+<script type="module">
+import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import { getFirestore, collection, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+const cfg = window.RAPID_FIREBASE || {};
+const app = getApps().length ? getApp() : initializeApp(cfg);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const loginView = document.getElementById("loginView");
+const dashView = document.getElementById("dashView");
+const loginForm = document.getElementById("loginForm");
+const loginErr = document.getElementById("loginErr");
+
+loginForm.addEventListener("submit", async e => {
+  e.preventDefault();
+  loginErr.textContent = "";
+  try {
+    await signInWithEmailAndPassword(auth, document.getElementById("email").value.trim(), document.getElementById("pass").value);
+  } catch (err) {
+    loginErr.textContent = "Sign-in failed. Check your email and password.";
+  }
+});
+
+document.getElementById("signOutBtn").addEventListener("click", () => signOut(auth));
+
+function bar(container, rows, max) {
+  container.innerHTML = rows.length ? rows.map(([label, n]) =>
+    `<div class="barrow"><div class="lbl" title="${esc(label)}">${esc(label)}</div><div class="bar"><i style="width:${max ? Math.round(n / max * 100) : 0}%"></i></div><div class="n">${n}</div></div>`
+  ).join("") : `<p class="ad-note" style="margin:0">No data yet.</p>`;
+}
+function esc(s) { return String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
+function top(map, n) { return [...map.entries()].sort((a, b) => b[1] - a[1]).slice(0, n); }
+
+async function loadDashboard() {
+  const snap = await getDocs(query(collection(db, "analytics_events"), orderBy("ts", "desc"), limit(5000)));
+  let views = 0, android = 0, windows = 0;
+  const pages = new Map(), days = new Map(), devices = new Map(), refs = new Map();
+  snap.forEach(d => {
+    const e = d.data();
+    if (e.type === "page_view") {
+      views++;
+      pages.set(e.path || "/", (pages.get(e.path || "/") || 0) + 1);
+      if (e.ts) {
+        const day = e.ts.toDate().toISOString().slice(0, 10);
+        days.set(day, (days.get(day) || 0) + 1);
+      }
+      devices.set(e.device || "unknown", (devices.get(e.device || "unknown") || 0) + 1);
+      if (e.ref) { try { refs.set(new URL(e.ref).hostname, (refs.get(new URL(e.ref).hostname) || 0) + 1); } catch { } }
+    } else if (e.type === "download_click") {
+      if (e.platform === "android") android++;
+      else if (e.platform === "windows") windows++;
+    }
+  });
+
+  document.getElementById("statViews").textContent = views;
+  document.getElementById("statAndroid").textContent = android;
+  document.getElementById("statWindows").textContent = windows;
+  document.getElementById("statUnique").textContent = pages.size;
+
+  const topP = top(pages, 10);
+  bar(document.getElementById("topPages"), topP, topP[0]?.[1] || 1);
+
+  const last14 = [...days.entries()].sort((a, b) => a[0] < b[0] ? -1 : 1).slice(-14);
+  bar(document.getElementById("byDay"), last14, Math.max(1, ...last14.map(r => r[1])));
+
+  const devRows = top(devices, 5);
+  bar(document.getElementById("byDevice"), devRows, devRows[0]?.[1] || 1);
+
+  const refRows = top(refs, 8);
+  bar(document.getElementById("byRef"), refRows, refRows[0]?.[1] || 1);
+}
+
+onAuthStateChanged(auth, user => {
+  loginView.hidden = !!user;
+  dashView.hidden = !user;
+  if (user) loadDashboard().catch(() => {});
+});
+</script>
+</body></html>
