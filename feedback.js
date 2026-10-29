@@ -28,8 +28,24 @@ function say(el, text, kind) {
 
 function cardHtml(name, message) {
   const who = (name || "").trim() || "Anonymous";
-  return `<div class="fb-card"><div class="fb-top"><div class="fb-avatar">${esc(who.charAt(0).toUpperCase())}</div><div class="fb-name">${esc(who)}</div></div><p>${esc(message)}</p></div>`;
+  return `<div class="fb-card"><div class="fb-top"><div class="fb-avatar">${esc(who.charAt(0).toUpperCase())}</div><div class="fb-name">${esc(who)}</div></div><p>${esc(message)}</p><button type="button" class="fb-more" hidden>Read more</button></div>`;
 }
+
+// Fixed card height clamps text to a few lines; only show "Read more" on cards where text actually overflows.
+function markOverflow(root) {
+  root.querySelectorAll(".fb-card").forEach(card => {
+    const p = card.querySelector("p"), btn = card.querySelector(".fb-more");
+    if (p && btn) btn.hidden = p.scrollHeight <= p.clientHeight + 1;
+  });
+}
+
+document.getElementById("fbTrack")?.addEventListener("click", e => {
+  const btn = e.target.closest(".fb-more");
+  if (!btn) return;
+  const card = btn.closest(".fb-card");
+  const expanded = card.classList.toggle("expanded");
+  btn.textContent = expanded ? "Show less" : "Read more";
+});
 
 async function load() {
   if (!db || !slider) return;
@@ -44,6 +60,7 @@ async function load() {
     // Duplicated once so a -50% translateX loops seamlessly; pure CSS, no per-frame JS.
     track.innerHTML = html + html;
     track.style.animationDuration = Math.max(24, items.length * 7) + "s";
+    requestAnimationFrame(() => markOverflow(track));
   } catch (e) {
     // Rules not published yet, or offline — fail quiet, the form below still lets people try to post.
   }
