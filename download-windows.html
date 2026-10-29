@@ -32,11 +32,14 @@
   .r3{animation:riseIn .6s cubic-bezier(.2,.7,.2,1) .16s both}
   .r4{animation:riseIn .6s cubic-bezier(.2,.7,.2,1) .24s both}
   .winmark{width:92px;height:92px;object-fit:contain;border-radius:22%;box-shadow:0 18px 34px rgba(255,107,0,.4);margin-bottom:8px}
-  .win-badge{display:inline-flex;position:relative}
-  .win-badge img{height:70px;width:auto;display:block;transition:transform .25s ease, filter .25s ease;border-radius:14px}
-  .win-badge:hover img{transform:translateY(-3px) scale(1.015);filter:brightness(1.06)}
-  .win-badge::after{content:"";position:absolute;inset:-2px;border-radius:16px;background:linear-gradient(90deg,var(--accent),#ffb066,var(--accent));background-size:220% 100%;opacity:0;transition:opacity .25s ease;z-index:-1;animation:badgeSheen 2.6s linear infinite}
-  .win-badge:hover::after{opacity:.55}
+  .win-btn{display:inline-flex;align-items:center;gap:14px;position:relative;background:var(--card);color:var(--text);border:2px solid var(--ink);border-radius:14px;padding:12px 26px;text-decoration:none;transition:transform .25s ease, box-shadow .25s ease}
+  .win-btn:hover{transform:translateY(-3px);box-shadow:0 14px 28px -10px rgba(20,18,12,.35);text-decoration:none}
+  .win-btn-ico{width:34px;height:34px;flex:none;color:var(--text)}
+  .win-btn-ico svg{width:100%;height:100%}
+  .win-btn-text{text-align:left;font-weight:800;font-size:25px;line-height:1.05;letter-spacing:-.2px}
+  .win-btn-text small{display:block;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+  .win-btn::after{content:"";position:absolute;inset:-2px;border-radius:16px;background:linear-gradient(90deg,var(--accent),#ffb066,var(--accent));background-size:220% 100%;opacity:0;transition:opacity .25s ease;z-index:-1;animation:badgeSheen 2.6s linear infinite}
+  .win-btn:hover::after{opacity:.6}
   @keyframes badgeSheen{to{background-position:220% 0}}
   .winmeta{color:var(--muted);font-size:14px;margin-top:14px}
   .winmeta a{font-weight:700}
@@ -74,7 +77,10 @@
   <div class="eyebrow r1">Windows</div>
   <h1 class="r2" style="margin:8px 0 10px">Rapid+ Browser for Windows</h1>
   <p class="sub r2" style="max-width:560px;margin:0 auto 26px">Profiles, a built-in proxy &amp; VPN mode, an ad &amp; tracker blocker and a private password manager — free, with no account needed.</p>
-  <div class="r3"><a class="win-badge" href="https://github.com/Hasan54y/rapidplus/releases/download/desktop-v1.2.0/RapidPlusBrowser-Setup-1.2.0.exe"><img src="assets/windows-badge.png" alt="Download for Windows"></a></div>
+  <div class="r3"><a class="win-btn" href="https://github.com/Hasan54y/rapidplus/releases/download/desktop-v1.2.0/RapidPlusBrowser-Setup-1.2.0.exe">
+    <span class="win-btn-ico"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="3.5" width="20" height="13" rx="1.6" stroke="currentColor" stroke-width="1.7"/><path d="M8.5 20.5h7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M12 16.5v4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M7 10.8l2.6 2.6L13 8" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    <span class="win-btn-text"><small>Download for</small>Windows</span>
+  </a></div>
   <p class="winmeta r4">Version 1.2.0 · 107 MB · 64-bit, Windows 10/11 · <a href="windows-releases">older versions &amp; release notes</a></p>
 </div></section>
 
@@ -86,9 +92,15 @@
   </div>
 
   <div class="featrow">
+    <div class="feat"><div class="ico"><svg viewBox="0 -960 960 960"><path d="M372-523q-42-42-42-108t42-108q42-42 108-42t108 42q42 42 42 108t-42 108q-42 42-108 42t-108-42ZM160-220v-34q0-38 19-65t49-41q67-30 128.5-45T480-420q62 0 123 15.5T731-360q31 14 50 41t19 65v34q0 25-17.5 42.5T740-160H220q-25 0-42.5-17.5T160-220Z"/></svg></div><h4>Multiple profiles</h4><p>Switch between the people and purposes in your life — the profile picker is one click away.</p></div>
     <div class="feat"><div class="ico"><svg viewBox="0 -960 960 960"><path d="M480-80q-139-35-229.5-159.5T160-516v-244l320-120 320 120v244q0 152-90.5 276.5T480-80Z"/></svg></div><h4>Proxy &amp; VPN mode</h4><p>Route a profile's browsing through your own SOCKS5 or HTTP proxy, saved and ready to switch.</p></div>
-    <div class="feat"><div class="ico"><svg viewBox="0 -960 960 960"><path d="M480-80q-139-35-229.5-159.5T160-516v-244l320-120 320 120v244q0 152-90.5 276.5T480-80Z"/></svg></div><h4>PIN-locked profiles</h4><p>Keep work, personal and shared browsing separate, each profile lockable with its own PIN.</p></div>
+    <div class="feat"><div class="ico"><svg viewBox="0 -960 960 960"><path d="M480-200q-116 0-198-81t-82-197q0-116 82-197t198-81q65 0 123 28t97 76v-104h60v220H560v-60h103q-29-44-76-70t-105-26q-92 0-156 63.5T260-478q0 90 64 153.5T482-261q82 0 144-50t79-129h61q-18 107-100 173.5T482-200Z"/></svg></div><h4>User-agent switcher</h4><p>Change how sites see your browser — Chrome, Safari, iPhone and more, saved per profile.</p></div>
+  </div>
+
+  <div class="featrow" style="margin-top:16px">
+    <div class="feat"><div class="ico"><svg viewBox="0 -960 960 960"><path d="M240-80q-33 0-56.5-23.5T160-160v-400q0-33 23.5-56.5T240-640h40v-80q0-83 58.5-141.5T480-920q83 0 141.5 58.5T680-720v80h40q33 0 56.5 23.5T800-560v400q0 33-23.5 56.5T720-80H240Zm240-200q33 0 56.5-23.5T560-360q0-33-23.5-56.5T480-440q-33 0-56.5 23.5T400-360q0 33 23.5 56.5T480-280ZM360-640h240v-80q0-50-35-85t-85-35q-50 0-85 35t-35 85v80Z"/></svg></div><h4>PIN-locked profiles</h4><p>Keep work, personal and shared browsing separate, each profile lockable with its own PIN.</p></div>
     <div class="feat"><div class="ico"><svg viewBox="0 -960 960 960"><path d="M480-80q-139-35-229.5-159.5T160-516v-244l320-120 320 120v244q0 152-90.5 276.5T480-80Z"/></svg></div><h4>Ad &amp; tracker blocker</h4><p>Pages load cleaner and faster, with zero analytics from Rapid+ itself.</p></div>
+    <div class="feat"><div class="ico"><svg viewBox="0 -960 960 960"><path d="M480-120q-151 0-255.5-46.5T120-280q0-50 57.5-91T320-438l40 60q-74 17-117 44.5T200-280q0 32 93.5 66T480-180q93 0 186.5-34T760-280q0-29-43-56.5T600-378l40-60q85 16 142.5 57T840-280q0 87-104.5 133.5T480-120Zm0-280q-83 0-141.5-58.5T280-600q0-83 58.5-141.5T480-800q83 0 141.5 58.5T680-600q0 83-58.5 141.5T480-400Z"/></svg></div><h4>Private password manager</h4><p>Passwords stay encrypted on your device with the OS's own secure storage.</p></div>
   </div>
 </div></section>
 
