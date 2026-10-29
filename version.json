@@ -5,8 +5,8 @@
   "url": "https://rapidplusbrowser.online/download",
   "minVersionCode": 0,
   "desktop": {
-    "version": "1.1.1",
+    "version": "1.2.0",
     "url": "https://rapidplusbrowser.online/download#windows",
-    "notes": "Fixes bookmark sync, which wasn't working, and folds \"Sign in to sync\" into the same Google sign-in instead of a separate one."
+    "notes": "Rapid+ is now free for everyone, no account or sign-in needed. New: ad & tracker blocker, a For You content feed, a daily digest notification, per-profile PIN lock, scheduled auto-clear, media downloads, a connection-security indicator with Proceed Anyway, removable Most Visited tiles, and reopen closed tab (Ctrl+Shift+T)."
   }
 }
