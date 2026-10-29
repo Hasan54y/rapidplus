@@ -49,6 +49,7 @@
   .winshot-cap b{color:var(--text)}
   .shotgrid3{display:grid;grid-template-columns:1.15fr 1fr;gap:22px}
   .shotgrid3 .tall{grid-row:span 2}
+  .shotgrid3.even3{grid-template-columns:repeat(3,1fr)}
   @media(max-width:760px){.shotgrid3{grid-template-columns:1fr}.shotgrid3 .tall{grid-row:auto}}
 
   .featrow{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:34px}
@@ -78,10 +79,10 @@
 </div></section>
 
 <section class="showcase"><div class="wrap">
-  <div class="shotgrid3">
-    <div class="winshot-wrap tall"><img src="assets/win-start.png" alt="Rapid+ Browser start page on Windows with a For You content feed"></div>
-    <div class="winshot-wrap"><img src="assets/win-settings.png" alt="Rapid+ Browser Windows proxy and VPN mode manager"></div>
-    <div class="winshot-wrap"><img src="assets/win-profiles.png" alt="Rapid+ Browser Windows profiles with PIN lock"></div>
+  <div class="shotgrid3 even3">
+    <div class="winshot-wrap"><img src="assets/win-profiles.png" alt="Rapid+ Browser Windows profile switcher"></div>
+    <div class="winshot-wrap"><img src="assets/win-proxy-add.png" alt="Rapid+ Browser Windows Add proxy dialog"></div>
+    <div class="winshot-wrap"><img src="assets/win-settings.png" alt="Rapid+ Browser Windows VPN/proxy and browser identity menu"></div>
   </div>
 
   <div class="featrow">
