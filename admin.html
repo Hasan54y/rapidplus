@@ -49,6 +49,7 @@
       <input id="pass" type="password" autocomplete="current-password" required>
       <button type="submit" class="btn primary">Sign in</button>
       <div class="login-err" id="loginErr"></div>
+      <p style="text-align:center;margin:14px 0 0"><a href="#" id="forgotLink" style="font-size:13px">Forgot password?</a></p>
     </form>
   </div>
 
@@ -92,7 +93,7 @@
 
 <script type="module">
 import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 import { getFirestore, collection, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
 const cfg = window.RAPID_FIREBASE || {};
@@ -116,6 +117,20 @@ loginForm.addEventListener("submit", async e => {
 });
 
 document.getElementById("signOutBtn").addEventListener("click", () => signOut(auth));
+
+document.getElementById("forgotLink").addEventListener("click", async e => {
+  e.preventDefault();
+  const email = document.getElementById("email").value.trim();
+  if (!email) { loginErr.style.color = ""; loginErr.textContent = "Enter your email above first, then click this again."; return; }
+  try {
+    await sendPasswordResetEmail(auth, email);
+    loginErr.style.color = "#1a8a4a";
+    loginErr.textContent = "Reset email sent — check your inbox.";
+  } catch (err) {
+    loginErr.style.color = "";
+    loginErr.textContent = "Couldn't send reset email. Check the address and try again.";
+  }
+});
 
 function bar(container, rows, max) {
   container.innerHTML = rows.length ? rows.map(([label, n]) =>
