@@ -12,178 +12,516 @@
 <link rel="stylesheet" href="style.css">
 <style>
   body{background:var(--bg2)}
-  .adminwrap{max-width:980px;margin:0 auto;padding:40px 20px 80px}
+  [hidden]{display:none!important}
   .login-box{max-width:360px;margin:80px auto;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:30px;box-shadow:var(--shadow)}
   .login-box h1{font-size:20px;margin:0 0 18px;text-align:center}
   .login-box label{display:block;font-size:13px;color:var(--muted);margin:14px 0 5px;font-weight:600}
   .login-box input{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:10px;font:inherit;background:var(--bg)}
   .login-box button{width:100%;margin-top:18px}
   .login-err{color:#d33;font-size:13px;margin-top:10px;text-align:center;min-height:16px}
-  .adtop{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
-  .adtop h1{font-size:24px;margin:0}
-  .stats4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px}
-  @media(max-width:700px){.stats4{grid-template-columns:1fr 1fr}}
-  .stat-tile{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;text-align:center}
-  .stat-tile b{display:block;font-size:28px;color:var(--accent)}
-  .stat-tile span{font-size:12.5px;color:var(--muted)}
-  .ad-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:18px}
-  .ad-card h3{margin:0 0 14px;font-size:15px}
-  .barrow{display:flex;align-items:center;gap:10px;margin-bottom:9px;font-size:13.5px}
-  .barrow .lbl{width:170px;flex:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text)}
-  .barrow .bar{flex:1;height:10px;background:var(--bg2);border-radius:6px;overflow:hidden}
+
+  .adbar{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg2) 88%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .adbar .in{max-width:1220px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .adbar h1{font-size:18px;margin:0;display:flex;align-items:center;gap:10px}
+  .adbar h1 img{width:28px;height:28px;border-radius:22%}
+  .adbar .sp{flex:1}
+  .live{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 12px}
+  .live i{width:8px;height:8px;border-radius:50%;background:#1a9e55;box-shadow:0 0 0 0 rgba(26,158,85,.5);animation:pulse 1.8s infinite}
+  @keyframes pulse{70%{box-shadow:0 0 0 8px rgba(26,158,85,0)}100%{box-shadow:0 0 0 0 rgba(26,158,85,0)}}
+  .seg{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:3px}
+  .seg button{border:0;background:none;font:inherit;font-size:13px;font-weight:700;padding:7px 11px;border-radius:9px;cursor:pointer;color:var(--muted)}
+  .seg button.on{background:var(--accent);color:#fff}
+  .sbtn{border:1px solid var(--line);background:var(--card);font:inherit;font-size:13px;font-weight:700;padding:8px 12px;border-radius:10px;cursor:pointer;color:var(--text)}
+  .sbtn:hover{border-color:var(--accent)}
+
+  .adwrap{max-width:1220px;margin:0 auto;padding:22px 20px 80px}
+  .kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:18px}
+  @media(max-width:1000px){.kpis{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:600px){.kpis{grid-template-columns:1fr 1fr}}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px 16px}
+  .kpi span{display:block;font-size:12px;color:var(--muted);font-weight:600}
+  .kpi b{display:block;font-size:25px;margin-top:4px;letter-spacing:-.4px}
+  .kpi small{font-size:12px;color:var(--muted)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media(max-width:900px){.grid2,.grid3{grid-template-columns:1fr}}
+  .ad-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:16px;min-width:0}
+  .ad-card h3{margin:0 0 4px;font-size:15px}
+  .ad-card .hint{font-size:12.5px;color:var(--muted);margin:0 0 14px}
+  .chart svg{width:100%;height:auto;display:block}
+  .legend{display:flex;gap:16px;font-size:12px;color:var(--muted);margin-top:8px}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+  .barrow{display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:13px}
+  .barrow .lbl{width:44%;flex:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .barrow .bar{flex:1;height:9px;background:var(--bg2);border-radius:6px;overflow:hidden}
   .barrow .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:6px}
-  .barrow .n{width:46px;text-align:right;color:var(--muted);flex:none}
-  .ad-note{font-size:12.5px;color:var(--muted);text-align:center;margin-top:10px}
-  [hidden]{display:none!important}
+  .barrow .n{min-width:64px;text-align:right;color:var(--muted);flex:none;font-variant-numeric:tabular-nums}
+  .empty{font-size:13px;color:var(--muted);margin:0}
+  .tblwrap{overflow-x:auto}
+  table.pt{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+  table.pt th{text-align:right;color:var(--muted);font-weight:700;font-size:12px;padding:8px 10px;border-bottom:1px solid var(--line);cursor:pointer;white-space:nowrap;user-select:none}
+  table.pt th:first-child,table.pt td:first-child{text-align:left}
+  table.pt th.sorted{color:var(--accent)}
+  table.pt td{text-align:right;padding:9px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+  table.pt tbody tr{cursor:pointer}
+  table.pt tbody tr:hover{background:var(--bg2)}
+  table.pt tbody tr.sel{background:color-mix(in srgb,var(--accent) 10%,transparent)}
+  .pg{display:block;font-weight:700;max-width:340px;overflow:hidden;text-overflow:ellipsis}
+  .pg small{display:block;font-weight:500;color:var(--muted);overflow:hidden;text-overflow:ellipsis}
+  .detail{border:2px solid var(--accent)}
+  .dhead{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px}
+  .dhead h3{font-size:17px;margin:0;word-break:break-all}
+  .dhead .sp{flex:1}
+  .mini{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:16px}
+  @media(max-width:900px){.mini{grid-template-columns:repeat(3,1fr)}}
+  .mini div{background:var(--bg2);border-radius:10px;padding:10px 12px}
+  .mini span{display:block;font-size:11.5px;color:var(--muted);font-weight:600}
+  .mini b{font-size:18px}
+  .feed{font-size:12.5px}
+  .feed div{display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--line);align-items:baseline}
+  .feed time{color:var(--muted);flex:none;width:118px;font-variant-numeric:tabular-nums}
+  .tag{flex:none;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.3px;padding:2px 7px;border-radius:999px;background:var(--bg2);color:var(--muted)}
+  .tag.page_view{background:#e8f0ff;color:#2453b8}.tag.download_click{background:#fff0e3;color:#b85300}.tag.click{background:#eef7ee;color:#1d7a3e}.tag.engage{background:#f3eefd;color:#6b3fc1}
+  .feed .what{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+  .note{font-size:12.5px;color:var(--muted);text-align:center;margin-top:8px}
 </style>
 </head>
 <body>
-<div class="adminwrap">
 
-  <div id="loginView" class="login-box">
-    <h1>Site Admin</h1>
-    <form id="loginForm">
-      <label for="email">Email</label>
-      <input id="email" type="email" autocomplete="username" required>
-      <label for="pass">Password</label>
-      <input id="pass" type="password" autocomplete="current-password" required>
-      <button type="submit" class="btn primary">Sign in</button>
-      <div class="login-err" id="loginErr"></div>
-      <p style="text-align:center;margin:14px 0 0"><a href="#" id="forgotLink" style="font-size:13px">Forgot password?</a></p>
-    </form>
+<div id="loginView" class="login-box">
+  <h1>Site Admin</h1>
+  <form id="loginForm">
+    <label for="email">Email</label>
+    <input id="email" type="email" autocomplete="username" required>
+    <label for="pass">Password</label>
+    <input id="pass" type="password" autocomplete="current-password" required>
+    <button type="submit" class="btn primary">Sign in</button>
+    <div class="login-err" id="loginErr"></div>
+    <p style="text-align:center;margin:14px 0 0"><a href="#" id="forgotLink" style="font-size:13px">Forgot password?</a></p>
+  </form>
+</div>
+
+<div id="dashView" hidden>
+  <div class="adbar"><div class="in">
+    <h1><img src="assets/logo.png" alt="">Site Admin</h1>
+    <span class="live" title="Sessions with activity in the last 5 minutes"><i></i><span id="liveNow">0</span> active now</span>
+    <span class="sp"></span>
+    <div class="seg" id="rangeSeg">
+      <button data-r="1">Today</button><button data-r="7" class="on">7 days</button><button data-r="30">30 days</button><button data-r="90">90 days</button><button data-r="0">All</button>
+    </div>
+    <button class="sbtn" id="refreshBtn">Refresh</button>
+    <button class="sbtn" id="csvBtn">Export CSV</button>
+    <button class="sbtn" id="signOutBtn">Sign out</button>
+  </div></div>
+
+  <div class="adwrap">
+    <div class="kpis" id="kpis"></div>
+
+    <div class="ad-card">
+      <h3 id="trendTitle">Traffic</h3>
+      <p class="hint">Page views (bars) and sessions (line).</p>
+      <div class="chart" id="trend"></div>
+      <div class="legend"><span><i style="background:var(--accent)"></i>Page views</span><span><i style="background:#6b3fc1"></i>Sessions</span></div>
+    </div>
+
+    <div class="ad-card">
+      <h3>Pages</h3>
+      <p class="hint">Click a page for its full breakdown. Click a column to sort.</p>
+      <div class="tblwrap"><table class="pt" id="pagesTbl"></table></div>
+    </div>
+
+    <div class="ad-card detail" id="detail" hidden></div>
+
+    <div class="grid2">
+      <div class="ad-card"><h3>Traffic sources</h3><p class="hint">How each session arrived.</p><div id="sources"></div></div>
+      <div class="ad-card"><h3>Referring sites</h3><p class="hint">External sites that sent visitors.</p><div id="refs"></div></div>
+    </div>
+
+    <div class="grid2">
+      <div class="ad-card"><h3>Entry pages</h3><p class="hint">First page of a session.</p><div id="entries"></div></div>
+      <div class="ad-card"><h3>Exit pages</h3><p class="hint">Last page of a session.</p><div id="exits"></div></div>
+    </div>
+
+    <div class="grid2">
+      <div class="ad-card"><h3>Downloads</h3><p class="hint">Download button clicks, by platform and the page they happened on.</p><div id="downloads"></div></div>
+      <div class="ad-card"><h3>Top clicks</h3><p class="hint">Links and buttons visitors used.</p><div id="clicks"></div></div>
+    </div>
+
+    <div class="grid3">
+      <div class="ad-card"><h3>Location</h3><p class="hint">From the visitor's time zone.</p><div id="geo"></div></div>
+      <div class="ad-card"><h3>Device</h3><p class="hint">&nbsp;</p><div id="devices"></div></div>
+      <div class="ad-card"><h3>Browser</h3><p class="hint">&nbsp;</p><div id="browsers"></div></div>
+      <div class="ad-card"><h3>Operating system</h3><div id="oses"></div></div>
+      <div class="ad-card"><h3>Screen size</h3><div id="screens"></div></div>
+      <div class="ad-card"><h3>Language</h3><div id="langs"></div></div>
+    </div>
+
+    <div class="grid2">
+      <div class="ad-card"><h3>Hour of day</h3><p class="hint">Page views by your local time.</p><div class="chart" id="hours"></div></div>
+      <div class="ad-card"><h3>Campaigns</h3><p class="hint">Visits with utm_source / utm_medium / utm_campaign tags.</p><div id="campaigns"></div></div>
+    </div>
+
+    <div class="ad-card"><h3>Recent activity</h3><p class="hint">Newest events first.</p><div class="feed" id="feed"></div></div>
+
+    <p class="note" id="note"></p>
   </div>
-
-  <div id="dashView" hidden>
-    <div class="adtop">
-      <h1>Site Admin</h1>
-      <button class="btn" id="signOutBtn">Sign out</button>
-    </div>
-
-    <div class="stats4">
-      <div class="stat-tile"><b id="statViews">–</b><span>Page views</span></div>
-      <div class="stat-tile"><b id="statAndroid">–</b><span>Android download clicks</span></div>
-      <div class="stat-tile"><b id="statWindows">–</b><span>Windows download clicks</span></div>
-      <div class="stat-tile"><b id="statUnique">–</b><span>Pages visited</span></div>
-    </div>
-
-    <div class="ad-card">
-      <h3>Top pages</h3>
-      <div id="topPages"></div>
-    </div>
-
-    <div class="ad-card">
-      <h3>Views per day (last 14 days)</h3>
-      <div id="byDay"></div>
-    </div>
-
-    <div class="ad-card">
-      <h3>Device</h3>
-      <div id="byDevice"></div>
-    </div>
-
-    <div class="ad-card">
-      <h3>Top referrers</h3>
-      <div id="byRef"></div>
-    </div>
-
-    <p class="ad-note">Based on the most recent 5,000 events.</p>
-  </div>
-
 </div>
 
 <script src="firebase-config.js"></script>
 <script type="module">
 import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-import { getFirestore, collection, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+import { getFirestore, collection, query, where, orderBy, limit, getDocs, Timestamp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
-const cfg = window.RAPID_FIREBASE || {};
-const app = getApps().length ? getApp() : initializeApp(cfg);
+const app = getApps().length ? getApp() : initializeApp(window.RAPID_FIREBASE || {});
 const auth = getAuth(app);
 const db = getFirestore(app);
+const LIMIT = 10000;
+const $ = id => document.getElementById(id);
 
-const loginView = document.getElementById("loginView");
-const dashView = document.getElementById("dashView");
-const loginForm = document.getElementById("loginForm");
-const loginErr = document.getElementById("loginErr");
-
-loginForm.addEventListener("submit", async e => {
+// ---------- auth ----------
+const loginErr = $("loginErr");
+$("loginForm").addEventListener("submit", async e => {
   e.preventDefault();
-  loginErr.textContent = "";
-  try {
-    await signInWithEmailAndPassword(auth, document.getElementById("email").value.trim(), document.getElementById("pass").value);
-  } catch (err) {
-    loginErr.textContent = "Sign-in failed. Check your email and password.";
-  }
+  loginErr.style.color = ""; loginErr.textContent = "";
+  try { await signInWithEmailAndPassword(auth, $("email").value.trim(), $("pass").value); }
+  catch { loginErr.textContent = "Sign-in failed. Check your email and password."; }
 });
-
-document.getElementById("signOutBtn").addEventListener("click", () => signOut(auth));
-
-document.getElementById("forgotLink").addEventListener("click", async e => {
+$("forgotLink").addEventListener("click", async e => {
   e.preventDefault();
-  const email = document.getElementById("email").value.trim();
+  const email = $("email").value.trim();
   if (!email) { loginErr.style.color = ""; loginErr.textContent = "Enter your email above first, then click this again."; return; }
-  try {
-    await sendPasswordResetEmail(auth, email);
-    loginErr.style.color = "#1a8a4a";
-    loginErr.textContent = "Reset email sent — check your inbox.";
-  } catch (err) {
-    loginErr.style.color = "";
-    loginErr.textContent = "Couldn't send reset email. Check the address and try again.";
+  try { await sendPasswordResetEmail(auth, email); loginErr.style.color = "#1a8a4a"; loginErr.textContent = "Reset email sent. Check your inbox."; }
+  catch { loginErr.style.color = ""; loginErr.textContent = "Couldn't send reset email. Check the address and try again."; }
+});
+$("signOutBtn").addEventListener("click", () => signOut(auth));
+
+// ---------- helpers ----------
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const nf = n => Number(n || 0).toLocaleString();
+const pct = (a, b) => b ? Math.round(a / b * 100) + "%" : "–";
+const fmtDur = s => { s = Math.round(s || 0); if (!s) return "–"; const m = Math.floor(s / 60); return m ? `${m}m ${s % 60}s` : `${s}s`; };
+const count = (arr, key) => { const m = new Map(); for (const x of arr) { const k = typeof key === "function" ? key(x) : x[key]; if (k === undefined || k === null || k === "") continue; m.set(k, (m.get(k) || 0) + 1); } return m; };
+const top = (m, n = 10) => [...m.entries()].sort((a, b) => b[1] - a[1]).slice(0, n);
+const dayKey = t => { const d = new Date(t); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
+const avg = a => a.length ? a.reduce((x, y) => x + y, 0) / a.length : 0;
+
+function bars(el, rows, total, fmt) {
+  if (!rows.length) { el.innerHTML = `<p class="empty">No data yet.</p>`; return; }
+  const max = Math.max(...rows.map(r => r[1]));
+  el.innerHTML = rows.map(([label, n]) =>
+    `<div class="barrow"><div class="lbl" title="${esc(label)}">${esc(label)}</div><div class="bar"><i style="width:${Math.max(2, Math.round(n / max * 100))}%"></i></div><div class="n">${fmt ? fmt(n) : nf(n)}${total ? ` · ${pct(n, total)}` : ""}</div></div>`
+  ).join("");
+}
+
+function trendSvg(points, opts = {}) {
+  if (!points.length) return `<p class="empty">No data yet.</p>`;
+  const W = 900, H = 220, P = { l: 34, r: 10, t: 12, b: 26 };
+  const iw = W - P.l - P.r, ih = H - P.t - P.b;
+  const raw = Math.max(1, ...points.map(p => Math.max(p.a, p.b || 0)));
+  const mag = 10 ** Math.floor(Math.log10(raw / 4 || 1)), stepN = [1, 2, 2.5, 5, 10].map(m => m * mag).find(s => s * 4 >= raw) || 10 * mag;
+  const max = Math.max(4, Math.ceil(stepN) * 4);
+  const bw = iw / points.length;
+  const y = v => P.t + ih - v / max * ih;
+  let g = "";
+  for (let i = 0; i <= 4; i++) { const v = Math.round(max * i / 4), yy = y(v); g += `<line x1="${P.l}" x2="${W - P.r}" y1="${yy}" y2="${yy}" stroke="currentColor" stroke-opacity=".08"/><text x="${P.l - 6}" y="${yy + 4}" text-anchor="end" font-size="11" fill="currentColor" fill-opacity=".5">${v}</text>`; }
+  const step = Math.ceil(points.length / 12);
+  points.forEach((p, i) => {
+    const x = P.l + i * bw;
+    g += `<rect x="${x + bw * .15}" y="${y(p.a)}" width="${bw * .7}" height="${P.t + ih - y(p.a)}" rx="3" fill="var(--accent)" fill-opacity=".85"><title>${esc(p.label)}: ${p.a} views${p.b !== undefined ? `, ${p.b} sessions` : ""}</title></rect>`;
+    if (i % step === 0) g += `<text x="${x + bw / 2}" y="${H - 8}" text-anchor="middle" font-size="11" fill="currentColor" fill-opacity=".55">${esc(p.short || p.label)}</text>`;
+  });
+  if (!opts.noLine && points.some(p => p.b !== undefined)) {
+    const pts = points.map((p, i) => `${P.l + i * bw + bw / 2},${y(p.b || 0)}`).join(" ");
+    g += `<polyline points="${pts}" fill="none" stroke="#6b3fc1" stroke-width="2.5" stroke-linejoin="round"/>`;
+    points.forEach((p, i) => g += `<circle cx="${P.l + i * bw + bw / 2}" cy="${y(p.b || 0)}" r="3" fill="#6b3fc1"/>`);
   }
+  return `<svg viewBox="0 0 ${W} ${H}" style="color:var(--text)">${g}</svg>`;
+}
+
+const SEARCH = /(^|\.)(google|bing|duckduckgo|yahoo|yandex|baidu|ecosia|naver|startpage|qwant)\.|search\.brave\.com/;
+const SOCIAL = /(^|\.)(facebook|fb|instagram|twitter|x|t|linkedin|lnkd|reddit|youtube|youtu|tiktok|pinterest|telegram|t\.me|whatsapp|discord|threads|quora|medium)\.|^t\.me$|^t\.co$|^l\.facebook\.com$|^lm\.facebook\.com$/;
+function sourceOf(pv) {
+  if (pv.utmSource) return "Campaign";
+  const h = pv.refHost || (pv.ref ? (() => { try { return new URL(pv.ref).hostname; } catch { return ""; } })() : "");
+  if (!h) return "Direct";
+  if (SEARCH.test(h)) return "Search";
+  if (SOCIAL.test(h)) return "Social";
+  return "Referral";
+}
+const TZ = {
+  "Asia/Dhaka": "Bangladesh", "Asia/Kolkata": "India", "Asia/Calcutta": "India", "Asia/Karachi": "Pakistan", "Asia/Kathmandu": "Nepal",
+  "Asia/Colombo": "Sri Lanka", "Asia/Dubai": "United Arab Emirates", "Asia/Riyadh": "Saudi Arabia", "Asia/Qatar": "Qatar", "Asia/Kuwait": "Kuwait",
+  "Asia/Bahrain": "Bahrain", "Asia/Muscat": "Oman", "Asia/Singapore": "Singapore", "Asia/Kuala_Lumpur": "Malaysia", "Asia/Jakarta": "Indonesia",
+  "Asia/Manila": "Philippines", "Asia/Bangkok": "Thailand", "Asia/Ho_Chi_Minh": "Vietnam", "Asia/Saigon": "Vietnam", "Asia/Shanghai": "China",
+  "Asia/Hong_Kong": "Hong Kong", "Asia/Taipei": "Taiwan", "Asia/Tokyo": "Japan", "Asia/Seoul": "South Korea", "Asia/Tehran": "Iran",
+  "Asia/Baghdad": "Iraq", "Asia/Yangon": "Myanmar", "Asia/Kabul": "Afghanistan", "Europe/London": "United Kingdom", "Europe/Dublin": "Ireland",
+  "Europe/Berlin": "Germany", "Europe/Paris": "France", "Europe/Madrid": "Spain", "Europe/Rome": "Italy", "Europe/Amsterdam": "Netherlands",
+  "Europe/Brussels": "Belgium", "Europe/Stockholm": "Sweden", "Europe/Oslo": "Norway", "Europe/Zurich": "Switzerland", "Europe/Vienna": "Austria",
+  "Europe/Istanbul": "Turkey", "Europe/Moscow": "Russia", "Europe/Kyiv": "Ukraine", "Europe/Kiev": "Ukraine", "Europe/Warsaw": "Poland",
+  "Europe/Lisbon": "Portugal", "Europe/Athens": "Greece", "Europe/Bucharest": "Romania", "Africa/Lagos": "Nigeria", "Africa/Cairo": "Egypt",
+  "Africa/Nairobi": "Kenya", "Africa/Johannesburg": "South Africa", "Africa/Casablanca": "Morocco", "Africa/Accra": "Ghana",
+  "America/New_York": "United States", "America/Chicago": "United States", "America/Denver": "United States", "America/Los_Angeles": "United States",
+  "America/Phoenix": "United States", "America/Anchorage": "United States", "Pacific/Honolulu": "United States", "America/Toronto": "Canada",
+  "America/Vancouver": "Canada", "America/Edmonton": "Canada", "America/Sao_Paulo": "Brazil", "America/Mexico_City": "Mexico",
+  "America/Argentina/Buenos_Aires": "Argentina", "America/Bogota": "Colombia", "America/Lima": "Peru", "America/Santiago": "Chile",
+  "Australia/Sydney": "Australia", "Australia/Melbourne": "Australia", "Australia/Brisbane": "Australia", "Australia/Perth": "Australia",
+  "Australia/Adelaide": "Australia", "Pacific/Auckland": "New Zealand"
+};
+const country = tz => tz ? (TZ[tz] || tz) : undefined;
+
+// ---------- data ----------
+let range = 7, events = [], sessions = new Map(), selected = null, sortKey = "views", sortDir = -1;
+
+async function fetchEvents() {
+  const col = collection(db, "analytics_events");
+  let q;
+  if (range === 1) { const d = new Date(); d.setHours(0, 0, 0, 0); q = query(col, where("ts", ">=", Timestamp.fromDate(d)), orderBy("ts", "desc"), limit(LIMIT)); }
+  else if (range) q = query(col, where("ts", ">=", Timestamp.fromMillis(Date.now() - range * 864e5)), orderBy("ts", "desc"), limit(LIMIT));
+  else q = query(col, orderBy("ts", "desc"), limit(LIMIT));
+  const snap = await getDocs(q);
+  const out = [];
+  snap.forEach(d => { const e = d.data(); if (!e.ts) return; e.id = d.id; e.t = e.ts.toMillis(); e.sid = e.sid || "x" + d.id; out.push(e); });
+  return out.sort((a, b) => a.t - b.t);
+}
+
+function buildSessions(evs) {
+  const m = new Map();
+  for (const e of evs) {
+    let s = m.get(e.sid);
+    if (!s) { s = { sid: e.sid, events: [], pvs: [], downloads: 0, clicks: 0, start: e.t, end: e.t }; m.set(e.sid, s); }
+    s.events.push(e); s.end = Math.max(s.end, e.t); s.start = Math.min(s.start, e.t);
+    if (e.type === "page_view") s.pvs.push(e);
+    else if (e.type === "download_click") s.downloads++;
+    else if (e.type === "click") s.clicks++;
+  }
+  for (const s of m.values()) {
+    s.entry = s.pvs[0]; s.exit = s.pvs[s.pvs.length - 1];
+    s.bounce = s.pvs.length === 1 && !s.clicks && !s.downloads;
+  }
+  return new Map([...m].filter(([, s]) => s.pvs.length));
+}
+
+// ---------- render ----------
+function render() {
+  const pv = events.filter(e => e.type === "page_view");
+  const eng = events.filter(e => e.type === "engage");
+  const dl = events.filter(e => e.type === "download_click");
+  const ck = events.filter(e => e.type === "click");
+  const ss = [...sessions.values()];
+  const nS = ss.length;
+  const newV = ss.filter(s => s.entry.newVisitor === true).length;
+  const bounces = ss.filter(s => s.bounce).length;
+  const conv = ss.filter(s => s.downloads).length;
+  const durs = eng.map(e => e.dur || 0);
+  const sessDur = ss.map(s => { const sum = s.events.filter(e => e.type === "engage").reduce((a, e) => a + (e.dur || 0), 0); return sum; }).filter(Boolean);
+  const andr = dl.filter(e => e.platform === "android").length, win = dl.filter(e => e.platform === "windows").length;
+
+  $("liveNow").textContent = new Set(events.filter(e => e.t > Date.now() - 5 * 60e3).map(e => e.sid)).size;
+
+  const kpi = (label, val, sub) => `<div class="kpi"><span>${label}</span><b>${val}</b>${sub ? `<small>${sub}</small>` : ""}</div>`;
+  $("kpis").innerHTML =
+    kpi("Page views", nf(pv.length)) +
+    kpi("Sessions", nf(nS)) +
+    kpi("New visitors", nf(newV), `${pct(newV, nS)} of sessions`) +
+    kpi("Pages / session", nS ? (pv.length / nS).toFixed(2) : "–") +
+    kpi("Avg session time", fmtDur(avg(sessDur))) +
+    kpi("Avg time on page", fmtDur(avg(durs))) +
+    kpi("Bounce rate", pct(bounces, nS), "1 page, no clicks") +
+    kpi("Android downloads", nf(andr)) +
+    kpi("Windows downloads", nf(win)) +
+    kpi("Download conversion", pct(conv, nS), "sessions that clicked a download");
+
+  // trend
+  let points = [];
+  if (range === 1) {
+    $("trendTitle").textContent = "Traffic today (by hour)";
+    for (let h = 0; h < 24; h++) {
+      const inH = e => new Date(e.t).getHours() === h;
+      points.push({ label: `${h}:00`, short: String(h), a: pv.filter(inH).length, b: new Set(pv.filter(inH).map(e => e.sid)).size });
+    }
+  } else {
+    $("trendTitle").textContent = "Traffic per day";
+    const first = pv.length ? pv[0].t : Date.now();
+    const start = new Date(range ? Date.now() - (range - 1) * 864e5 : first); start.setHours(0, 0, 0, 0);
+    const byDay = new Map();
+    for (const e of pv) { const k = dayKey(e.t); const o = byDay.get(k) || { a: 0, s: new Set() }; o.a++; o.s.add(e.sid); byDay.set(k, o); }
+    for (let d = new Date(start); d <= new Date(); d.setDate(d.getDate() + 1)) {
+      const k = dayKey(d), o = byDay.get(k);
+      points.push({ label: d.toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" }), short: d.toLocaleDateString(undefined, { month: "short", day: "numeric" }), a: o ? o.a : 0, b: o ? o.s.size : 0 });
+    }
+  }
+  $("trend").innerHTML = trendSvg(points);
+
+  // pages table
+  const pages = new Map();
+  const pg = p => { let o = pages.get(p); if (!o) { o = { path: p, title: "", views: 0, sids: new Set(), entries: 0, exits: 0, bounces: 0, durs: [], scrolls: [], clicks: 0, downloads: 0 }; pages.set(p, o); } return o; };
+  for (const e of pv) { const o = pg(e.path); o.views++; o.sids.add(e.sid); if (e.title) o.title = e.title; }
+  for (const e of eng) { const o = pg(e.path); o.durs.push(e.dur || 0); if (typeof e.scroll === "number") o.scrolls.push(e.scroll); }
+  for (const e of ck) pg(e.path).clicks++;
+  for (const e of dl) pg(e.path).downloads++;
+  for (const s of ss) { pg(s.entry.path).entries++; pg(s.exit.path).exits++; if (s.bounce) pg(s.entry.path).bounces++; }
+  const rows = [...pages.values()].filter(o => o.views).map(o => ({ ...o, sessions: o.sids.size, avgDur: avg(o.durs), avgScroll: o.scrolls.length ? avg(o.scrolls) : -1, bounce: o.entries ? o.bounces / o.entries : -1, exitRate: o.views ? o.exits / o.views : 0 }));
+  rows.sort((a, b) => ((a[sortKey] > b[sortKey]) - (a[sortKey] < b[sortKey])) * sortDir);
+  const cols = [["path", "Page"], ["views", "Views"], ["sessions", "Sessions"], ["entries", "Entries"], ["bounce", "Bounce"], ["exitRate", "Exit rate"], ["avgDur", "Avg time"], ["avgScroll", "Avg scroll"], ["clicks", "Clicks"], ["downloads", "Downloads"]];
+  $("pagesTbl").innerHTML = `<thead><tr>${cols.map(([k, l]) => `<th data-k="${k}" class="${k === sortKey ? "sorted" : ""}">${l}${k === sortKey ? (sortDir < 0 ? " ↓" : " ↑") : ""}</th>`).join("")}</tr></thead><tbody>${rows.length ? rows.map(o => `<tr data-p="${esc(o.path)}" class="${o.path === selected ? "sel" : ""}"><td><span class="pg">${esc(o.path)}<small>${esc(o.title)}</small></span></td><td>${nf(o.views)}</td><td>${nf(o.sessions)}</td><td>${nf(o.entries)}</td><td>${o.bounce < 0 ? "–" : Math.round(o.bounce * 100) + "%"}</td><td>${Math.round(o.exitRate * 100)}%</td><td>${fmtDur(o.avgDur)}</td><td>${o.avgScroll < 0 ? "–" : Math.round(o.avgScroll) + "%"}</td><td>${nf(o.clicks)}</td><td>${nf(o.downloads)}</td></tr>`).join("") : `<tr><td colspan="10" class="empty">No page views in this range yet.</td></tr>`}</tbody>`;
+
+  // sources & refs
+  bars($("sources"), top(count(ss, s => sourceOf(s.entry)), 6), nS);
+  bars($("refs"), top(count(pv, e => e.refHost || (e.ref ? (() => { try { return new URL(e.ref).hostname; } catch { return ""; } })() : "")), 10), pv.length);
+  bars($("entries"), top(count(ss, s => s.entry.path), 10), nS);
+  bars($("exits"), top(count(ss, s => s.exit.path), 10), nS);
+
+  // downloads
+  const dlRows = top(count(dl, e => `${e.platform === "android" ? "Android" : e.platform === "windows" ? "Windows" : "Other"} · from ${e.path}`), 10);
+  bars($("downloads"), dlRows, dl.length);
+  bars($("clicks"), top(count(ck, e => `${e.label || "(no text)"} → ${e.target || "button"}`), 12), ck.length);
+
+  // tech & geo (per session, from entry page view)
+  const ent = ss.map(s => s.entry);
+  bars($("geo"), top(count(ent, e => country(e.tz)), 12), nS);
+  bars($("devices"), top(count(ent, "device"), 5), nS);
+  bars($("browsers"), top(count(ent, "browser"), 8), nS);
+  bars($("oses"), top(count(ent, "os"), 8), nS);
+  bars($("screens"), top(count(ent, "screen"), 8), nS);
+  bars($("langs"), top(count(ent, "lang"), 8), nS);
+
+  // hours
+  const hp = []; for (let h = 0; h < 24; h++) hp.push({ label: `${h}:00`, short: String(h), a: pv.filter(e => new Date(e.t).getHours() === h).length });
+  $("hours").innerHTML = trendSvg(hp, { noLine: true });
+
+  // campaigns
+  bars($("campaigns"), top(count(pv.filter(e => e.utmSource), e => [e.utmSource, e.utmMedium, e.utmCampaign].filter(Boolean).join(" / ")), 10), pv.length);
+
+  // feed
+  const recent = events.slice(-60).reverse();
+  $("feed").innerHTML = recent.length ? recent.map(e => {
+    let what = esc(e.path);
+    if (e.type === "page_view") what += e.refHost ? ` <span style="color:var(--muted)">from ${esc(e.refHost)}</span>` : "";
+    if (e.type === "engage") what += ` <span style="color:var(--muted)">${fmtDur(e.dur)}, scrolled ${e.scroll ?? 0}%</span>`;
+    if (e.type === "click" || e.type === "download_click") what += ` <span style="color:var(--muted)">${esc(e.label || "")} → ${esc(e.target || e.platform || "")}</span>`;
+    const meta = [country(e.tz), e.device, e.browser].filter(Boolean).join(" · ");
+    return `<div><time>${new Date(e.t).toLocaleString(undefined, { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" })}</time><span class="tag ${esc(e.type)}">${esc(e.type.replace("_", " "))}</span><span class="what">${what}${meta ? ` <span style="color:var(--muted)">· ${esc(meta)}</span>` : ""}</span></div>`;
+  }).join("") : `<p class="empty">No events yet.</p>`;
+
+  $("note").textContent = `${nf(events.length)} events loaded${events.length >= LIMIT ? ` (capped at the newest ${nf(LIMIT)}, pick a shorter range for exact totals)` : ""}. Location is estimated from time zone; no IP addresses are collected.`;
+
+  if (selected) renderDetail(selected); else $("detail").hidden = true;
+}
+
+function renderDetail(path) {
+  const el = $("detail");
+  const pv = events.filter(e => e.type === "page_view" && e.path === path);
+  if (!pv.length) { el.hidden = true; return; }
+  const eng = events.filter(e => e.type === "engage" && e.path === path);
+  const ck = events.filter(e => (e.type === "click" || e.type === "download_click") && e.path === path);
+  const sids = new Set(pv.map(e => e.sid));
+  const ss = [...sessions.values()].filter(s => sids.has(s.sid));
+  const entries = ss.filter(s => s.entry.path === path);
+  const exits = ss.filter(s => s.exit.path === path);
+  const bounces = entries.filter(s => s.bounce).length;
+  const prev = new Map(), next = new Map();
+  for (const s of ss) s.pvs.forEach((e, i) => {
+    if (e.path !== path) return;
+    const p = s.pvs[i - 1], n = s.pvs[i + 1];
+    const pk = p ? p.path : "(entered here) " + sourceOf(e);
+    prev.set(pk, (prev.get(pk) || 0) + 1);
+    const nk = n ? n.path : "(left the site)";
+    next.set(nk, (next.get(nk) || 0) + 1);
+  });
+  const durB = [["Under 10s", 0, 10], ["10-30s", 10, 30], ["30-60s", 30, 60], ["1-3 min", 60, 180], ["3-10 min", 180, 600], ["10+ min", 600, 1e9]];
+  const scrB = [["0-24%", 0, 25], ["25-49%", 25, 50], ["50-74%", 50, 75], ["75-99%", 75, 100], ["100% (reached end)", 100, 101]];
+  const days = new Map(); for (const e of pv) { const k = dayKey(e.t); days.set(k, (days.get(k) || 0) + 1); }
+  const pts = [...days.entries()].sort().map(([k, a]) => { const d = new Date(k + "T00:00"); return { label: d.toLocaleDateString(undefined, { month: "short", day: "numeric" }), a }; });
+  const title = pv.findLast(e => e.title)?.title || "";
+
+  el.hidden = false;
+  el.innerHTML = `
+    <div class="dhead"><div><h3>${esc(path)}</h3><p class="hint" style="margin:4px 0 0">${esc(title)}</p></div><span class="sp"></span>${/^\/(?!\/)/.test(path) ? `<a class="sbtn" href="${esc(path)}" target="_blank" rel="noopener">Open page</a>` : ""}<button class="sbtn" id="closeDetail">Close</button></div>
+    <div class="mini">
+      <div><span>Views</span><b>${nf(pv.length)}</b></div>
+      <div><span>Sessions</span><b>${nf(sids.size)}</b></div>
+      <div><span>Entrances</span><b>${nf(entries.length)}</b></div>
+      <div><span>Bounce rate</span><b>${pct(bounces, entries.length)}</b></div>
+      <div><span>Avg time</span><b>${fmtDur(avg(eng.map(e => e.dur || 0)))}</b></div>
+      <div><span>Avg scroll</span><b>${eng.length ? Math.round(avg(eng.map(e => e.scroll || 0))) + "%" : "–"}</b></div>
+    </div>
+    <div class="chart" style="margin-bottom:16px">${trendSvg(pts, { noLine: true })}</div>
+    <div class="grid3">
+      <div><h3 style="font-size:14px">Came from</h3><div id="dPrev"></div></div>
+      <div><h3 style="font-size:14px">Went next</h3><div id="dNext"></div></div>
+      <div><h3 style="font-size:14px">Clicked on this page</h3><div id="dClicks"></div></div>
+      <div><h3 style="font-size:14px">Time on page</h3><div id="dDur"></div></div>
+      <div><h3 style="font-size:14px">Scroll depth</h3><div id="dScroll"></div></div>
+      <div><h3 style="font-size:14px">Referring sites</h3><div id="dRefs"></div></div>
+      <div><h3 style="font-size:14px">Location</h3><div id="dGeo"></div></div>
+      <div><h3 style="font-size:14px">Device &amp; OS</h3><div id="dDev"></div></div>
+      <div><h3 style="font-size:14px">Browser</h3><div id="dBrowser"></div></div>
+    </div>`;
+  bars($("dPrev"), top(prev, 8), pv.length);
+  bars($("dNext"), top(next, 8), pv.length);
+  bars($("dClicks"), top(count(ck, e => `${e.label || "(no text)"} → ${e.target || e.platform || "button"}`), 8), ck.length);
+  bars($("dDur"), durB.map(([l, a, b]) => [l, eng.filter(e => (e.dur || 0) >= a && (e.dur || 0) < b).length]).filter(r => r[1]), eng.length);
+  bars($("dScroll"), scrB.map(([l, a, b]) => [l, eng.filter(e => (e.scroll || 0) >= a && (e.scroll || 0) < b).length]).filter(r => r[1]), eng.length);
+  bars($("dRefs"), top(count(pv, "refHost"), 8), pv.length);
+  bars($("dGeo"), top(count(pv, e => country(e.tz)), 8), pv.length);
+  bars($("dDev"), top(count(pv, e => [e.device, e.os].filter(Boolean).join(" · ")), 8), pv.length);
+  bars($("dBrowser"), top(count(pv, "browser"), 8), pv.length);
+  $("closeDetail").onclick = () => { selected = null; render(); };
+}
+
+$("pagesTbl").addEventListener("click", e => {
+  const th = e.target.closest("th");
+  if (th) { const k = th.dataset.k; if (sortKey === k) sortDir = -sortDir; else { sortKey = k; sortDir = k === "path" ? 1 : -1; } render(); return; }
+  const tr = e.target.closest("tr[data-p]");
+  if (tr) { selected = tr.dataset.p; render(); $("detail").scrollIntoView({ behavior: "smooth", block: "start" }); }
 });
 
-function bar(container, rows, max) {
-  container.innerHTML = rows.length ? rows.map(([label, n]) =>
-    `<div class="barrow"><div class="lbl" title="${esc(label)}">${esc(label)}</div><div class="bar"><i style="width:${max ? Math.round(n / max * 100) : 0}%"></i></div><div class="n">${n}</div></div>`
-  ).join("") : `<p class="ad-note" style="margin:0">No data yet.</p>`;
-}
-function esc(s) { return String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
-function top(map, n) { return [...map.entries()].sort((a, b) => b[1] - a[1]).slice(0, n); }
+$("rangeSeg").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  range = Number(b.dataset.r);
+  $("rangeSeg").querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b));
+  load();
+});
+$("refreshBtn").addEventListener("click", load);
+$("csvBtn").addEventListener("click", () => {
+  const cols = ["time", "type", "path", "title", "sid", "refHost", "ref", "utmSource", "utmMedium", "utmCampaign", "device", "browser", "os", "lang", "tz", "screen", "newVisitor", "dur", "scroll", "platform", "label", "target"];
+  const cell = v => `"${String(v ?? "").replace(/"/g, '""')}"`;
+  const csv = [cols.join(","), ...events.map(e => cols.map(c => cell(c === "time" ? new Date(e.t).toISOString() : e[c])).join(","))].join("\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
+  a.download = `rapidplus-analytics-${dayKey(Date.now())}.csv`;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+});
 
-async function loadDashboard() {
-  const snap = await getDocs(query(collection(db, "analytics_events"), orderBy("ts", "desc"), limit(5000)));
-  let views = 0, android = 0, windows = 0;
-  const pages = new Map(), days = new Map(), devices = new Map(), refs = new Map();
-  snap.forEach(d => {
-    const e = d.data();
-    if (e.type === "page_view") {
-      views++;
-      pages.set(e.path || "/", (pages.get(e.path || "/") || 0) + 1);
-      if (e.ts) {
-        const day = e.ts.toDate().toISOString().slice(0, 10);
-        days.set(day, (days.get(day) || 0) + 1);
-      }
-      devices.set(e.device || "unknown", (devices.get(e.device || "unknown") || 0) + 1);
-      if (e.ref) { try { refs.set(new URL(e.ref).hostname, (refs.get(new URL(e.ref).hostname) || 0) + 1); } catch { } }
-    } else if (e.type === "download_click") {
-      if (e.platform === "android") android++;
-      else if (e.platform === "windows") windows++;
-    }
-  });
-
-  document.getElementById("statViews").textContent = views;
-  document.getElementById("statAndroid").textContent = android;
-  document.getElementById("statWindows").textContent = windows;
-  document.getElementById("statUnique").textContent = pages.size;
-
-  const topP = top(pages, 10);
-  bar(document.getElementById("topPages"), topP, topP[0]?.[1] || 1);
-
-  const last14 = [...days.entries()].sort((a, b) => a[0] < b[0] ? -1 : 1).slice(-14);
-  bar(document.getElementById("byDay"), last14, Math.max(1, ...last14.map(r => r[1])));
-
-  const devRows = top(devices, 5);
-  bar(document.getElementById("byDevice"), devRows, devRows[0]?.[1] || 1);
-
-  const refRows = top(refs, 8);
-  bar(document.getElementById("byRef"), refRows, refRows[0]?.[1] || 1);
+async function load() {
+  $("note").textContent = "Loading…";
+  try {
+    events = await fetchEvents();
+    sessions = buildSessions(events);
+    render();
+  } catch (err) {
+    $("note").textContent = "Couldn't load analytics: " + (err.code || err.message);
+  }
 }
 
+// Only the "active now" count refreshes on its own, with a small 5-minute query, so leaving the dashboard
+// open doesn't re-read thousands of events a minute against the free Firestore quota.
+async function refreshLive() {
+  try {
+    const snap = await getDocs(query(collection(db, "analytics_events"), where("ts", ">=", Timestamp.fromMillis(Date.now() - 5 * 60e3)), orderBy("ts", "desc"), limit(500)));
+    const s = new Set(); snap.forEach(d => { const e = d.data(); s.add(e.sid || d.id); });
+    $("liveNow").textContent = s.size;
+  } catch { }
+}
+
+let timer;
 onAuthStateChanged(auth, user => {
-  loginView.hidden = !!user;
-  dashView.hidden = !user;
-  if (user) loadDashboard().catch(() => {});
+  $("loginView").hidden = !!user;
+  $("dashView").hidden = !user;
+  clearInterval(timer);
+  if (user) { load(); timer = setInterval(() => { if (document.visibilityState === "visible") refreshLive(); }, 30000); }
 });
 </script>
 </body></html>
