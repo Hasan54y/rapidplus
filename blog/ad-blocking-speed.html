@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Do Ad Blockers Make Pages Load Faster? What the Measurements Show | Rapid+ Blog</title>
+<meta name="description" content="Ads and trackers are a large share of what many pages download. What studies measured for load time and data savings, how blocking works under the hood, and the tradeoffs worth knowing.">
+<meta name="theme-color" content="#ff6b00">
+<link rel="canonical" href="https://rapidplusbrowser.online/blog/ad-blocking-speed">
+<link rel="icon" type="image/png" href="/assets/logo.png">
+<link rel="apple-touch-icon" href="/assets/logo.png">
+<meta property="og:type" content="article"><meta property="og:site_name" content="Rapid+ Browser">
+<meta property="og:title" content="Do Ad Blockers Make Pages Load Faster? What the Measurements Show | Rapid+ Blog"><meta property="og:description" content="Ads and trackers are a large share of what many pages download. What studies measured for load time and data savings, how blocking works under the hood, and the tradeoffs worth knowing.">
+<meta property="og:url" content="https://rapidplusbrowser.online/blog/ad-blocking-speed"><meta property="og:image" content="https://rapidplusbrowser.online/assets/og-image.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Rapid+ Browser"><meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-10-30"><meta property="article:section" content="Performance">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Do Ad Blockers Make Pages Load Faster? What the Measurements Show | Rapid+ Blog"><meta name="twitter:description" content="Ads and trackers are a large share of what many pages download. What studies measured for load time and data savings, how blocking works under the hood, and the tradeoffs worth knowing."><meta name="twitter:image" content="https://rapidplusbrowser.online/assets/og-image.png">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Do Ad Blockers Make Pages Load Faster? What the Measurements Show","description":"Ads and trackers are a large share of what many pages download. What studies measured for load time and data savings, how blocking works under the hood, and the tradeoffs worth knowing.","image":"https://rapidplusbrowser.online/assets/og-image.png","datePublished":"2026-10-30","dateModified":"2026-10-30","author":{"@type":"Organization","name":"HM Dev Studio","url":"https://rapidplusbrowser.online/","logo":{"@type":"ImageObject","url":"https://rapidplusbrowser.online/assets/logo.png"}},"publisher":{"@type":"Organization","name":"HM Dev Studio","url":"https://rapidplusbrowser.online/","logo":{"@type":"ImageObject","url":"https://rapidplusbrowser.online/assets/logo.png"}},"mainEntityOfPage":"https://rapidplusbrowser.online/blog/ad-blocking-speed","wordCount":1755,"articleSection":"Performance"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://rapidplusbrowser.online/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://rapidplusbrowser.online/blog/"},{"@type":"ListItem","position":3,"name":"Do Ad Blockers Make Pages Load Faster? What the Measurements Show","item":"https://rapidplusbrowser.online/blog/ad-blocking-speed"}]}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/blog.css">
+</head>
+<body>
+<header class="nav" id="nav"><div class="wrap">
+  <a class="brand" href="/"><img src="/assets/logo.png" alt=""><span>Rapid<b>+</b></span></a>
+  <nav class="links" id="links" aria-label="Main"><a href="/"><svg class="i " viewBox="0 -960 960 960" aria-hidden="true"><path d="M160-180v-390q0-14.25 6.38-27 6.37-12.75 17.62-21l260-195q15.68-12 35.84-12Q500-825 516-813l260 195q11.25 8.25 17.63 21 6.37 12.75 6.37 27v390q0 24.75-17.62 42.37Q764.75-120 740-120H590q-12.75 0-21.37-8.63Q560-137.25 560-150v-220q0-12.75-8.62-21.38Q542.75-400 530-400H430q-12.75 0-21.37 8.62Q400-382.75 400-370v220q0 12.75-8.62 21.37Q382.75-120 370-120H220q-24.75 0-42.37-17.63Q160-155.25 160-180Z"/></svg><span>Home</span></a><a href="/features"><svg class="i " viewBox="0 -960 960 960" aria-hidden="true"><path d="M360-360H217q-18 0-26.5-16t2.5-31l338-488q8-11 20-15t24 1q12 5 19 16t5 24l-39 309h176q19 0 27 17t-4 32L388-66q-8 10-20.5 13T344-55q-11-5-17.5-16T322-95l38-265Z"/></svg><span>Features</span></a><a href="/pricing"><svg class="i " viewBox="0 -960 960 960" aria-hidden="true"><path d="M100-160q-24.75 0-42.37-17.63Q40-195.25 40-220v-430q0-12.75 8.68-21.38 8.67-8.62 21.5-8.62 12.82 0 21.32 8.62 8.5 8.63 8.5 21.38v430h670q12.75 0 21.38 8.68 8.62 8.67 8.62 21.5 0 12.82-8.62 21.32-8.63 8.5-21.38 8.5H100Zm120-120q-24.75 0-42.37-17.63Q160-315.25 160-340v-400q0-24.75 17.63-42.38Q195.25-800 220-800h640q24.75 0 42.38 17.62Q920-764.75 920-740v400q0 24.75-17.62 42.37Q884.75-280 860-280H220Zm100-60q0-42-29-71t-71-29v100h100Zm440 0h100v-100q-42 0-71 29t-29 71Zm-220-80q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35ZM220-640q42 0 71-29t29-71H220v100Zm640 0v-100H760q0 42 29 71t71 29Z"/></svg><span>Pricing</span></a><a href="/manual"><svg class="i " viewBox="0 -960 960 960" aria-hidden="true"><path d="M290-80q-54 0-92-38t-38-92v-540q0-54 38-92t92-38h450q25 0 42.5 17.5T800-820v515q0 9-5 16.5T781-277q-19 8-30 26t-11 41q0 23 11 40.5t30 25.5q9 4 14 13t5 21q0 12-8.5 21T770-80H290Zm81.5-268.5Q380-357 380-370v-420q0-13-8.5-21.5T350-820q-13 0-21.5 8.5T320-790v420q0 13 8.5 21.5T350-340q13 0 21.5-8.5ZM290-140h409q-9-15-14-33t-5-37q0-20 5-37.5t15-32.5H290q-29 0-49.5 20.5T220-210q0 29 20.5 49.5T290-140Z"/></svg><span>User manual</span></a><a href="/faq"><svg class="i " viewBox="0 -960 960 960" aria-hidden="true"><path d="M511-258.03q11-11.03 11-27T510.97-312q-11.03-11-27-11T457-311.97q-11 11.03-11 27T457.03-258q11.03 11 27 11T511-258.03ZM480.27-80q-82.74 0-155.5-31.5Q252-143 197.5-197.5t-86-127.34Q80-397.68 80-480.5t31.5-155.66Q143-709 197.5-763t127.34-85.5Q397.68-880 480.5-880t155.66 31.5Q709-817 763-763t85.5 127Q880-563 880-480.27q0 82.74-31.5 155.5Q817-252 763-197.68q-54 54.31-127 86Q563-80 480.27-80Zm2.5-580Q513-660 536-641.5q23 18.5 23 47.2 0 26.3-15.65 45.73Q527.7-529.14 508-512q-23 19-40 42.38-17 23.39-17 52.62 0 11 8.4 17.5T479-393q12 0 19.88-8 7.87-8 10.12-20 3-21 16-38t30.23-30.78Q580-510 596-537q16-27 16-58.61 0-50.39-37.5-83.89T485.55-713Q450-713 417-698t-54 44q-7 10-6.5 21.5t9.47 18.5q11.41 8 23.65 5 12.23-3 20.38-14 12.75-17.9 31.88-27.45Q461-660 482.77-660Z"/></svg><span>FAQ</span></a><a href="/blog/" class="active" aria-current="page"><svg class="i " viewBox="0 -960 960 960" aria-hidden="true"><path d="M280-280h280v-80H280v80Zm0-160h400v-80H280v80Zm0-160h400v-80H280v80Zm-80 480q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Z"/></svg><span>Blog</span></a><a href="/support"><svg class="i " viewBox="0 -960 960 960" aria-hidden="true"><path d="M470-120q-12.75 0-21.37-8.68-8.63-8.67-8.63-21.5 0-12.82 8.63-21.32 8.62-8.5 21.37-8.5h310v-304q0-123.69-87.32-209.84Q605.36-780 480-780q-125.36 0-212.68 86.16Q180-607.69 180-484v224q0 8.5-5.75 14.25T160-240q-33 0-56.5-23.5T80-320v-80q0-21 10.5-39.5T120-469l3-53q8-68 39.5-126t79-101q47.5-43 109-67T480-840q68 0 129 24t109 66.5Q766-707 797-649t40 126l3 52q19 9 29.5 27t10.5 38v92q0 20-10.5 38T840-249v69q0 24.75-17.62 42.37Q804.75-120 780-120H470ZM338.5-418.68q-8.5-8.67-8.5-21.5 0-12.82 8.68-21.32 8.67-8.5 21.5-8.5 12.82 0 21.32 8.68 8.5 8.67 8.5 21.5 0 12.82-8.68 21.32-8.67 8.5-21.5 8.5-12.82 0-21.32-8.68Zm240 0q-8.5-8.67-8.5-21.5 0-12.82 8.68-21.32 8.67-8.5 21.5-8.5 12.82 0 21.32 8.68 8.5 8.67 8.5 21.5 0 12.82-8.68 21.32-8.67 8.5-21.5 8.5-12.82 0-21.32-8.68ZM241-462q-7-106 64-182t177-76q87 0 151 57.5T711-519q-89-1-162.5-50T434.72-698Q419-618 367.5-555.5T241-462Z"/></svg><span>Support</span></a><a class="cta" href="/download"><svg class="i " viewBox="0 -960 960 960" aria-hidden="true"><path d="M469-327q-5-2-10-7L308-485q-9-9.27-8.5-21.64.5-12.36 9.11-21.36 9.39-9 21.89-9t21.5 9l98 99v-341q0-12.75 8.68-21.38 8.67-8.62 21.5-8.62 12.82 0 21.32 8.62 8.5 8.63 8.5 21.38v341l99-99q8.8-9 20.9-8.5 12.1.5 21.49 9.5 8.61 9 8.61 21.5t-9 21.5L501-334q-5 5-10.13 7-5.14 2-11 2-5.87 0-10.87-2ZM220-160q-24 0-42-18t-18-42v-113q0-12.75 8.68-21.38 8.67-8.62 21.5-8.62 12.82 0 21.32 8.62 8.5 8.63 8.5 21.38v113h520v-113q0-12.75 8.68-21.38 8.67-8.62 21.5-8.62 12.82 0 21.32 8.62 8.5 8.63 8.5 21.38v113q0 24-18 42t-42 18H220Z"/></svg><span>Download</span></a></nav>
+  <button class="burger" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="links"><svg class="i open" viewBox="0 -960 960 960" aria-hidden="true"><path d="M150-240q-12.75 0-21.37-8.68-8.63-8.67-8.63-21.5 0-12.82 8.63-21.32 8.62-8.5 21.37-8.5h660q12.75 0 21.38 8.68 8.62 8.67 8.62 21.5 0 12.82-8.62 21.32-8.63 8.5-21.38 8.5H150Zm0-210q-12.75 0-21.37-8.68-8.63-8.67-8.63-21.5 0-12.82 8.63-21.32 8.62-8.5 21.37-8.5h660q12.75 0 21.38 8.68 8.62 8.67 8.62 21.5 0 12.82-8.62 21.32-8.63 8.5-21.38 8.5H150Zm0-210q-12.75 0-21.37-8.68-8.63-8.67-8.63-21.5 0-12.82 8.63-21.32 8.62-8.5 21.37-8.5h660q12.75 0 21.38 8.68 8.62 8.67 8.62 21.5 0 12.82-8.62 21.32-8.63 8.5-21.38 8.5H150Z"/></svg><svg class="i close" viewBox="0 -960 960 960" aria-hidden="true"><path d="M480-438 270-228q-9 9-21 9t-21-9q-9-9-9-21t9-21l210-210-210-210q-9-9-9-21t9-21q9-9 21-9t21 9l210 210 210-210q9-9 21-9t21 9q9 9 9 21t-9 21L522-480l210 210q9 9 9 21t-9 21q-9 9-21 9t-21-9L480-438Z"/></svg></button>
+</div></header>
+<main>
+<article>
+<header class="post-head">
+  <div class="crumbs"><a href="/">Home</a> / <a href="/blog/">Blog</a> / Performance</div>
+  <span class="chip">Performance</span>
+  <h1>Do Ad Blockers Make Pages Load Faster? What the Measurements Show</h1>
+  <p class="dek">Ads and trackers are a big share of what many pages download. What researchers measured, how blocking works, and what it costs.</p>
+  <div class="byline"><img src="/assets/logo.png" alt=""><div><b>Rapid+ team</b><span>HM Dev Studio · 30 Oct 2026 · 8 min read</span></div></div>
+</header>
+<div class="post-art"><div class="art" style="--a1:#be185d;--a2:#f472a0" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 18a8.5 8.5 0 1 1 15 0"/><path d="M12 13l4.5-4.5"/><circle cx="12" cy="13" r="1.3"/></svg></div></div>
+<div class="post-layout">
+  <nav class="post-toc" aria-label="On this page"><h4>On this page</h4><a href="#what-pages-load">What a modern page actually loads</a><a href="#one-ad">What happens when one ad loads</a><a href="#measurements">What the measurements found</a><a href="#where-time-goes">Where the time goes</a><a href="#how-blockers-work">How blocking works</a><a href="#tradeoffs">The tradeoffs</a><a href="#phones">Why phones feel it most</a><a href="#choosing">Choosing a blocker</a><a href="#measure-yourself">How to measure it yourself</a><a href="#rapid-plus">A note on Rapid+</a><a href="#sources">Sources</a></nav>
+  <div class="prose">
+<p class="lede">The first thing many people notice after turning on an ad and tracker blocker is not the missing ads. It is that pages finish loading sooner and stop jumping around while they do. That impression is backed by measurements, though the size of the effect depends a great deal on the site you are looking at.</p>
+<p>This article looks at what a typical page actually loads, what researchers measured when they blocked ads and trackers, how blocking works, and what you give up in return.</p>
+
+<h2 id="what-pages-load">What a modern page actually loads</h2>
+<p>When you open a news article, the article text is usually the smallest part of the job. The page also pulls in scripts, images and frames from other companies: ad networks, analytics services, consent banners, video players, chat widgets and social buttons. These are called third parties, because they come from domains other than the site you visited.</p>
+<p>The HTTP Archive measures this every year by crawling millions of pages. In its 2024 Web Almanac:</p>
+<ul>
+<li>92% of pages loaded at least one third party.</li>
+<li>The median page among the top thousand websites used 66 different third parties. Across the top million it was 27.</li>
+<li>Scripts made up the largest share of third-party requests at 30.5%, followed by images at 26.0%.</li>
+<li>Nearly a third of third parties served advertising, analytics or consent management.</li>
+</ul>
+<p>Each of those third parties costs something. The browser has to look up a new domain name, open a new connection, download the file, and for scripts, parse and run the code. A script can then load more scripts of its own, so one ad slot can turn into a chain of requests to companies you have never heard of.</p>
+
+<h2 id="one-ad">What happens when one ad loads</h2>
+<p>It helps to follow a single ad slot from start to finish, because the chain is longer than most people expect.</p>
+<ol>
+<li>The page loads the publisher's ad script, usually from an ad platform's domain.</li>
+<li>That script often runs an auction. It asks several ad exchanges at once what they will pay to show something to this visitor, sending along whatever it knows about the page and the browser.</li>
+<li>Each exchange may consult its own partners before answering, which means more requests to more domains.</li>
+<li>The winning bid returns an ad, which might be an image, a block of HTML or a video player.</li>
+<li>The ad itself frequently loads more scripts: one to confirm the ad was actually visible, one to count the impression for the advertiser, one or two tracking pixels for audience building.</li>
+</ol>
+<p>None of this is visible to you. You see one rectangle. Behind it, the browser may have contacted a dozen companies and run several scripts on your phone's processor. Multiply that by the number of ad slots on a long article and the numbers in the Web Almanac start to make sense.</p>
+
+<h2 id="measurements">What the measurements found</h2>
+<h3 id="firefox-study">The Firefox Tracking Protection study</h3>
+<p>The most cited controlled measurement comes from a 2015 paper by Georgios Kontaxis and Monica Chew, written while Firefox was preparing its Tracking Protection feature. They loaded the 200 most popular news sites, as ranked by Alexa at the time, with and without Tracking Protection, which blocks requests to domains on a list of known trackers.</p>
+<p>With protection on, they measured:</p>
+<ul>
+<li>a median <strong>44% reduction in page load time</strong>,</li>
+<li>a median <strong>39% reduction in data used</strong>, and</li>
+<li>a <strong>67.5% reduction in the number of HTTP cookies</strong> set during the crawl.</li>
+</ul>
+<p>Those are medians across sites. Some pages barely changed. Others got dramatically faster.</p>
+<h3 id="nyt-study">The New York Times mobile test</h3>
+<p>Later that year The New York Times loaded the mobile home pages of 50 news sites with and without an ad blocker and compared the data used. Across the pages tested, more than half of all data came from ads and other content that ad blockers filter out. The results varied widely between sites, which is the same pattern the Firefox study found.</p>
+<h3 id="caveats">Reading these numbers carefully</h3>
+<p>Both studies are from 2015 and focus on news sites, which have always been among the heaviest users of advertising. The web has changed since then. Pages are larger overall, some publishers have trimmed their ad stacks, and browsers have added protections of their own. It would be wrong to promise you a 44% speedup on every site. A page built without heavy advertising, such as a documentation site or a small blog, has little to remove and will load about the same either way. What the research does show, consistently, is that on ad supported pages, third-party advertising and tracking code is a large share of the work, and removing it saves real time and data.</p>
+
+<h2 id="where-time-goes">Where the time goes</h2>
+<p>Blocking helps in several different ways at once.</p>
+<ul>
+<li><strong>Fewer network round trips.</strong> Every blocked domain is a lookup and a connection that never happens.</li>
+<li><strong>Less JavaScript on the main thread.</strong> Scripts have to be parsed and run on the same thread that responds to your taps and scrolls. On a budget phone this is often a bigger cost than the download itself.</li>
+<li><strong>Fewer layout jumps.</strong> Ads that load late push the text you are reading down the page. Without them, the layout settles sooner.</li>
+<li><strong>Less data on metered plans.</strong> On a prepaid mobile plan, every megabyte of video ad you did not ask for comes out of your allowance.</li>
+</ul>
+
+<h2 id="how-blockers-work">How blocking works</h2>
+<h3 id="filter-lists">Filter lists</h3>
+<p>Most blockers rely on filter lists: large, community maintained collections of rules. Some rules match request addresses, so the browser never sends the request. Others are cosmetic rules that hide the empty boxes and leftover page elements an ad would have filled.</p>
+<h3 id="built-in">Built into the browser</h3>
+<p>Several browsers now block trackers without any extension. Firefox's Enhanced Tracking Protection blocks social media trackers, cross-site tracking cookies, fingerprinters and cryptominers by default. Built-in blocking runs inside the browser itself, so it does not depend on what the extension system allows.</p>
+<h3 id="dns-blocking">At the network level</h3>
+<p>Some people block at the DNS level, with a home server or a filtering DNS service that refuses to resolve known ad domains. This covers every device on the network, including smart TVs and apps. The tradeoff is precision: it can only block whole domains, it cannot hide the empty space an ad leaves behind, and it cannot touch ads served from the same domain as the content.</p>
+<h3 id="manifest-v3">The Chrome extension change</h3>
+<p>Extension based blocking in Chrome changed significantly with Manifest V3. The older extension platform let blockers inspect each request with the <code>webRequest</code> API and decide whether to cancel it. Manifest V3 moves that decision into the browser through a declarative rules system. Google's published timeline shows Manifest V2 extensions disabled for all Chrome users from Chrome 138 in July 2025, after a gradual rollout that began in late 2024.</p>
+<p>The most popular blocker, uBlock Origin, depended on the older API. Its author released a separate Manifest V3 version, uBlock Origin Lite, and its FAQ explains some of the limits: the declarative system cannot enforce rules according to the address shown in the address bar, so certain capabilities of the original cannot be carried over.</p>
+
+<h2 id="tradeoffs">The tradeoffs</h2>
+<h3 id="breakage">Some sites break</h3>
+<p>Blocking a script a page depends on can break a login button, a video player or a checkout. Mozilla notes that its Strict tracking protection mode may cause breakage on some sites. Every good blocker lets you switch it off for a single site, and that is usually the fix.</p>
+<h3 id="publishers">Publishers lose income</h3>
+<p>Much of the free web is paid for by advertising. If you rely on a site, consider allowing it in your blocker or supporting it directly. Blocking trackers while allowing ordinary ads is a reasonable middle ground on sites you want to support.</p>
+<h3 id="lists">Blockers are only as good as their lists</h3>
+<p>New ad and tracking domains appear all the time. A blocker with stale lists catches less, and a first-party tracker served from the site's own domain may slip through any list based approach.</p>
+
+<h2 id="phones">Why phones feel it most</h2>
+<p>On a fast laptop with a wired connection, a page full of trackers might load in a second or two either way, and the difference is easy to miss. On a mid-range phone on a weak mobile signal, the same page has a slower processor running the scripts and a slower, less reliable network fetching them. Every extra connection costs more time, and every script takes longer to run while the page stays unresponsive. The same blocklist that saves a fraction of a second on a desktop can save several seconds on a phone, along with a noticeable share of a small data allowance.</p>
+
+<h2 id="choosing">Choosing a blocker</h2>
+<p>A few questions separate a good choice from a poor one:</p>
+<ul>
+<li><strong>Who maintains the lists, and how often are they updated?</strong> A blocker is only as current as its rules.</li>
+<li><strong>Can you turn it off for one site in a couple of taps?</strong> You will need this sooner or later.</li>
+<li><strong>Does it block trackers as well as ads?</strong> For speed and privacy, the tracking scripts matter as much as the ads themselves.</li>
+<li><strong>Does it depend on an extension platform that may change?</strong> The Chrome change above is a reminder that extension capabilities are decided by the browser maker.</li>
+<li><strong>What does the blocker itself collect?</strong> Some extensions have been sold or changed hands over the years. Prefer ones with a clear owner and a clear privacy policy, or blocking built into a browser you already trust.</li>
+</ul>
+
+<h2 id="measure-yourself">How to measure it yourself</h2>
+<p>You do not have to take anyone's word for it. In a desktop browser:</p>
+<ol>
+<li>Open the developer tools and switch to the Network panel.</li>
+<li>Tick the option to disable the cache, so every load starts from scratch.</li>
+<li>Load a page with your blocker switched off for that site and note the number of requests, the amount transferred and the finish time shown at the bottom of the panel.</li>
+<li>Turn the blocker back on, reload, and compare.</li>
+<li>Repeat a few times, since network conditions vary from one load to the next.</li>
+</ol>
+<p>Try a news site, a recipe site and a site with no ads at all. The differences between those three tell you more than any average.</p>
+
+<h2 id="rapid-plus">A note on Rapid+</h2>
+<p>Rapid+ Browser has an ad and tracker blocker built into the browser on both Android and Windows, so it does not depend on extension APIs. It blocks requests to known ad and tracking domains before they are sent, and Rapid+ itself collects no analytics from the app. You can read more on the <a href="/features">features page</a>.</p>
+<h2 id="sources">Sources</h2>
+<ol class="sources">
+<li><a href="https://almanac.httparchive.org/en/2024/third-parties" target="_blank" rel="noopener">HTTP Archive Web Almanac 2024: Third Parties</a></li>
+<li><a href="https://www.cs.columbia.edu/nsl/papers/2015/trackingprotectionfirefox.w2sp15.pdf" target="_blank" rel="noopener">Kontaxis and Chew, Tracking Protection in Firefox for Privacy and Performance (W2SP 2015)</a></li>
+<li><a href="https://www.nytimes.com/interactive/2015/10/01/business/cost-of-mobile-ads.html" target="_blank" rel="noopener">The New York Times: The Cost of Mobile Ads on 50 News Websites (October 2015)</a></li>
+<li><a href="https://support.mozilla.org/en-US/kb/enhanced-tracking-protection-firefox-desktop" target="_blank" rel="noopener">Mozilla Support: Enhanced Tracking Protection in Firefox for desktop</a></li>
+<li><a href="https://developer.chrome.com/docs/extensions/develop/migrate/mv2-deprecation-timeline" target="_blank" rel="noopener">Chrome for Developers: Manifest V2 support timeline</a></li>
+<li><a href="https://github.com/uBlockOrigin/uBOL-home/wiki/Frequently-asked-questions-%28FAQ%29" target="_blank" rel="noopener">uBlock Origin Lite: Frequently asked questions</a></li>
+</ol>
+<div class="post-end"><img src="/assets/logo.png" alt=""><p><b>Written by the Rapid+ team</b> at HM Dev Studio. We build Rapid+ Browser for Android and Windows. Spotted a mistake or have a question? Message us on <a href="https://t.me/hasanmahmud_dev" target="_blank" rel="noopener">Telegram</a>.</p></div>
+  </div>
+</div>
+</article>
+<section class="alt"><div class="wrap">
+  <h2 class="title">Keep reading</h2>
+  <div class="postgrid"><a class="postcard" href="/blog/browser-fingerprinting"><div class="art" style="--a1:#6d28d9;--a2:#b78cf7" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 11c0 3.5-.6 6.4-1.8 8.9"/><path d="M8.5 9.6A4 4 0 0 1 16 11c0 1.5-.1 3-.4 4.4"/><path d="M5.5 8.3A7 7 0 0 1 19 11c0 .9 0 1.9-.1 2.8"/><path d="M4 13.5c.3-1 .5-1.9.5-2.5"/><path d="M8 13c-.1 2.2-.6 4.2-1.5 6"/><path d="M14.3 17.6c-.3 1.2-.7 2.3-1.2 3.4"/></svg></div><div class="txt"><span class="chip">Privacy</span><h3>Browser Fingerprinting: How Websites Recognize You Without Cookies</h3><p>Nothing is stored on your device, so there is nothing to clear. Here is what fingerprinting measures, how well it works in practice, and what helps.</p><div class="postmeta"><span>30 Oct 2026</span><span class="dot">·</span><span>8 min read</span></div></div></a><a class="postcard" href="/blog/proxy-vs-vpn"><div class="art" style="--a1:#ff6b00;--a2:#ffa04d" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.4-7.5 9.9-4.3-1.5-7.5-5.3-7.5-9.9V6L12 3z"/><path d="M9 12l2 2 4-4"/></svg></div><div class="txt"><span class="chip">Privacy</span><h3>Proxy vs VPN: What Each One Actually Hides</h3><p>Both put another server between you and the web. They cover different traffic, protect it differently, and hide different things from different people.</p><div class="postmeta"><span>30 Oct 2026</span><span class="dot">·</span><span>10 min read</span></div></div></a><a class="postcard" href="/blog/browser-profiles"><div class="art" style="--a1:#1d4ed8;--a2:#6b9cf5" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.6 3.3-6 6.5-6s5.9 2.4 6.5 6"/><circle cx="17" cy="9" r="2.6"/><path d="M16.5 14.2c2.6.2 4.6 2.2 5 5.3"/></svg></div><div class="txt"><span class="chip">Productivity</span><h3>Separate Browser Profiles for Work, Personal and Shopping: Why They Work</h3><p>One browser, several separate lives. How profiles keep logins and cookies apart, what they do not protect, and how to set them up well.</p><div class="postmeta"><span>30 Oct 2026</span><span class="dot">·</span><span>8 min read</span></div></div></a></div>
+</div></section>
+</main>
+<footer><div class="wrap">
+  <div class="fgrid">
+    <div><a class="brand" href="/" style="padding:0"><img src="/assets/logo.png" alt=""><span>Rapid<b>+</b></span></a><p>A fast, private Android browser with profiles, proxy/VPN mode and a built-in password manager.</p></div>
+    <div><h4>Product</h4><a href="/features">Features</a><a href="/multiple-profiles">Multiple profiles</a><a href="/proxy-browser">Proxy browser</a><a href="/user-agent-switcher">User-agent switcher</a><a href="/pricing">Pricing</a><a href="/download">Download</a></div>
+    <div><h4>Help</h4><a href="/manual">User manual</a><a href="/faq">FAQ</a><a href="/support">Support</a><a href="/blog/">Blog</a></div>
+    <div><h4>Legal</h4><a href="/privacy">Privacy Policy</a><a href="/terms">Terms of Use</a><a href="https://t.me/hasanmahmud_dev">Telegram</a></div>
+  </div>
+  <div class="copy">© 2026 HM Dev Studio · Rapid+ Browser · rapidplusbrowser.online</div>
+</div></footer>
+<div class="dlbar"><img src="/assets/logo.png" alt=""><div><b>Rapid+ Browser</b>Free, always</div><a class="btn primary" href="/download">Get app</a></div>
+<script>
+(function(){var n=document.getElementById('nav'),b=document.getElementById('burger');
+function set(o){n.classList.toggle('open',o);b.setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':''}
+b.addEventListener('click',function(){set(!n.classList.contains('open'))});
+document.querySelectorAll('#links a').forEach(function(a){a.addEventListener('click',function(){set(false)})});
+window.addEventListener('resize',function(){if(innerWidth>1000)set(false)});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
+if(/.html$/.test(location.pathname)){var cp=location.pathname.replace(/index.html$/,'').replace(/.html$/,'')||'/';history.replaceState(null,'',cp+location.search+location.hash)}
+})();
+</script>
+<script src="/firebase-config.js"></script>
+<script type="module" src="/analytics.js"></script>
+</body></html>
