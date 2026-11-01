@@ -70,25 +70,29 @@ async function copyText(t) {
   try { const a = el("textarea", { readonly: true, style: "position:fixed;left:-9999px" }); a.value = t; document.body.append(a); a.select(); const ok = document.execCommand("copy"); a.remove(); return ok; } catch { return false; }
 }
 
-// ---- votes widget: up arrow, score, down arrow
+// ---- votes widget: up arrow, score, down arrow. All boxes for one path share a state, so the bar at the top and
+// the one under the article always agree.
+const VS = {};
 function voteBox(path, init, label) {
-  let up = init.up || 0, down = init.down || 0, mine = myVotes()[path] || 0, busy = false;
+  const st = VS[path] || (VS[path] = { up: init.up || 0, down: init.down || 0, mine: myVotes()[path] || 0, busy: false, boxes: [] });
   const bu = el("button", { type: "button", class: "v up", "aria-label": "Upvote", title: "Upvote" }), bd = el("button", { type: "button", class: "v down", "aria-label": "Downvote", title: "Downvote" });
   // Reddit-style arrows: outlined when idle, filled when chosen
   bu.append(svg("M12 3.5 3.5 12.5h5v8h7v-8h5z")); bd.append(svg("M12 20.5 3.5 11.5h5v-8h7v8h5z"));
   const sc = el("span", { class: "sc", "aria-live": "polite" });
-  const paint = () => { sc.textContent = nf(up - down); sc.classList.toggle("up", mine === 1); sc.classList.toggle("down", mine === -1); bu.classList.toggle("on", mine === 1); bd.classList.toggle("on", mine === -1); bu.setAttribute("aria-pressed", mine === 1); bd.setAttribute("aria-pressed", mine === -1); };
+  const root = el("div", { class: "vote", role: "group", "aria-label": label }, bu, sc, bd);
+  const paint = () => { sc.textContent = nf(st.up - st.down); sc.classList.toggle("up", st.mine === 1); sc.classList.toggle("down", st.mine === -1); bu.classList.toggle("on", st.mine === 1); bd.classList.toggle("on", st.mine === -1); bu.setAttribute("aria-pressed", st.mine === 1); bd.setAttribute("aria-pressed", st.mine === -1); };
+  const paintAll = () => { st.boxes = st.boxes.filter(b => b.root.isConnected); st.boxes.forEach(b => b.paint()); };
   async function cast(v) {
-    if (busy || !live) return; busy = true;
-    const next = mine === v ? 0 : v, dUp = (next === 1) - (mine === 1), dDown = (next === -1) - (mine === -1), prev = { up, down, mine };
-    up += dUp; down += dDown; mine = next; paint(); setMyVote(path, next);
+    if (st.busy || !live) return; st.busy = true;
+    const next = st.mine === v ? 0 : v, dUp = (next === 1) - (st.mine === 1), dDown = (next === -1) - (st.mine === -1), prev = { up: st.up, down: st.down, mine: st.mine };
+    st.up += dUp; st.down += dDown; st.mine = next; paintAll(); setMyVote(path, next);
     try { await bump(path, { up: dUp, down: dDown }); }
-    catch { up = prev.up; down = prev.down; mine = prev.mine; setMyVote(path, mine); paint(); toast("Couldn't save your vote. Try again."); }
-    busy = false;
+    catch { st.up = prev.up; st.down = prev.down; st.mine = prev.mine; setMyVote(path, st.mine); paintAll(); toast("Couldn't save your vote. Try again."); }
+    st.busy = false;
   }
   bu.addEventListener("click", () => cast(1)); bd.addEventListener("click", () => cast(-1));
-  paint();
-  return el("div", { class: "vote", role: "group", "aria-label": label }, bu, sc, bd);
+  st.boxes.push({ root, paint }); paint();
+  return root;
 }
 
 // ---- share bar
@@ -213,27 +217,35 @@ function commentsSection() {
   return sec;
 }
 
+// One row: vote pill, a thin divider, then the share buttons (used under the byline and under the article)
+function actionBar(top) {
+  const voteSlot = el("div", { class: "eng-vote" });
+  const share = shareBar(); if (top) share.classList.add("top");
+  return { bar: el("div", { class: "actions" + (top ? " top" : "") }, voteSlot, el("span", { class: "sep", "aria-hidden": "true" }), share), voteSlot };
+}
+
 // ---- page wiring
 async function initPost() {
   const byline = article.querySelector(".byline");
-  const viewsEl = el("span", { class: "views", hidden: true });
+  const viewsEl = el("span", { class: "views", hidden: true }), dotEl = el("span", { text: " · ", hidden: true });
   const metaSpan = byline && byline.querySelector("div > span");
-  if (metaSpan) metaSpan.append(" · ", viewsEl);
-  if (byline) { const top = shareBar(); top.classList.add("top"); byline.after(top); }
+  if (metaSpan) metaSpan.append(dotEl, viewsEl);
+  const topA = actionBar(true);
+  if (byline) byline.after(topA.bar);
 
   const end = article.querySelector(".post-end");
+  const botA = actionBar(false);
   const engage = el("section", { class: "engage", id: "engage", "aria-label": "Reactions and comments" });
-  const voteSlot = el("div", { class: "eng-vote" });
   engage.append(
-    el("div", { class: "eng-row" }, el("div", { class: "eng-q" }, el("b", { text: "Was this article helpful?" }), el("span", { text: "Your vote tells us what to write more of." })), voteSlot),
-    el("div", { class: "eng-row" }, el("b", { text: "Share this article" }), shareBar()),
+    el("div", { class: "eng-actions" }, el("b", { class: "lab", text: "Helpful?" }), botA.bar),
     subscribeCard("article"),
     commentsSection());
   (end || article).after(engage);
 
   const counts = await loadCounts();
   const cur = counts[slug] || { views: 0, up: 0, down: 0 };
-  voteSlot.append(voteBox("blog_posts/" + slug, cur, "Vote on this article"));
+  topA.voteSlot.append(voteBox("blog_posts/" + slug, cur, "Vote on this article"));
+  botA.voteSlot.append(voteBox("blog_posts/" + slug, cur, "Vote on this article"));
 
   let views = cur.views, counted = false;
   const skip = ignored() || declined() || navigator.webdriver || /^(localhost|127\.)/.test(location.hostname) || !live;
@@ -241,19 +253,59 @@ async function initPost() {
   if (!skip && !seen) {
     try { await bump("blog_posts/" + slug, { views: 1 }); views += 1; counted = true; try { sessionStorage.setItem("rp_v_" + slug, "1"); } catch { } } catch { }
   }
-  if (views > 0) { viewsEl.textContent = `${nf(views)} ${views === 1 ? "view" : "views"}`; viewsEl.hidden = false; }
+  if (views > 0) { viewsEl.textContent = `${nf(views)} ${views === 1 ? "view" : "views"}`; viewsEl.hidden = false; dotEl.hidden = false; }
   return counted;
 }
 
-async function initHub() {
-  const mainEl = document.querySelector("main");
-  if (mainEl) mainEl.append(el("section", { class: "nlsec" }, el("div", { class: "wrap" }, subscribeCard("hub"))));
-  const counts = await loadCounts();
-  document.querySelectorAll("[data-cat]").forEach(card => {
-    const s = (card.getAttribute("href") || "").replace(/\/+$/, "").split("/").pop();
-    const v = counts[s] && counts[s].views, meta = card.querySelector(".postmeta");
-    if (v > 0 && meta) meta.append(el("span", { class: "dot", text: "·" }), el("span", { text: `${nf(v)} ${v === 1 ? "view" : "views"}` }));
+// Home and category pages: "load more", view counts on the cards, popular articles ordered by real views
+async function initListing() {
+  const more = document.querySelector("[data-more]");
+  if (more) more.addEventListener("click", () => {
+    const hid = [...document.querySelectorAll("#list [data-extra][hidden]")];
+    hid.slice(0, 8).forEach(e => { e.hidden = false; });
+    if (hid.length <= 8) more.parentElement.remove();
   });
+  const counts = await loadCounts();
+  const viewsText = v => `${nf(v)} ${v === 1 ? "view" : "views"}`;
+  document.querySelectorAll(".feature-post[data-slug], .pitem[data-slug]").forEach(c => {
+    const v = (counts[c.dataset.slug] || {}).views, meta = c.querySelector(".postmeta");
+    if (v > 0 && meta) meta.append(el("span", { class: "dot", text: "·" }), el("span", { text: viewsText(v) }));
+  });
+  const pop = document.querySelector(".side-pop");
+  if (pop) {
+    const lis = [...pop.children], vOf = li => (counts[li.dataset.slug] || {}).views || 0;
+    if (lis.some(li => vOf(li) > 0)) lis.sort((a, b) => vOf(b) - vOf(a)).forEach(li => pop.append(li));
+    lis.forEach(li => { const v = vOf(li), sv = li.querySelector(".sv"); if (v > 0 && sv) sv.textContent = viewsText(v); });
+  }
+}
+
+// Search page (/blog/search?q=...): full-text results, category filter
+async function initSearchPage() {
+  const form = document.getElementById("sform"); if (!form) return;
+  const input = document.getElementById("sq"), filters = document.getElementById("sfilters"), status = document.getElementById("sstatus"), res = document.getElementById("sres");
+  const params = new URLSearchParams(location.search);
+  let cat = params.get("cat") || "all", data = null, timer;
+  input.value = params.get("q") || "";
+  async function draw() {
+    data = data || await loadIndex();
+    const q = input.value.trim(), words = q.toLowerCase().split(/\s+/).filter(Boolean), all = search(q, data);
+    const cats = new Map(); all.forEach(p => cats.set(p.cs, { label: p.cat, n: ((cats.get(p.cs) || {}).n || 0) + 1 }));
+    if (cat !== "all" && !cats.has(cat)) cat = "all";
+    const found = cat === "all" ? all : all.filter(p => p.cs === cat);
+    const link = (k, l, n) => el("a", { href: "/blog/search?" + new URLSearchParams({ ...(q ? { q } : {}), ...(k !== "all" ? { cat: k } : {}) }), class: k === cat ? "on" : "", "data-c": k }, l, el("i", { text: String(n) }));
+    filters.replaceChildren(link("all", "All", all.length), ...[...cats].map(([k, v]) => link(k, v.label, v.n)));
+    filters.hidden = cats.size < 2;
+    status.textContent = !data.length ? "Search isn't available right now." : q ? (found.length ? `${found.length} ${found.length === 1 ? "article" : "articles"} for “${q}”` : `No articles match “${q}”. Try a shorter or different word, or browse a category from the menu.`) : `All ${data.length} articles. Type above to search titles and the full text.`;
+    res.replaceChildren(...found.map(p => el("div", { class: "pitem" },
+      el("a", { class: "pthumb", href: "/blog/" + p.slug, tabindex: "-1", "aria-hidden": "true" }, el("img", { src: `/assets/blog/${p.slug}.jpg`, alt: "", loading: "lazy", width: "1200", height: "630" })),
+      el("div", { class: "ptxt" }, el("a", { class: "chip", href: "/blog/category/" + p.cs, text: p.cat }), el("h3", {}, el("a", { href: "/blog/" + p.slug }, hl(p.title, words))), el("p", {}, q ? snippet(p, words) : p.desc),
+        el("div", { class: "postmeta" }, el("span", { text: p.date }), el("span", { class: "dot", text: "·" }), el("span", { text: p.mins + " min read" }))))));
+  }
+  const sync = () => { const q = input.value.trim(), qs = new URLSearchParams({ ...(q ? { q } : {}), ...(cat !== "all" ? { cat } : {}) }).toString(); history.replaceState(null, "", "/blog/search" + (qs ? "?" + qs : "")); };
+  input.addEventListener("input", () => { clearTimeout(timer); timer = setTimeout(() => { sync(); draw(); }, 120); });
+  form.addEventListener("submit", e => { e.preventDefault(); sync(); draw(); });
+  filters.addEventListener("click", e => { const a = e.target.closest("a[data-c]"); if (!a) return; e.preventDefault(); cat = a.dataset.c; sync(); draw(); });
+  draw(); if (!input.value) input.focus();
 }
 
 // ---- newsletter: collects an address into Firestore; emails are sent from the admin's own mail tool
@@ -346,7 +398,8 @@ async function render() {
   resUl.replaceChildren(...found.map(p => el("li", {}, el("a", { href: "/blog/" + p.slug }, el("img", { src: `/assets/blog/${p.slug}.jpg`, alt: "", loading: "lazy", width: "84", height: "44" }),
     el("div", { class: "rt" }, el("span", { class: "rc", text: p.cat }), el("b", {}, hl(p.title, words)), el("p", {}, q ? snippet(p, words) : p.desc))))));
   resLinks = [...resUl.querySelectorAll("a")]; sel = resLinks.length && q ? 0 : -1; paintSel();
-  hintP.textContent = !data.length ? "Search isn't available right now." : q ? (found.length ? `${found.length} ${found.length === 1 ? "article" : "articles"} found` : `No articles match “${q}”. Try a shorter or different word.`) : `${data.length} articles. Type to search titles and the full text.`;
+  const msg = !data.length ? "Search isn't available right now." : q ? (found.length ? `${found.length} ${found.length === 1 ? "article" : "articles"} found` : `No articles match “${q}”. Try a shorter or different word.`) : `${data.length} articles. Type to search titles and the full text.`;
+  hintP.replaceChildren(msg, q ? el("a", { href: "/blog/search?q=" + encodeURIComponent(q), class: "bsearch-all", text: " Open search page →" }) : "");
 }
 function openSearch() {
   if (!ov) {
@@ -362,7 +415,11 @@ function openSearch() {
     qIn.addEventListener("input", render);
     qIn.addEventListener("keydown", e => {
       if (e.key === "ArrowDown" || e.key === "ArrowUp") { e.preventDefault(); if (resLinks.length) { sel = (sel + (e.key === "ArrowDown" ? 1 : -1) + resLinks.length) % resLinks.length; paintSel(); } }
-      else if (e.key === "Enter" && resLinks[Math.max(sel, 0)]) { e.preventDefault(); location.href = resLinks[Math.max(sel, 0)].href; }
+      else if (e.key === "Enter") {
+        e.preventDefault();
+        const a = resLinks[Math.max(sel, 0)], q = qIn.value.trim();
+        if (a) location.href = a.href; else if (q) location.href = "/blog/search?q=" + encodeURIComponent(q);
+      }
     });
     resUl.addEventListener("mousemove", e => { const a = e.target.closest("a"); if (a) { sel = resLinks.indexOf(a); paintSel(); } });
   }
@@ -379,4 +436,6 @@ addEventListener("keydown", e => {
 
 document.querySelectorAll("[data-copy]").forEach(b => b.addEventListener("click", async () => toast((await copyText(b.dataset.copy)) ? "Copied" : "Couldn't copy. Select it and copy by hand.")));
 document.querySelectorAll("[data-subscribe]").forEach(h => h.append(subscribeCard(h.dataset.subscribe || "page")));
-if (isPost) initPost(); else if (document.querySelector("#list")) initHub();
+// old links like /blog/#privacy now go to the real category page
+if (/^\/blog\/?(index)?(\.html)?$/.test(location.pathname) && /^#(security|privacy|how-the-web-works|productivity|performance)$/.test(location.hash)) location.replace("/blog/category/" + location.hash.slice(1));
+if (isPost) initPost(); else { initListing(); initSearchPage(); }

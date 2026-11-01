@@ -223,7 +223,6 @@ table.cmp td:first-child{font-weight:700;width:30%}
 .bnav-cats{display:flex;align-items:center;gap:2px;margin-left:10px}
 .bnav-cats a{color:var(--muted);font-weight:600;font-size:14.5px;padding:8px 11px;border-radius:10px;white-space:nowrap}
 .bnav-cats a:hover{background:var(--bg2);color:var(--text);text-decoration:none}
-.hub .bnav-cats{display:none}
 .bicon{width:40px;height:40px;display:grid;place-items:center;border:0;border-radius:12px;background:transparent;color:var(--text);cursor:pointer;padding:0;transition:background .15s ease}
 .bicon:hover{background:var(--bg2)}
 .bicon:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
@@ -306,3 +305,98 @@ body.noscroll{overflow:hidden}
 .contact-card{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:20px 22px;border:1px solid var(--line);border-radius:18px;background:var(--card);box-shadow:var(--shadow)}
 .contact-card .k{display:block;font-size:11.5px;font-weight:800;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
 .contact-card .email{font-size:clamp(18px,3.4vw,24px);font-weight:800;letter-spacing:-.4px;overflow-wrap:anywhere}
+
+/* ===== Blog home, category and search pages ===== */
+.bnav-cats a[aria-current]{color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,transparent)}
+.homegrid{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:44px;align-items:start}
+.homemain{min-width:0}
+.homemain .feature-post{margin-bottom:6px}
+.listh{font-size:22px;letter-spacing:-.4px;margin:32px 0 2px}
+.muted-count{white-space:nowrap}
+.blogtop .crumbs{margin-bottom:8px}
+.cats-m{margin-top:4px}
+@media(min-width:981px){.cats-m{display:none}.blogtop{padding-bottom:0}.blogtop p{margin-bottom:6px}}
+.plist{display:flex;flex-direction:column}
+.pitem{display:grid;grid-template-columns:240px minmax(0,1fr);gap:22px;padding:22px 0;border-bottom:1px solid var(--line)}
+.plist .pitem:last-child{border-bottom:0}
+.pthumb{display:block;border-radius:16px;overflow:hidden;background:var(--bg2);aspect-ratio:1200/630;align-self:start}
+.pthumb img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.pitem:hover .pthumb img{transform:scale(1.04)}
+.ptxt{min-width:0}
+.ptxt .chip{margin-bottom:8px}
+.ptxt .chip:hover{text-decoration:none;background:rgba(255,107,0,.18)}
+.ptxt h3{font-size:20px;letter-spacing:-.3px;line-height:1.25;margin:2px 0 6px}
+.ptxt h3 a{color:var(--text)}
+.ptxt h3 a:hover{color:var(--accent);text-decoration:none}
+.ptxt p{margin:0 0 10px;color:var(--muted);font-size:15px;line-height:1.55;overflow-wrap:anywhere}
+.ptxt mark,.bsearch-res mark{background:color-mix(in srgb,var(--accent) 24%,transparent);color:inherit;border-radius:3px;padding:0 1px}
+.more{text-align:center;margin:22px 0 0}
+@media(max-width:620px){.pitem{grid-template-columns:minmax(0,1fr);gap:12px;padding:18px 0}.ptxt h3{font-size:19px}}
+
+.side{display:flex;flex-direction:column;gap:18px;min-width:0}
+.side-search{display:flex;border:1px solid var(--line);border-radius:14px;background:var(--card);overflow:hidden;transition:border-color .15s ease,box-shadow .15s ease}
+.side-search:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 20%,transparent)}
+.side-search input{flex:1;min-width:0;border:0;outline:0;background:transparent;font:inherit;font-size:15px;padding:12px 14px;color:var(--text)}
+.side-search input::-webkit-search-cancel-button{display:none}
+.side-search button{border:0;background:var(--accent);color:#fff;width:48px;display:grid;place-items:center;cursor:pointer;padding:0}
+.side-search button svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.side-card{border:1px solid var(--line);border-radius:18px;background:var(--card);padding:18px}
+.side-card h3{font-size:12.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+.side-cats,.side-pop{list-style:none;margin:0;padding:0}
+.side-cats a{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);color:var(--text);font-weight:600;font-size:15px}
+.side-cats li:last-child a{border-bottom:0}
+.side-cats a:hover,.side-cats a.on{color:var(--accent);text-decoration:none}
+.side-cats i{font-style:normal;font-size:12px;font-weight:700;color:var(--muted);background:var(--bg2);border-radius:999px;padding:1px 9px}
+.side-pop{counter-reset:p}
+.side-pop li{counter-increment:p;display:grid;grid-template-columns:26px minmax(0,1fr);column-gap:8px;padding:11px 0;border-bottom:1px solid var(--line);align-items:start}
+.side-pop li:last-child{border-bottom:0}
+.side-pop li::before{content:counter(p);grid-row:1/3;font-weight:800;color:var(--accent);font-size:19px;line-height:1.15}
+.side-pop a{color:var(--text);font-weight:600;font-size:14.5px;line-height:1.35}
+.side-pop a:hover{color:var(--accent);text-decoration:none}
+.side-pop .sv{grid-column:2;font-size:12px;color:var(--muted);margin-top:2px}
+.side-pop .sv:empty{display:none}
+.side-about{margin:0;font-size:14px;line-height:1.55;color:var(--muted)}
+.side .nl{padding:18px}.side .nl h2{font-size:18px}.side .nl-sub{font-size:14px}.side .nl-form{gap:8px}.side .nl-form .btn{width:100%}
+@media(max-width:980px){.homegrid{grid-template-columns:minmax(0,1fr);gap:34px}}
+
+.searchpage .wrap.wide{max-width:900px}
+.bigsearch{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:18px;background:var(--card);padding:8px 8px 8px 16px;box-shadow:var(--shadow);margin:8px 0 16px;transition:border-color .15s ease,box-shadow .15s ease}
+.bigsearch:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 20%,transparent)}
+.bigsearch svg{width:24px;height:24px;flex:none;fill:none;stroke:var(--muted);stroke-width:2;stroke-linecap:round}
+.bigsearch input{flex:1;min-width:0;border:0;outline:0;background:transparent;font:inherit;font-size:18px;font-weight:600;color:var(--text);padding:10px 0}
+.bigsearch input::-webkit-search-cancel-button{display:none}
+.bigsearch .btn{padding:12px 22px}
+.searchpage .cats{border-bottom:0;padding-bottom:4px}
+.sstatus{margin:12px 0 0;font-size:15px;color:var(--muted)}
+.searchpage .pagebody p,.searchpage .ptxt p{font-size:15px}
+@media(max-width:480px){.bigsearch .btn{display:none}.bigsearch input{font-size:17px}}
+.bsearch-all{color:var(--accent);font-weight:700;white-space:nowrap}
+
+/* ===== Vote + share in one row ===== */
+.actions{display:flex;align-items:center;gap:14px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding:2px;max-width:100%}
+.actions::-webkit-scrollbar{display:none}
+.actions .vote,.actions .share{flex:none;flex-wrap:nowrap}
+.actions .sep{flex:none;width:1px;align-self:stretch;margin:6px 0;background:var(--line)}
+.actions.top{margin:14px 0 0}
+.eng-actions{display:flex;align-items:center;gap:14px;padding:12px 14px;border:1px solid var(--line);border-radius:18px;background:var(--card)}
+.eng-actions .lab{flex:none;font-size:14.5px}
+.eng-actions .actions{flex:1 1 auto;min-width:0;justify-content:flex-end}
+@media(max-width:760px){.eng-actions .lab{display:none}.eng-actions .actions{justify-content:flex-start}}
+@media(max-width:440px){
+  .eng-actions{padding:0;border:0;background:transparent;border-radius:0}
+  .actions{gap:8px}
+  .actions .share{gap:4px}
+  .actions .sh{height:31px;min-width:31px;width:31px}
+  .actions .sh svg{width:17px;height:17px}
+  .actions .v{width:28px;height:28px}
+  .actions .v svg{width:19px;height:19px}
+  .actions .vote .sc{min-width:22px;font-size:13px}
+}
+@media print{.actions,.eng-actions,.side,.cats-m,.more{display:none!important}}
+
+/* Home: the lead story stacks (big picture, then text) because the column is narrower beside the sidebar */
+.homemain .feature-post{grid-template-columns:minmax(0,1fr)}
+.homemain .feature-post .thumb{aspect-ratio:1200/630;min-height:0}
+.homemain .feature-post .txt{padding:26px 30px 28px}
+.homemain .feature-post h2{font-size:clamp(26px,3.2vw,36px);letter-spacing:-.9px}
+@media(max-width:620px){.homemain .feature-post .txt{padding:20px}}
