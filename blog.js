@@ -219,9 +219,10 @@ function commentsSection() {
 
 // One row: vote pill, a thin divider, then the share buttons (used under the byline and under the article)
 function actionBar(top) {
+  const share = shareBar();
+  if (top) { share.classList.add("top"); return { bar: el("div", { class: "actions top" }, share) }; } // top: share only
   const voteSlot = el("div", { class: "eng-vote" });
-  const share = shareBar(); if (top) share.classList.add("top");
-  return { bar: el("div", { class: "actions" + (top ? " top" : "") }, voteSlot, el("span", { class: "sep", "aria-hidden": "true" }), share), voteSlot };
+  return { bar: el("div", { class: "actions" }, voteSlot, el("span", { class: "sep", "aria-hidden": "true" }), share), voteSlot };
 }
 
 // ---- page wiring
@@ -244,7 +245,6 @@ async function initPost() {
 
   const counts = await loadCounts();
   const cur = counts[slug] || { views: 0, up: 0, down: 0 };
-  topA.voteSlot.append(voteBox("blog_posts/" + slug, cur, "Vote on this article"));
   botA.voteSlot.append(voteBox("blog_posts/" + slug, cur, "Vote on this article"));
 
   let views = cur.views, counted = false;
