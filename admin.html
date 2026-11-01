@@ -20,21 +20,26 @@
   .login-box button{width:100%;margin-top:18px}
   .login-err{color:#d33;font-size:13px;margin-top:10px;text-align:center;min-height:16px}
 
-  .adbar{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg2) 88%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-  .adbar .in{max-width:1220px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .adbar{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg2) 90%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .adbar .in{max-width:1260px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
   .adbar h1{font-size:18px;margin:0;display:flex;align-items:center;gap:10px}
   .adbar h1 img{width:28px;height:28px;border-radius:22%}
   .adbar .sp{flex:1}
   .live{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 12px}
-  .live i{width:8px;height:8px;border-radius:50%;background:#1a9e55;box-shadow:0 0 0 0 rgba(26,158,85,.5);animation:pulse 1.8s infinite}
+  .live i{width:8px;height:8px;border-radius:50%;background:#1a9e55;animation:pulse 1.8s infinite}
   @keyframes pulse{70%{box-shadow:0 0 0 8px rgba(26,158,85,0)}100%{box-shadow:0 0 0 0 rgba(26,158,85,0)}}
-  .seg{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:3px}
+  .seg{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:3px;flex-wrap:wrap}
   .seg button{border:0;background:none;font:inherit;font-size:13px;font-weight:700;padding:7px 11px;border-radius:9px;cursor:pointer;color:var(--muted)}
   .seg button.on{background:var(--accent);color:#fff}
   .sbtn{border:1px solid var(--line);background:var(--card);font:inherit;font-size:13px;font-weight:700;padding:8px 12px;border-radius:10px;cursor:pointer;color:var(--text)}
   .sbtn:hover{border-color:var(--accent)}
+  .sbtn.pri{background:var(--accent);border-color:var(--accent);color:#fff}
+  .ctrl{max-width:1260px;margin:0 auto;padding:0 20px 10px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px}
+  .ctrl input[type=date]{font:inherit;font-size:13px;padding:7px 9px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--text)}
+  .ctrl label.chk{display:inline-flex;align-items:center;gap:6px;font-weight:600;cursor:pointer}
+  .rangelbl{color:var(--muted);font-weight:600}
 
-  .adwrap{max-width:1220px;margin:0 auto;padding:22px 20px 80px}
+  .adwrap{max-width:1260px;margin:0 auto;padding:20px 20px 80px}
   .kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:18px}
   @media(max-width:1000px){.kpis{grid-template-columns:repeat(3,1fr)}}
   @media(max-width:600px){.kpis{grid-template-columns:1fr 1fr}}
@@ -42,20 +47,24 @@
   .kpi span{display:block;font-size:12px;color:var(--muted);font-weight:600}
   .kpi b{display:block;font-size:25px;margin-top:4px;letter-spacing:-.4px}
   .kpi small{font-size:12px;color:var(--muted)}
+  .kpi b .dlt{display:inline-block;font-size:11.5px;font-weight:800;padding:2px 7px;border-radius:999px;margin-left:6px;vertical-align:3px}
+  .kpi b .dlt.up{background:#e6f6ec;color:#1a7a43}.kpi b .dlt.down{background:#fdeaea;color:#b83232}.kpi b .dlt.flat{background:var(--bg2);color:var(--muted)}
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
   .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
   @media(max-width:900px){.grid2,.grid3{grid-template-columns:1fr}}
   .ad-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:16px;min-width:0}
   .ad-card h3{margin:0 0 4px;font-size:15px}
   .ad-card .hint{font-size:12.5px;color:var(--muted);margin:0 0 14px}
+  .headrow{display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap}
+  .headrow .sp{flex:1}
   .chart svg{width:100%;height:auto;display:block}
-  .legend{display:flex;gap:16px;font-size:12px;color:var(--muted);margin-top:8px}
+  .legend{display:flex;gap:16px;font-size:12px;color:var(--muted);margin-top:8px;flex-wrap:wrap}
   .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
   .barrow{display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:13px}
   .barrow .lbl{width:44%;flex:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .barrow .bar{flex:1;height:9px;background:var(--bg2);border-radius:6px;overflow:hidden}
   .barrow .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:6px}
-  .barrow .n{min-width:64px;text-align:right;color:var(--muted);flex:none;font-variant-numeric:tabular-nums}
+  .barrow .n{min-width:70px;text-align:right;color:var(--muted);flex:none;font-variant-numeric:tabular-nums}
   .empty{font-size:13px;color:var(--muted);margin:0}
   .tblwrap{overflow-x:auto}
   table.pt{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
@@ -63,11 +72,14 @@
   table.pt th:first-child,table.pt td:first-child{text-align:left}
   table.pt th.sorted{color:var(--accent)}
   table.pt td{text-align:right;padding:9px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
-  table.pt tbody tr{cursor:pointer}
-  table.pt tbody tr:hover{background:var(--bg2)}
+  table.pt tbody tr.row{cursor:pointer}
+  table.pt tbody tr.row:hover{background:var(--bg2)}
   table.pt tbody tr.sel{background:color-mix(in srgb,var(--accent) 10%,transparent)}
+  table.pt tfoot td{font-weight:800;border-top:2px solid var(--line);border-bottom:0}
+  table.pt td.l,table.pt th.l{text-align:left}
   .pg{display:block;font-weight:700;max-width:340px;overflow:hidden;text-overflow:ellipsis}
   .pg small{display:block;font-weight:500;color:var(--muted);overflow:hidden;text-overflow:ellipsis}
+  .filter{font:inherit;font-size:13px;padding:7px 10px;border:1px solid var(--line);border-radius:10px;background:var(--bg);min-width:180px}
   .detail{border:2px solid var(--accent)}
   .dhead{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px}
   .dhead h3{font-size:17px;margin:0;word-break:break-all}
@@ -84,6 +96,19 @@
   .tag.page_view{background:#e8f0ff;color:#2453b8}.tag.download_click{background:#fff0e3;color:#b85300}.tag.click{background:#eef7ee;color:#1d7a3e}.tag.engage{background:#f3eefd;color:#6b3fc1}
   .feed .what{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
   .note{font-size:12.5px;color:var(--muted);text-align:center;margin-top:8px}
+  .heat{display:grid;grid-template-columns:34px repeat(24,1fr);gap:3px;font-size:10.5px;color:var(--muted)}
+  .heat .c{aspect-ratio:1/.8;border-radius:4px;background:color-mix(in srgb,var(--accent) calc(var(--v)*1%),var(--bg2))}
+  .heat .h{text-align:center}
+  .heat .d{display:flex;align-items:center;font-weight:700}
+  .funnel .fstep{margin-bottom:10px}
+  .funnel .fstep .t{display:flex;justify-content:space-between;font-size:13px;font-weight:600;margin-bottom:4px}
+  .funnel .fstep .t span:last-child{color:var(--muted);font-weight:500}
+  .funnel .bar{height:22px;background:var(--bg2);border-radius:8px;overflow:hidden}
+  .funnel .bar i{display:block;height:100%;border-radius:8px;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+  .journey{background:var(--bg2);border-radius:10px;padding:12px 14px;font-size:12.5px;text-align:left;white-space:normal}
+  .journey div{display:flex;gap:10px;padding:3px 0}
+  .journey time{color:var(--muted);width:54px;flex:none;font-variant-numeric:tabular-nums}
+  td.jr{padding:6px 10px 12px;white-space:normal}
 </style>
 </head>
 <body>
@@ -102,31 +127,50 @@
 </div>
 
 <div id="dashView" hidden>
-  <div class="adbar"><div class="in">
-    <h1><img src="assets/logo.png" alt="">Site Admin</h1>
-    <span class="live" title="Sessions with activity in the last 5 minutes"><i></i><span id="liveNow">0</span> active now</span>
-    <span class="sp"></span>
-    <div class="seg" id="rangeSeg">
-      <button data-r="1">Today</button><button data-r="7" class="on">7 days</button><button data-r="30">30 days</button><button data-r="90">90 days</button><button data-r="0">All</button>
+  <div class="adbar">
+    <div class="in">
+      <h1><img src="assets/logo.png" alt="">Site Admin</h1>
+      <span class="live" title="Sessions with activity in the last 5 minutes"><i></i><span id="liveNow">0</span> active now</span>
+      <span class="sp"></span>
+      <button class="sbtn" id="refreshBtn">Refresh</button>
+      <button class="sbtn" id="csvBtn">Events CSV</button>
+      <button class="sbtn" id="csvDayBtn">Daily CSV</button>
+      <button class="sbtn" id="signOutBtn">Sign out</button>
     </div>
-    <button class="sbtn" id="refreshBtn">Refresh</button>
-    <button class="sbtn" id="csvBtn">Export CSV</button>
-    <button class="sbtn" id="signOutBtn">Sign out</button>
-  </div></div>
+    <div class="ctrl">
+      <div class="seg" id="presets">
+        <button data-p="today">Today</button><button data-p="yesterday">Yesterday</button><button data-p="7" class="on">7 days</button><button data-p="30">30 days</button><button data-p="90">90 days</button><button data-p="all">All time</button>
+      </div>
+      <span>From</span><input type="date" id="fromDate"><span>to</span><input type="date" id="toDate">
+      <button class="sbtn pri" id="applyBtn">Apply</button>
+      <label class="chk"><input type="checkbox" id="cmpChk"> Compare with previous period</label>
+      <span class="rangelbl" id="rangeLbl"></span>
+    </div>
+  </div>
 
   <div class="adwrap">
     <div class="kpis" id="kpis"></div>
 
     <div class="ad-card">
       <h3 id="trendTitle">Traffic</h3>
-      <p class="hint">Page views (bars) and sessions (line).</p>
+      <p class="hint" id="trendHint">Page views (bars) and sessions (line).</p>
       <div class="chart" id="trend"></div>
       <div class="legend"><span><i style="background:var(--accent)"></i>Page views</span><span><i style="background:#6b3fc1"></i>Sessions</span></div>
     </div>
 
+    <div class="grid2">
+      <div class="ad-card"><h3>Downloads over time</h3><p class="hint">Download button clicks, split by platform.</p><div class="chart" id="dlTrend"></div><div class="legend"><span><i style="background:var(--accent)"></i>Android</span><span><i style="background:#6b3fc1"></i>Windows</span></div></div>
+      <div class="ad-card"><h3>Download funnel</h3><p class="hint">How sessions move toward a download.</p><div class="funnel" id="funnel"></div></div>
+    </div>
+
     <div class="ad-card">
-      <h3>Pages</h3>
-      <p class="hint">Click a page for its full breakdown. Click a column to sort.</p>
+      <h3>Day by day</h3>
+      <p class="hint">Click a day to zoom into just that day. Click a column to sort.</p>
+      <div class="tblwrap"><table class="pt" id="dayTbl"></table></div>
+    </div>
+
+    <div class="ad-card">
+      <div class="headrow"><div><h3>Pages</h3><p class="hint">Click a page for its full breakdown. Click a column to sort.</p></div><span class="sp"></span><input class="filter" id="pageFilter" placeholder="Filter pages…"></div>
       <div class="tblwrap"><table class="pt" id="pagesTbl"></table></div>
     </div>
 
@@ -143,9 +187,11 @@
     </div>
 
     <div class="grid2">
-      <div class="ad-card"><h3>Downloads</h3><p class="hint">Download button clicks, by platform and the page they happened on.</p><div id="downloads"></div></div>
+      <div class="ad-card"><h3>Downloads by page</h3><p class="hint">Which page each download click happened on.</p><div id="downloads"></div></div>
       <div class="ad-card"><h3>Top clicks</h3><p class="hint">Links and buttons visitors used.</p><div id="clicks"></div></div>
     </div>
+
+    <div class="ad-card"><h3>When people visit</h3><p class="hint">Page views by weekday and hour, in your local time. Darker means busier.</p><div class="heat" id="heat"></div></div>
 
     <div class="grid3">
       <div class="ad-card"><h3>Location</h3><p class="hint">From the visitor's time zone.</p><div id="geo"></div></div>
@@ -157,13 +203,20 @@
     </div>
 
     <div class="grid2">
-      <div class="ad-card"><h3>Hour of day</h3><p class="hint">Page views by your local time.</p><div class="chart" id="hours"></div></div>
+      <div class="ad-card"><h3>New vs returning</h3><p class="hint">Sessions from first-time browsers and repeat ones.</p><div id="newret"></div></div>
       <div class="ad-card"><h3>Campaigns</h3><p class="hint">Visits with utm_source / utm_medium / utm_campaign tags.</p><div id="campaigns"></div></div>
+    </div>
+
+    <div class="ad-card">
+      <h3>Sessions</h3>
+      <p class="hint">Newest 150 sessions in this range. Click one to see exactly what that visitor did.</p>
+      <div class="tblwrap"><table class="pt" id="sessTbl"></table></div>
     </div>
 
     <div class="ad-card"><h3>Recent activity</h3><p class="hint">Newest events first.</p><div class="feed" id="feed"></div></div>
 
     <p class="note" id="note"></p>
+    <p class="note"><button class="sbtn" id="moreBtn" hidden>Load 10,000 more events</button></p>
   </div>
 </div>
 
@@ -171,19 +224,18 @@
 <script type="module">
 import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-import { getFirestore, collection, query, where, orderBy, limit, getDocs, Timestamp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+import { getFirestore, collection, query, where, orderBy, limit, startAfter, getDocs, Timestamp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
 const app = getApps().length ? getApp() : initializeApp(window.RAPID_FIREBASE || {});
 const auth = getAuth(app);
 const db = getFirestore(app);
-const LIMIT = 10000;
+const CHUNK = 5000, CAP_START = 10000, CAP_MAX = 50000;
 const $ = id => document.getElementById(id);
 
 // ---------- auth ----------
 const loginErr = $("loginErr");
 $("loginForm").addEventListener("submit", async e => {
-  e.preventDefault();
-  loginErr.style.color = ""; loginErr.textContent = "";
+  e.preventDefault(); loginErr.style.color = ""; loginErr.textContent = "";
   try { await signInWithEmailAndPassword(auth, $("email").value.trim(), $("pass").value); }
   catch { loginErr.textContent = "Sign-in failed. Check your email and password."; }
 });
@@ -203,47 +255,64 @@ const pct = (a, b) => b ? Math.round(a / b * 100) + "%" : "–";
 const fmtDur = s => { s = Math.round(s || 0); if (!s) return "–"; const m = Math.floor(s / 60); return m ? `${m}m ${s % 60}s` : `${s}s`; };
 const count = (arr, key) => { const m = new Map(); for (const x of arr) { const k = typeof key === "function" ? key(x) : x[key]; if (k === undefined || k === null || k === "") continue; m.set(k, (m.get(k) || 0) + 1); } return m; };
 const top = (m, n = 10) => [...m.entries()].sort((a, b) => b[1] - a[1]).slice(0, n);
-const dayKey = t => { const d = new Date(t); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
+const p2 = n => String(n).padStart(2, "0");
+const dayKey = t => { const d = new Date(t); return `${d.getFullYear()}-${p2(d.getMonth() + 1)}-${p2(d.getDate())}`; };
+const inputDate = d => dayKey(d);
+const parseDay = s => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
 const avg = a => a.length ? a.reduce((x, y) => x + y, 0) / a.length : 0;
+const addDays = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); return x; };
+const fmtDay = (d, o = { weekday: "short", day: "numeric", month: "short" }) => d.toLocaleDateString(undefined, o);
 
 function bars(el, rows, total, fmt) {
-  if (!rows.length) { el.innerHTML = `<p class="empty">No data yet.</p>`; return; }
+  if (!rows.length) { el.innerHTML = `<p class="empty">No data in this range.</p>`; return; }
   const max = Math.max(...rows.map(r => r[1]));
   el.innerHTML = rows.map(([label, n]) =>
     `<div class="barrow"><div class="lbl" title="${esc(label)}">${esc(label)}</div><div class="bar"><i style="width:${Math.max(2, Math.round(n / max * 100))}%"></i></div><div class="n">${fmt ? fmt(n) : nf(n)}${total ? ` · ${pct(n, total)}` : ""}</div></div>`
   ).join("");
 }
 
-function trendSvg(points, opts = {}) {
-  if (!points.length) return `<p class="empty">No data yet.</p>`;
-  const W = 900, H = 220, P = { l: 34, r: 10, t: 12, b: 26 };
-  const iw = W - P.l - P.r, ih = H - P.t - P.b;
-  const raw = Math.max(1, ...points.map(p => Math.max(p.a, p.b || 0)));
-  const mag = 10 ** Math.floor(Math.log10(raw / 4 || 1)), stepN = [1, 2, 2.5, 5, 10].map(m => m * mag).find(s => s * 4 >= raw) || 10 * mag;
-  const max = Math.max(4, Math.ceil(stepN) * 4);
-  const bw = iw / points.length;
-  const y = v => P.t + ih - v / max * ih;
+function niceMax(raw) {
+  raw = Math.max(4, raw);
+  const mag = 10 ** Math.floor(Math.log10(raw / 4)), step = [1, 2, 2.5, 5, 10].map(m => m * mag).find(s => s * 4 >= raw) || 10 * mag;
+  return Math.ceil(step) * 4;
+}
+function axis(max, W, P, H, ih) {
   let g = "";
-  for (let i = 0; i <= 4; i++) { const v = Math.round(max * i / 4), yy = y(v); g += `<line x1="${P.l}" x2="${W - P.r}" y1="${yy}" y2="${yy}" stroke="currentColor" stroke-opacity=".08"/><text x="${P.l - 6}" y="${yy + 4}" text-anchor="end" font-size="11" fill="currentColor" fill-opacity=".5">${v}</text>`; }
+  for (let i = 0; i <= 4; i++) { const v = Math.round(max * i / 4), yy = P.t + ih - v / max * ih; g += `<line x1="${P.l}" x2="${W - P.r}" y1="${yy}" y2="${yy}" stroke="currentColor" stroke-opacity=".08"/><text x="${P.l - 6}" y="${yy + 4}" text-anchor="end" font-size="11" fill="currentColor" fill-opacity=".5">${v}</text>`; }
+  return g;
+}
+// series: [{key, color}] stacked bars; opts.line = key drawn as a line instead
+function chartSvg(points, series, opts = {}) {
+  if (!points.length) return `<p class="empty">No data in this range.</p>`;
+  const W = 900, H = 220, P = { l: 34, r: 10, t: 12, b: 26 }, iw = W - P.l - P.r, ih = H - P.t - P.b;
+  const stackMax = Math.max(...points.map(p => series.reduce((a, s) => a + (p[s.key] || 0), 0)));
+  const lineMax = opts.line ? Math.max(...points.map(p => p[opts.line] || 0)) : 0;
+  const max = niceMax(Math.max(stackMax, lineMax));
+  const bw = iw / points.length, y = v => P.t + ih - v / max * ih;
+  let g = axis(max, W, P, H, ih);
   const step = Math.ceil(points.length / 12);
   points.forEach((p, i) => {
-    const x = P.l + i * bw;
-    g += `<rect x="${x + bw * .15}" y="${y(p.a)}" width="${bw * .7}" height="${P.t + ih - y(p.a)}" rx="3" fill="var(--accent)" fill-opacity=".85"><title>${esc(p.label)}: ${p.a} views${p.b !== undefined ? `, ${p.b} sessions` : ""}</title></rect>`;
+    const x = P.l + i * bw; let acc = 0;
+    for (const s of series) {
+      const v = p[s.key] || 0; if (!v) continue;
+      g += `<rect x="${x + bw * .15}" y="${y(acc + v)}" width="${bw * .7}" height="${Math.max(0, y(acc) - y(acc + v))}" rx="2" fill="${s.color}" fill-opacity=".9"><title>${esc(p.label)}: ${v} ${s.name || s.key}</title></rect>`;
+      acc += v;
+    }
     if (i % step === 0) g += `<text x="${x + bw / 2}" y="${H - 8}" text-anchor="middle" font-size="11" fill="currentColor" fill-opacity=".55">${esc(p.short || p.label)}</text>`;
   });
-  if (!opts.noLine && points.some(p => p.b !== undefined)) {
-    const pts = points.map((p, i) => `${P.l + i * bw + bw / 2},${y(p.b || 0)}`).join(" ");
-    g += `<polyline points="${pts}" fill="none" stroke="#6b3fc1" stroke-width="2.5" stroke-linejoin="round"/>`;
-    points.forEach((p, i) => g += `<circle cx="${P.l + i * bw + bw / 2}" cy="${y(p.b || 0)}" r="3" fill="#6b3fc1"/>`);
+  if (opts.line) {
+    g += `<polyline points="${points.map((p, i) => `${P.l + i * bw + bw / 2},${y(p[opts.line] || 0)}`).join(" ")}" fill="none" stroke="#6b3fc1" stroke-width="2.5" stroke-linejoin="round"/>`;
+    points.forEach((p, i) => g += `<circle cx="${P.l + i * bw + bw / 2}" cy="${y(p[opts.line] || 0)}" r="3" fill="#6b3fc1"><title>${esc(p.label)}: ${p[opts.line] || 0} ${opts.lineName || opts.line}</title></circle>`);
   }
   return `<svg viewBox="0 0 ${W} ${H}" style="color:var(--text)">${g}</svg>`;
 }
 
 const SEARCH = /(^|\.)(google|bing|duckduckgo|yahoo|yandex|baidu|ecosia|naver|startpage|qwant)\.|search\.brave\.com/;
-const SOCIAL = /(^|\.)(facebook|fb|instagram|twitter|x|t|linkedin|lnkd|reddit|youtube|youtu|tiktok|pinterest|telegram|t\.me|whatsapp|discord|threads|quora|medium)\.|^t\.me$|^t\.co$|^l\.facebook\.com$|^lm\.facebook\.com$/;
+const SOCIAL = /(^|\.)(facebook|fb|instagram|twitter|x|t|linkedin|lnkd|reddit|youtube|youtu|tiktok|pinterest|telegram|whatsapp|discord|threads|quora|medium)\.|^t\.me$|^t\.co$|^l\.facebook\.com$|^lm\.facebook\.com$/;
+const hostOf = e => e.refHost || (e.ref ? (() => { try { return new URL(e.ref).hostname; } catch { return ""; } })() : "");
 function sourceOf(pv) {
   if (pv.utmSource) return "Campaign";
-  const h = pv.refHost || (pv.ref ? (() => { try { return new URL(pv.ref).hostname; } catch { return ""; } })() : "");
+  const h = hostOf(pv);
   if (!h) return "Direct";
   if (SEARCH.test(h)) return "Search";
   if (SOCIAL.test(h)) return "Social";
@@ -270,90 +339,156 @@ const TZ = {
 };
 const country = tz => tz ? (TZ[tz] || tz) : undefined;
 
-// ---------- data ----------
-let range = 7, events = [], sessions = new Map(), selected = null, sortKey = "views", sortDir = -1;
+// ---------- state ----------
+const S = { preset: "7", from: null, to: null, compare: false, cap: CAP_START, events: [], prev: null, cursor: null, exhausted: true, sessions: new Map(), selected: null, pSort: ["views", -1], dSort: ["day", -1], filter: "" };
+try { const saved = JSON.parse(localStorage.getItem("rp_admin") || "null"); if (saved) { S.preset = saved.preset || "7"; S.compare = !!saved.compare; if (saved.preset === "custom") { S.from = saved.from; S.to = saved.to; } } } catch { }
 
-async function fetchEvents() {
-  const col = collection(db, "analytics_events");
-  let q;
-  if (range === 1) { const d = new Date(); d.setHours(0, 0, 0, 0); q = query(col, where("ts", ">=", Timestamp.fromDate(d)), orderBy("ts", "desc"), limit(LIMIT)); }
-  else if (range) q = query(col, where("ts", ">=", Timestamp.fromMillis(Date.now() - range * 864e5)), orderBy("ts", "desc"), limit(LIMIT));
-  else q = query(col, orderBy("ts", "desc"), limit(LIMIT));
-  const snap = await getDocs(q);
-  const out = [];
-  snap.forEach(d => { const e = d.data(); if (!e.ts) return; e.id = d.id; e.t = e.ts.toMillis(); e.sid = e.sid || "x" + d.id; out.push(e); });
-  return out.sort((a, b) => a.t - b.t);
+function resolveRange() {
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  let from, to;
+  switch (S.preset) {
+    case "today": from = to = today; break;
+    case "yesterday": from = to = addDays(today, -1); break;
+    case "7": case "30": case "90": from = addDays(today, -(Number(S.preset) - 1)); to = today; break;
+    case "all": from = null; to = today; break;
+    default: from = S.from ? parseDay(S.from) : addDays(today, -6); to = S.to ? parseDay(S.to) : today;
+  }
+  if (from && to && from > to) [from, to] = [to, from];
+  return { from, to, startMs: from ? from.getTime() : null, endMs: addDays(to, 1).getTime(), days: from ? Math.round((to - from) / 864e5) + 1 : null };
 }
 
+// ---------- data ----------
+async function fetchPage(startMs, endMs, cursor, n) {
+  const cons = [];
+  if (startMs != null) cons.push(where("ts", ">=", Timestamp.fromMillis(startMs)));
+  cons.push(where("ts", "<", Timestamp.fromMillis(endMs)), orderBy("ts", "desc"));
+  if (cursor) cons.push(startAfter(cursor));
+  cons.push(limit(n));
+  const snap = await getDocs(query(collection(db, "analytics_events"), ...cons));
+  const out = snap.docs.map(d => { const e = d.data(); if (!e.ts) return null; e.t = e.ts.toMillis(); e.sid = e.sid || "x" + d.id; return e; }).filter(Boolean);
+  return { out, last: snap.docs[snap.docs.length - 1], full: snap.docs.length === n };
+}
+async function fetchUpTo(startMs, endMs, cap, cursor = null, have = 0) {
+  let all = [], cur = cursor, full = true;
+  while (full && have + all.length < cap) {
+    const r = await fetchPage(startMs, endMs, cur, Math.min(CHUNK, cap - have - all.length));
+    all = all.concat(r.out); cur = r.last || cur; full = r.full;
+  }
+  return { events: all, cursor: cur, exhausted: !full };
+}
 function buildSessions(evs) {
   const m = new Map();
-  for (const e of evs) {
+  for (const e of [...evs].sort((a, b) => a.t - b.t)) {
     let s = m.get(e.sid);
-    if (!s) { s = { sid: e.sid, events: [], pvs: [], downloads: 0, clicks: 0, start: e.t, end: e.t }; m.set(e.sid, s); }
+    if (!s) { s = { sid: e.sid, events: [], pvs: [], downloads: 0, clicks: 0, dur: 0, start: e.t, end: e.t }; m.set(e.sid, s); }
     s.events.push(e); s.end = Math.max(s.end, e.t); s.start = Math.min(s.start, e.t);
     if (e.type === "page_view") s.pvs.push(e);
     else if (e.type === "download_click") s.downloads++;
     else if (e.type === "click") s.clicks++;
+    else if (e.type === "engage") s.dur += e.dur || 0;
   }
-  for (const s of m.values()) {
+  for (const [k, s] of [...m]) {
+    if (!s.pvs.length) { m.delete(k); continue; }
     s.entry = s.pvs[0]; s.exit = s.pvs[s.pvs.length - 1];
     s.bounce = s.pvs.length === 1 && !s.clicks && !s.downloads;
   }
-  return new Map([...m].filter(([, s]) => s.pvs.length));
+  return m;
+}
+function kpiOf(evs, sess) {
+  const pv = evs.filter(e => e.type === "page_view"), eng = evs.filter(e => e.type === "engage"), dl = evs.filter(e => e.type === "download_click");
+  const ss = [...sess.values()], nS = ss.length;
+  return {
+    views: pv.length, sessions: nS, newV: ss.filter(s => s.entry.newVisitor === true).length,
+    pps: nS ? pv.length / nS : 0, avgSess: avg(ss.map(s => s.dur).filter(Boolean)), avgPage: avg(eng.map(e => e.dur || 0)),
+    bounce: nS ? ss.filter(s => s.bounce).length / nS : 0,
+    android: dl.filter(e => e.platform === "android").length, windows: dl.filter(e => e.platform === "windows").length,
+    conv: nS ? ss.filter(s => s.downloads).length / nS : 0
+  };
 }
 
 // ---------- render ----------
+function delta(cur, prev, lowerBetter) {
+  if (!S.prev) return "";
+  if (!prev && !cur) return `<span class="dlt flat">–</span>`;
+  if (!prev) return `<span class="dlt up">new</span>`;
+  const d = (cur - prev) / prev * 100;
+  if (Math.abs(d) < 0.5) return `<span class="dlt flat">0%</span>`;
+  const good = lowerBetter ? d < 0 : d > 0;
+  return `<span class="dlt ${good ? "up" : "down"}">${d > 0 ? "▲" : "▼"} ${Math.abs(Math.round(d))}%</span>`;
+}
+
 function render() {
-  const pv = events.filter(e => e.type === "page_view");
-  const eng = events.filter(e => e.type === "engage");
-  const dl = events.filter(e => e.type === "download_click");
-  const ck = events.filter(e => e.type === "click");
-  const ss = [...sessions.values()];
-  const nS = ss.length;
-  const newV = ss.filter(s => s.entry.newVisitor === true).length;
-  const bounces = ss.filter(s => s.bounce).length;
-  const conv = ss.filter(s => s.downloads).length;
-  const durs = eng.map(e => e.dur || 0);
-  const sessDur = ss.map(s => { const sum = s.events.filter(e => e.type === "engage").reduce((a, e) => a + (e.dur || 0), 0); return sum; }).filter(Boolean);
-  const andr = dl.filter(e => e.platform === "android").length, win = dl.filter(e => e.platform === "windows").length;
+  const R = resolveRange();
+  const ev = S.events, sess = S.sessions;
+  const pv = ev.filter(e => e.type === "page_view"), eng = ev.filter(e => e.type === "engage"), dl = ev.filter(e => e.type === "download_click"), ck = ev.filter(e => e.type === "click");
+  const ss = [...sess.values()], nS = ss.length;
+  const K = kpiOf(ev, sess), PK = S.prev;
 
-  $("liveNow").textContent = new Set(events.filter(e => e.t > Date.now() - 5 * 60e3).map(e => e.sid)).size;
+  $("rangeLbl").textContent = R.from ? (R.days === 1 ? fmtDay(R.from, { weekday: "long", day: "numeric", month: "long", year: "numeric" }) : `${fmtDay(R.from, { day: "numeric", month: "short", year: "numeric" })} to ${fmtDay(R.to, { day: "numeric", month: "short", year: "numeric" })} (${R.days} days)`) : "All time";
+  $("liveNow").textContent = new Set(ev.filter(e => e.t > Date.now() - 5 * 60e3).map(e => e.sid)).size;
 
-  const kpi = (label, val, sub) => `<div class="kpi"><span>${label}</span><b>${val}</b>${sub ? `<small>${sub}</small>` : ""}</div>`;
+  const kpi = (label, val, sub, d) => `<div class="kpi"><span>${label}</span><b>${val}${d || ""}</b>${sub ? `<small>${sub}</small>` : ""}</div>`;
   $("kpis").innerHTML =
-    kpi("Page views", nf(pv.length)) +
-    kpi("Sessions", nf(nS)) +
-    kpi("New visitors", nf(newV), `${pct(newV, nS)} of sessions`) +
-    kpi("Pages / session", nS ? (pv.length / nS).toFixed(2) : "–") +
-    kpi("Avg session time", fmtDur(avg(sessDur))) +
-    kpi("Avg time on page", fmtDur(avg(durs))) +
-    kpi("Bounce rate", pct(bounces, nS), "1 page, no clicks") +
-    kpi("Android downloads", nf(andr)) +
-    kpi("Windows downloads", nf(win)) +
-    kpi("Download conversion", pct(conv, nS), "sessions that clicked a download");
+    kpi("Page views", nf(K.views), "", delta(K.views, PK?.views)) +
+    kpi("Sessions", nf(K.sessions), "", delta(K.sessions, PK?.sessions)) +
+    kpi("New visitors", nf(K.newV), `${pct(K.newV, nS)} of sessions`, delta(K.newV, PK?.newV)) +
+    kpi("Pages / session", nS ? K.pps.toFixed(2) : "–", "", delta(K.pps, PK?.pps)) +
+    kpi("Avg session time", fmtDur(K.avgSess), "", delta(K.avgSess, PK?.avgSess)) +
+    kpi("Avg time on page", fmtDur(K.avgPage), "", delta(K.avgPage, PK?.avgPage)) +
+    kpi("Bounce rate", pct(K.bounce * nS, nS), "1 page, no clicks", delta(K.bounce, PK?.bounce, true)) +
+    kpi("Android downloads", nf(K.android), "", delta(K.android, PK?.android)) +
+    kpi("Windows downloads", nf(K.windows), "", delta(K.windows, PK?.windows)) +
+    kpi("Download conversion", pct(K.conv * nS, nS), "sessions that clicked a download", delta(K.conv, PK?.conv));
 
-  // trend
-  let points = [];
-  if (range === 1) {
-    $("trendTitle").textContent = "Traffic today (by hour)";
+  // ---- per-day and per-hour series
+  const sessDay = new Map();
+  for (const s of ss) { const k = dayKey(s.start); (sessDay.get(k) || sessDay.set(k, []).get(k)).push(s); }
+  const pvDay = count(pv, e => dayKey(e.t)), dlDay = new Map(), ckDay = count(ck, e => dayKey(e.t)), durDay = new Map();
+  for (const e of dl) { const k = dayKey(e.t); const o = dlDay.get(k) || { android: 0, windows: 0 }; if (e.platform === "windows") o.windows++; else o.android++; dlDay.set(k, o); }
+  for (const e of eng) { const k = dayKey(e.t); (durDay.get(k) || durDay.set(k, []).get(k)).push(e.dur || 0); }
+  const first = R.from || (pv[0] ? new Date(Math.min(...pv.map(e => e.t))) : new Date());
+  const startDay = new Date(first); startDay.setHours(0, 0, 0, 0);
+  const days = []; for (let d = new Date(startDay); d <= R.to; d = addDays(d, 1)) days.push(new Date(d));
+
+  const single = days.length === 1;
+  if (single) {
+    $("trendTitle").textContent = "Traffic by hour"; $("trendHint").textContent = "Page views (bars) and sessions (line) for the day, hour by hour.";
+    const pts = [];
     for (let h = 0; h < 24; h++) {
       const inH = e => new Date(e.t).getHours() === h;
-      points.push({ label: `${h}:00`, short: String(h), a: pv.filter(inH).length, b: new Set(pv.filter(inH).map(e => e.sid)).size });
+      pts.push({ label: `${h}:00`, short: String(h), views: pv.filter(inH).length, sessions: new Set(pv.filter(inH).map(e => e.sid)).size });
     }
+    $("trend").innerHTML = chartSvg(pts, [{ key: "views", color: "var(--accent)", name: "views" }], { line: "sessions", lineName: "sessions" });
+    const dpts = []; for (let h = 0; h < 24; h++) { const inH = e => new Date(e.t).getHours() === h; dpts.push({ label: `${h}:00`, short: String(h), android: dl.filter(e => inH(e) && e.platform !== "windows").length, windows: dl.filter(e => inH(e) && e.platform === "windows").length }); }
+    $("dlTrend").innerHTML = chartSvg(dpts, [{ key: "android", color: "var(--accent)", name: "Android" }, { key: "windows", color: "#6b3fc1", name: "Windows" }]);
   } else {
-    $("trendTitle").textContent = "Traffic per day";
-    const first = pv.length ? pv[0].t : Date.now();
-    const start = new Date(range ? Date.now() - (range - 1) * 864e5 : first); start.setHours(0, 0, 0, 0);
-    const byDay = new Map();
-    for (const e of pv) { const k = dayKey(e.t); const o = byDay.get(k) || { a: 0, s: new Set() }; o.a++; o.s.add(e.sid); byDay.set(k, o); }
-    for (let d = new Date(start); d <= new Date(); d.setDate(d.getDate() + 1)) {
-      const k = dayKey(d), o = byDay.get(k);
-      points.push({ label: d.toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" }), short: d.toLocaleDateString(undefined, { month: "short", day: "numeric" }), a: o ? o.a : 0, b: o ? o.s.size : 0 });
-    }
+    $("trendTitle").textContent = "Traffic per day"; $("trendHint").textContent = "Page views (bars) and sessions (line). Click a bar's day in the table below to zoom in.";
+    const pts = days.map(d => { const k = dayKey(d); return { label: fmtDay(d), short: fmtDay(d, { day: "numeric", month: "short" }), views: pvDay.get(k) || 0, sessions: (sessDay.get(k) || []).length }; });
+    $("trend").innerHTML = chartSvg(pts, [{ key: "views", color: "var(--accent)", name: "views" }], { line: "sessions", lineName: "sessions" });
+    const dpts = days.map(d => { const k = dayKey(d), o = dlDay.get(k) || { android: 0, windows: 0 }; return { label: fmtDay(d), short: fmtDay(d, { day: "numeric", month: "short" }), android: o.android, windows: o.windows }; });
+    $("dlTrend").innerHTML = chartSvg(dpts, [{ key: "android", color: "var(--accent)", name: "Android" }, { key: "windows", color: "#6b3fc1", name: "Windows" }]);
   }
-  $("trend").innerHTML = trendSvg(points);
 
-  // pages table
+  // ---- funnel
+  const reached = ss.filter(s => s.pvs.some(e => /^\/(download|windows-releases)/.test(e.path)));
+  const clicked = ss.filter(s => s.downloads);
+  const andS = ss.filter(s => s.events.some(e => e.type === "download_click" && e.platform === "android"));
+  const winS = ss.filter(s => s.events.some(e => e.type === "download_click" && e.platform === "windows"));
+  const steps = [["Sessions", nS, nS], ["Visited a download page", reached.length, nS], ["Clicked a download button", clicked.length, reached.length || nS], ["Android download", andS.length, clicked.length || 1], ["Windows download", winS.length, clicked.length || 1]];
+  $("funnel").innerHTML = nS ? steps.map(([l, n, base], i) => `<div class="fstep"><div class="t"><span>${l}</span><span>${nf(n)} · ${pct(n, nS)} of sessions${i ? ` · ${pct(n, base)} of previous step` : ""}</span></div><div class="bar"><i style="width:${Math.max(n ? 1.5 : 0, n / nS * 100)}%"></i></div></div>`).join("") : `<p class="empty">No data in this range.</p>`;
+
+  // ---- day table
+  const dayRows = days.map(d => {
+    const k = dayKey(d), sl = sessDay.get(k) || [], dd = dlDay.get(k) || { android: 0, windows: 0 }, dur = durDay.get(k) || [];
+    return { day: d.getTime(), label: fmtDay(d), views: pvDay.get(k) || 0, sessions: sl.length, newV: sl.filter(s => s.entry.newVisitor === true).length, android: dd.android, windows: dd.windows, clicks: ckDay.get(k) || 0, avgDur: avg(dur), bounce: sl.length ? sl.filter(s => s.bounce).length / sl.length : -1 };
+  });
+  const [dk, dd] = S.dSort;
+  dayRows.sort((a, b) => ((a[dk] > b[dk]) - (a[dk] < b[dk])) * dd);
+  const dcols = [["day", "Date"], ["views", "Views"], ["sessions", "Sessions"], ["newV", "New"], ["bounce", "Bounce"], ["avgDur", "Avg time"], ["clicks", "Clicks"], ["android", "Android"], ["windows", "Windows"]];
+  const tot = { views: K.views, sessions: nS, newV: K.newV, clicks: ck.length, android: K.android, windows: K.windows };
+  $("dayTbl").innerHTML = `<thead><tr>${dcols.map(([k, l]) => `<th data-k="${k}" class="${k === dk ? "sorted" : ""}">${l}${k === dk ? (dd < 0 ? " ↓" : " ↑") : ""}</th>`).join("")}</tr></thead><tbody>${dayRows.map(r => `<tr class="row" data-d="${dayKey(r.day)}"><td>${esc(r.label)}</td><td>${nf(r.views)}</td><td>${nf(r.sessions)}</td><td>${nf(r.newV)}</td><td>${r.bounce < 0 ? "–" : Math.round(r.bounce * 100) + "%"}</td><td>${fmtDur(r.avgDur)}</td><td>${nf(r.clicks)}</td><td>${nf(r.android)}</td><td>${nf(r.windows)}</td></tr>`).join("")}</tbody><tfoot><tr><td>Total</td><td>${nf(tot.views)}</td><td>${nf(tot.sessions)}</td><td>${nf(tot.newV)}</td><td>${pct(K.bounce * nS, nS)}</td><td>${fmtDur(K.avgPage)}</td><td>${nf(tot.clicks)}</td><td>${nf(tot.android)}</td><td>${nf(tot.windows)}</td></tr></tfoot>`;
+
+  // ---- pages table
   const pages = new Map();
   const pg = p => { let o = pages.get(p); if (!o) { o = { path: p, title: "", views: 0, sids: new Set(), entries: 0, exits: 0, bounces: 0, durs: [], scrolls: [], clicks: 0, downloads: 0 }; pages.set(p, o); } return o; };
   for (const e of pv) { const o = pg(e.path); o.views++; o.sids.add(e.sid); if (e.title) o.title = e.title; }
@@ -361,23 +496,20 @@ function render() {
   for (const e of ck) pg(e.path).clicks++;
   for (const e of dl) pg(e.path).downloads++;
   for (const s of ss) { pg(s.entry.path).entries++; pg(s.exit.path).exits++; if (s.bounce) pg(s.entry.path).bounces++; }
-  const rows = [...pages.values()].filter(o => o.views).map(o => ({ ...o, sessions: o.sids.size, avgDur: avg(o.durs), avgScroll: o.scrolls.length ? avg(o.scrolls) : -1, bounce: o.entries ? o.bounces / o.entries : -1, exitRate: o.views ? o.exits / o.views : 0 }));
-  rows.sort((a, b) => ((a[sortKey] > b[sortKey]) - (a[sortKey] < b[sortKey])) * sortDir);
+  const f = S.filter.toLowerCase();
+  const rows = [...pages.values()].filter(o => o.views && (!f || o.path.toLowerCase().includes(f) || o.title.toLowerCase().includes(f))).map(o => ({ ...o, sessions: o.sids.size, avgDur: avg(o.durs), avgScroll: o.scrolls.length ? avg(o.scrolls) : -1, bounce: o.entries ? o.bounces / o.entries : -1, exitRate: o.views ? o.exits / o.views : 0 }));
+  const [pk, pd] = S.pSort;
+  rows.sort((a, b) => ((a[pk] > b[pk]) - (a[pk] < b[pk])) * pd);
   const cols = [["path", "Page"], ["views", "Views"], ["sessions", "Sessions"], ["entries", "Entries"], ["bounce", "Bounce"], ["exitRate", "Exit rate"], ["avgDur", "Avg time"], ["avgScroll", "Avg scroll"], ["clicks", "Clicks"], ["downloads", "Downloads"]];
-  $("pagesTbl").innerHTML = `<thead><tr>${cols.map(([k, l]) => `<th data-k="${k}" class="${k === sortKey ? "sorted" : ""}">${l}${k === sortKey ? (sortDir < 0 ? " ↓" : " ↑") : ""}</th>`).join("")}</tr></thead><tbody>${rows.length ? rows.map(o => `<tr data-p="${esc(o.path)}" class="${o.path === selected ? "sel" : ""}"><td><span class="pg">${esc(o.path)}<small>${esc(o.title)}</small></span></td><td>${nf(o.views)}</td><td>${nf(o.sessions)}</td><td>${nf(o.entries)}</td><td>${o.bounce < 0 ? "–" : Math.round(o.bounce * 100) + "%"}</td><td>${Math.round(o.exitRate * 100)}%</td><td>${fmtDur(o.avgDur)}</td><td>${o.avgScroll < 0 ? "–" : Math.round(o.avgScroll) + "%"}</td><td>${nf(o.clicks)}</td><td>${nf(o.downloads)}</td></tr>`).join("") : `<tr><td colspan="10" class="empty">No page views in this range yet.</td></tr>`}</tbody>`;
+  $("pagesTbl").innerHTML = `<thead><tr>${cols.map(([k, l]) => `<th data-k="${k}" class="${k === pk ? "sorted" : ""}">${l}${k === pk ? (pd < 0 ? " ↓" : " ↑") : ""}</th>`).join("")}</tr></thead><tbody>${rows.length ? rows.map(o => `<tr class="row ${o.path === S.selected ? "sel" : ""}" data-p="${esc(o.path)}"><td><span class="pg">${esc(o.path)}<small>${esc(o.title)}</small></span></td><td>${nf(o.views)}</td><td>${nf(o.sessions)}</td><td>${nf(o.entries)}</td><td>${o.bounce < 0 ? "–" : Math.round(o.bounce * 100) + "%"}</td><td>${Math.round(o.exitRate * 100)}%</td><td>${fmtDur(o.avgDur)}</td><td>${o.avgScroll < 0 ? "–" : Math.round(o.avgScroll) + "%"}</td><td>${nf(o.clicks)}</td><td>${nf(o.downloads)}</td></tr>`).join("") : `<tr><td colspan="10" class="empty">No pages match in this range.</td></tr>`}</tbody>`;
 
-  // sources & refs
+  // ---- breakdowns
   bars($("sources"), top(count(ss, s => sourceOf(s.entry)), 6), nS);
-  bars($("refs"), top(count(pv, e => e.refHost || (e.ref ? (() => { try { return new URL(e.ref).hostname; } catch { return ""; } })() : "")), 10), pv.length);
+  bars($("refs"), top(count(pv, hostOf), 10), pv.length);
   bars($("entries"), top(count(ss, s => s.entry.path), 10), nS);
   bars($("exits"), top(count(ss, s => s.exit.path), 10), nS);
-
-  // downloads
-  const dlRows = top(count(dl, e => `${e.platform === "android" ? "Android" : e.platform === "windows" ? "Windows" : "Other"} · from ${e.path}`), 10);
-  bars($("downloads"), dlRows, dl.length);
+  bars($("downloads"), top(count(dl, e => `${e.platform === "android" ? "Android" : e.platform === "windows" ? "Windows" : "Other"} · from ${e.path}`), 10), dl.length);
   bars($("clicks"), top(count(ck, e => `${e.label || "(no text)"} → ${e.target || "button"}`), 12), ck.length);
-
-  // tech & geo (per session, from entry page view)
   const ent = ss.map(s => s.entry);
   bars($("geo"), top(count(ent, e => country(e.tz)), 12), nS);
   bars($("devices"), top(count(ent, "device"), 5), nS);
@@ -385,129 +517,173 @@ function render() {
   bars($("oses"), top(count(ent, "os"), 8), nS);
   bars($("screens"), top(count(ent, "screen"), 8), nS);
   bars($("langs"), top(count(ent, "lang"), 8), nS);
-
-  // hours
-  const hp = []; for (let h = 0; h < 24; h++) hp.push({ label: `${h}:00`, short: String(h), a: pv.filter(e => new Date(e.t).getHours() === h).length });
-  $("hours").innerHTML = trendSvg(hp, { noLine: true });
-
-  // campaigns
+  bars($("newret"), [["New visitors", K.newV], ["Returning", ss.filter(s => s.entry.newVisitor === false).length]].filter(r => r[1]), nS);
   bars($("campaigns"), top(count(pv.filter(e => e.utmSource), e => [e.utmSource, e.utmMedium, e.utmCampaign].filter(Boolean).join(" / ")), 10), pv.length);
 
-  // feed
-  const recent = events.slice(-60).reverse();
-  $("feed").innerHTML = recent.length ? recent.map(e => {
+  // ---- heatmap (weekday x hour)
+  const grid = Array.from({ length: 7 }, () => new Array(24).fill(0));
+  for (const e of pv) { const d = new Date(e.t); grid[(d.getDay() + 6) % 7][d.getHours()]++; }
+  const hmax = Math.max(1, ...grid.flat());
+  const WD = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  $("heat").innerHTML = `<span></span>${Array.from({ length: 24 }, (_, h) => `<span class="h">${h % 3 === 0 ? h : ""}</span>`).join("")}` + grid.map((r, i) => `<span class="d">${WD[i]}</span>${r.map((v, h) => `<span class="c" style="--v:${v ? Math.max(8, Math.round(v / hmax * 100)) : 0}" title="${WD[i]} ${h}:00, ${v} views"></span>`).join("")}`).join("");
+
+  // ---- sessions explorer
+  const recent = [...ss].sort((a, b) => b.start - a.start).slice(0, 150);
+  $("sessTbl").innerHTML = `<thead><tr><th class="l">Started</th><th class="l">Entry page</th><th>Pages</th><th>Time</th><th class="l">Device</th><th class="l">Location</th><th class="l">Source</th><th class="l">Result</th></tr></thead><tbody>${recent.length ? recent.map(s => {
+    const e = s.entry;
+    return `<tr class="row" data-s="${esc(s.sid)}"><td class="l">${esc(new Date(s.start).toLocaleString(undefined, { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" }))}</td><td class="l">${esc(e.path)}</td><td>${s.pvs.length}</td><td>${fmtDur(s.dur)}</td><td class="l">${esc([e.device, e.browser, e.os].filter(Boolean).join(" · "))}</td><td class="l">${esc(country(e.tz) || "–")}</td><td class="l">${esc(sourceOf(e))}${hostOf(e) ? ` · ${esc(hostOf(e))}` : ""}</td><td class="l">${s.downloads ? "Downloaded" : s.bounce ? "Bounced" : "Browsed"}</td></tr>`;
+  }).join("") : `<tr><td colspan="8" class="empty">No sessions in this range.</td></tr>`}</tbody>`;
+
+  // ---- feed
+  const rec = ev.slice().sort((a, b) => b.t - a.t).slice(0, 60);
+  $("feed").innerHTML = rec.length ? rec.map(e => {
     let what = esc(e.path);
-    if (e.type === "page_view") what += e.refHost ? ` <span style="color:var(--muted)">from ${esc(e.refHost)}</span>` : "";
+    if (e.type === "page_view") what += hostOf(e) ? ` <span style="color:var(--muted)">from ${esc(hostOf(e))}</span>` : "";
     if (e.type === "engage") what += ` <span style="color:var(--muted)">${fmtDur(e.dur)}, scrolled ${e.scroll ?? 0}%</span>`;
     if (e.type === "click" || e.type === "download_click") what += ` <span style="color:var(--muted)">${esc(e.label || "")} → ${esc(e.target || e.platform || "")}</span>`;
     const meta = [country(e.tz), e.device, e.browser].filter(Boolean).join(" · ");
     return `<div><time>${new Date(e.t).toLocaleString(undefined, { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" })}</time><span class="tag ${esc(e.type)}">${esc(e.type.replace("_", " "))}</span><span class="what">${what}${meta ? ` <span style="color:var(--muted)">· ${esc(meta)}</span>` : ""}</span></div>`;
-  }).join("") : `<p class="empty">No events yet.</p>`;
+  }).join("") : `<p class="empty">No events in this range.</p>`;
 
-  $("note").textContent = `${nf(events.length)} events loaded${events.length >= LIMIT ? ` (capped at the newest ${nf(LIMIT)}, pick a shorter range for exact totals)` : ""}. Location is estimated from time zone; no IP addresses are collected.`;
-
-  if (selected) renderDetail(selected); else $("detail").hidden = true;
+  $("note").textContent = `${nf(ev.length)} events loaded${S.exhausted ? " (everything in this range)" : " (more exist in this range; load more for exact totals)"}. Dates use your local time zone. Location is estimated from time zone; no IP addresses are collected.${PK ? ` Comparing with the ${PK.span}.` : ""}`;
+  $("moreBtn").hidden = S.exhausted || S.events.length >= CAP_MAX;
+  if (S.selected) renderDetail(S.selected); else $("detail").hidden = true;
 }
 
 function renderDetail(path) {
-  const el = $("detail");
-  const pv = events.filter(e => e.type === "page_view" && e.path === path);
+  const el = $("detail"), ev = S.events;
+  const pv = ev.filter(e => e.type === "page_view" && e.path === path);
   if (!pv.length) { el.hidden = true; return; }
-  const eng = events.filter(e => e.type === "engage" && e.path === path);
-  const ck = events.filter(e => (e.type === "click" || e.type === "download_click") && e.path === path);
+  const eng = ev.filter(e => e.type === "engage" && e.path === path);
+  const ck = ev.filter(e => (e.type === "click" || e.type === "download_click") && e.path === path);
   const sids = new Set(pv.map(e => e.sid));
-  const ss = [...sessions.values()].filter(s => sids.has(s.sid));
-  const entries = ss.filter(s => s.entry.path === path);
-  const exits = ss.filter(s => s.exit.path === path);
-  const bounces = entries.filter(s => s.bounce).length;
+  const ss = [...S.sessions.values()].filter(s => sids.has(s.sid));
+  const entries = ss.filter(s => s.entry.path === path), bounces = entries.filter(s => s.bounce).length;
   const prev = new Map(), next = new Map();
   for (const s of ss) s.pvs.forEach((e, i) => {
     if (e.path !== path) return;
     const p = s.pvs[i - 1], n = s.pvs[i + 1];
-    const pk = p ? p.path : "(entered here) " + sourceOf(e);
-    prev.set(pk, (prev.get(pk) || 0) + 1);
-    const nk = n ? n.path : "(left the site)";
-    next.set(nk, (next.get(nk) || 0) + 1);
+    const pk = p ? p.path : "(entered here) " + sourceOf(e); prev.set(pk, (prev.get(pk) || 0) + 1);
+    const nk = n ? n.path : "(left the site)"; next.set(nk, (next.get(nk) || 0) + 1);
   });
   const durB = [["Under 10s", 0, 10], ["10-30s", 10, 30], ["30-60s", 30, 60], ["1-3 min", 60, 180], ["3-10 min", 180, 600], ["10+ min", 600, 1e9]];
   const scrB = [["0-24%", 0, 25], ["25-49%", 25, 50], ["50-74%", 50, 75], ["75-99%", 75, 100], ["100% (reached end)", 100, 101]];
-  const days = new Map(); for (const e of pv) { const k = dayKey(e.t); days.set(k, (days.get(k) || 0) + 1); }
-  const pts = [...days.entries()].sort().map(([k, a]) => { const d = new Date(k + "T00:00"); return { label: d.toLocaleDateString(undefined, { month: "short", day: "numeric" }), a }; });
+  const dmap = new Map(); for (const e of pv) { const k = dayKey(e.t); dmap.set(k, (dmap.get(k) || 0) + 1); }
+  const pts = [...dmap.entries()].sort().map(([k, v]) => ({ label: fmtDay(parseDay(k)), short: fmtDay(parseDay(k), { day: "numeric", month: "short" }), views: v }));
   const title = pv.findLast(e => e.title)?.title || "";
-
   el.hidden = false;
   el.innerHTML = `
     <div class="dhead"><div><h3>${esc(path)}</h3><p class="hint" style="margin:4px 0 0">${esc(title)}</p></div><span class="sp"></span>${/^\/(?!\/)/.test(path) ? `<a class="sbtn" href="${esc(path)}" target="_blank" rel="noopener">Open page</a>` : ""}<button class="sbtn" id="closeDetail">Close</button></div>
     <div class="mini">
-      <div><span>Views</span><b>${nf(pv.length)}</b></div>
-      <div><span>Sessions</span><b>${nf(sids.size)}</b></div>
-      <div><span>Entrances</span><b>${nf(entries.length)}</b></div>
-      <div><span>Bounce rate</span><b>${pct(bounces, entries.length)}</b></div>
-      <div><span>Avg time</span><b>${fmtDur(avg(eng.map(e => e.dur || 0)))}</b></div>
-      <div><span>Avg scroll</span><b>${eng.length ? Math.round(avg(eng.map(e => e.scroll || 0))) + "%" : "–"}</b></div>
+      <div><span>Views</span><b>${nf(pv.length)}</b></div><div><span>Sessions</span><b>${nf(sids.size)}</b></div>
+      <div><span>Entrances</span><b>${nf(entries.length)}</b></div><div><span>Bounce rate</span><b>${pct(bounces, entries.length)}</b></div>
+      <div><span>Avg time</span><b>${fmtDur(avg(eng.map(e => e.dur || 0)))}</b></div><div><span>Avg scroll</span><b>${eng.length ? Math.round(avg(eng.map(e => e.scroll || 0))) + "%" : "–"}</b></div>
     </div>
-    <div class="chart" style="margin-bottom:16px">${trendSvg(pts, { noLine: true })}</div>
+    <div class="chart" style="margin-bottom:16px">${chartSvg(pts, [{ key: "views", color: "var(--accent)", name: "views" }])}</div>
     <div class="grid3">
-      <div><h3 style="font-size:14px">Came from</h3><div id="dPrev"></div></div>
-      <div><h3 style="font-size:14px">Went next</h3><div id="dNext"></div></div>
-      <div><h3 style="font-size:14px">Clicked on this page</h3><div id="dClicks"></div></div>
-      <div><h3 style="font-size:14px">Time on page</h3><div id="dDur"></div></div>
-      <div><h3 style="font-size:14px">Scroll depth</h3><div id="dScroll"></div></div>
-      <div><h3 style="font-size:14px">Referring sites</h3><div id="dRefs"></div></div>
-      <div><h3 style="font-size:14px">Location</h3><div id="dGeo"></div></div>
-      <div><h3 style="font-size:14px">Device &amp; OS</h3><div id="dDev"></div></div>
-      <div><h3 style="font-size:14px">Browser</h3><div id="dBrowser"></div></div>
+      <div><h3 style="font-size:14px">Came from</h3><div id="dPrev"></div></div><div><h3 style="font-size:14px">Went next</h3><div id="dNext"></div></div><div><h3 style="font-size:14px">Clicked on this page</h3><div id="dClicks"></div></div>
+      <div><h3 style="font-size:14px">Time on page</h3><div id="dDur"></div></div><div><h3 style="font-size:14px">Scroll depth</h3><div id="dScroll"></div></div><div><h3 style="font-size:14px">Referring sites</h3><div id="dRefs"></div></div>
+      <div><h3 style="font-size:14px">Location</h3><div id="dGeo"></div></div><div><h3 style="font-size:14px">Device &amp; OS</h3><div id="dDev"></div></div><div><h3 style="font-size:14px">Browser</h3><div id="dBrowser"></div></div>
     </div>`;
-  bars($("dPrev"), top(prev, 8), pv.length);
-  bars($("dNext"), top(next, 8), pv.length);
+  bars($("dPrev"), top(prev, 8), pv.length); bars($("dNext"), top(next, 8), pv.length);
   bars($("dClicks"), top(count(ck, e => `${e.label || "(no text)"} → ${e.target || e.platform || "button"}`), 8), ck.length);
   bars($("dDur"), durB.map(([l, a, b]) => [l, eng.filter(e => (e.dur || 0) >= a && (e.dur || 0) < b).length]).filter(r => r[1]), eng.length);
   bars($("dScroll"), scrB.map(([l, a, b]) => [l, eng.filter(e => (e.scroll || 0) >= a && (e.scroll || 0) < b).length]).filter(r => r[1]), eng.length);
-  bars($("dRefs"), top(count(pv, "refHost"), 8), pv.length);
-  bars($("dGeo"), top(count(pv, e => country(e.tz)), 8), pv.length);
-  bars($("dDev"), top(count(pv, e => [e.device, e.os].filter(Boolean).join(" · ")), 8), pv.length);
-  bars($("dBrowser"), top(count(pv, "browser"), 8), pv.length);
-  $("closeDetail").onclick = () => { selected = null; render(); };
+  bars($("dRefs"), top(count(pv, hostOf), 8), pv.length); bars($("dGeo"), top(count(pv, e => country(e.tz)), 8), pv.length);
+  bars($("dDev"), top(count(pv, e => [e.device, e.os].filter(Boolean).join(" · ")), 8), pv.length); bars($("dBrowser"), top(count(pv, "browser"), 8), pv.length);
+  $("closeDetail").onclick = () => { S.selected = null; render(); };
 }
 
+// ---------- interactions ----------
+function toggleSort(key, which, defaultAsc) {
+  const cur = S[which]; S[which] = cur[0] === key ? [key, -cur[1]] : [key, defaultAsc.includes(key) ? 1 : -1];
+}
+$("dayTbl").addEventListener("click", e => {
+  const th = e.target.closest("th");
+  if (th) { toggleSort(th.dataset.k, "dSort", []); render(); return; }
+  const tr = e.target.closest("tr[data-d]");
+  if (tr) { S.preset = "custom"; S.from = S.to = tr.dataset.d; syncControls(); load(); window.scrollTo({ top: 0, behavior: "smooth" }); }
+});
 $("pagesTbl").addEventListener("click", e => {
   const th = e.target.closest("th");
-  if (th) { const k = th.dataset.k; if (sortKey === k) sortDir = -sortDir; else { sortKey = k; sortDir = k === "path" ? 1 : -1; } render(); return; }
+  if (th) { toggleSort(th.dataset.k, "pSort", ["path"]); render(); return; }
   const tr = e.target.closest("tr[data-p]");
-  if (tr) { selected = tr.dataset.p; render(); $("detail").scrollIntoView({ behavior: "smooth", block: "start" }); }
+  if (tr) { S.selected = tr.dataset.p; render(); $("detail").scrollIntoView({ behavior: "smooth", block: "start" }); }
+});
+$("pageFilter").addEventListener("input", e => { S.filter = e.target.value.trim(); render(); });
+$("sessTbl").addEventListener("click", e => {
+  const tr = e.target.closest("tr[data-s]"); if (!tr) return;
+  const next = tr.nextElementSibling;
+  if (next && next.classList.contains("jrow")) { next.remove(); return; }
+  const s = S.sessions.get(tr.dataset.s); if (!s) return;
+  const t0 = s.start;
+  const lines = s.events.map(ev => {
+    const off = Math.round((ev.t - t0) / 1000), t = off >= 60 ? `+${Math.floor(off / 60)}m${off % 60}s` : `+${off}s`;
+    let txt = "";
+    if (ev.type === "page_view") txt = `Viewed <b>${esc(ev.path)}</b>${ev.title ? ` <span style="color:var(--muted)">${esc(ev.title)}</span>` : ""}`;
+    else if (ev.type === "engage") txt = `<span style="color:var(--muted)">Stayed ${fmtDur(ev.dur)} on ${esc(ev.path)}, scrolled ${ev.scroll ?? 0}%</span>`;
+    else if (ev.type === "click") txt = `Clicked <b>${esc(ev.label || "(no text)")}</b> → ${esc(ev.target || "")}`;
+    else if (ev.type === "download_click") txt = `<b>Download click</b>: ${esc(ev.platform || "")} ${esc(ev.label || "")}`;
+    return `<div><time>${t}</time><span>${txt}</span></div>`;
+  }).join("");
+  tr.insertAdjacentHTML("afterend", `<tr class="jrow"><td class="jr" colspan="8"><div class="journey">${lines}</div></td></tr>`);
 });
 
-$("rangeSeg").addEventListener("click", e => {
-  const b = e.target.closest("button"); if (!b) return;
-  range = Number(b.dataset.r);
-  $("rangeSeg").querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b));
-  load();
+function syncControls() {
+  const R = resolveRange();
+  $("presets").querySelectorAll("button").forEach(b => b.classList.toggle("on", b.dataset.p === S.preset));
+  $("fromDate").value = R.from ? inputDate(R.from) : ""; $("toDate").value = inputDate(R.to);
+  $("cmpChk").checked = S.compare; $("cmpChk").disabled = S.preset === "all";
+  try { localStorage.setItem("rp_admin", JSON.stringify({ preset: S.preset, from: S.from, to: S.to, compare: S.compare })); } catch { }
+}
+$("presets").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; S.preset = b.dataset.p; S.selected = null; syncControls(); load(); });
+$("applyBtn").addEventListener("click", () => {
+  const f = $("fromDate").value, t = $("toDate").value;
+  if (!t && !f) return;
+  S.preset = "custom"; S.from = f || t; S.to = t || f; S.selected = null; syncControls(); load();
 });
+$("cmpChk").addEventListener("change", e => { S.compare = e.target.checked; syncControls(); load(); });
 $("refreshBtn").addEventListener("click", load);
+$("moreBtn").addEventListener("click", async () => {
+  $("moreBtn").disabled = true;
+  try {
+    const R = resolveRange(), r = await fetchUpTo(R.startMs, R.endMs, Math.min(CAP_MAX, S.events.length + CAP_START), S.cursor, S.events.length);
+    S.events = S.events.concat(r.events); S.cursor = r.cursor; S.exhausted = r.exhausted; S.sessions = buildSessions(S.events); render();
+  } catch (err) { $("note").textContent = "Couldn't load more: " + (err.code || err.message); }
+  $("moreBtn").disabled = false;
+});
+
+const cell = v => `"${String(v ?? "").replace(/"/g, '""')}"`;
+function download(name, csv) {
+  const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" })); a.download = name; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
 $("csvBtn").addEventListener("click", () => {
   const cols = ["time", "type", "path", "title", "sid", "refHost", "ref", "utmSource", "utmMedium", "utmCampaign", "device", "browser", "os", "lang", "tz", "screen", "newVisitor", "dur", "scroll", "platform", "label", "target"];
-  const cell = v => `"${String(v ?? "").replace(/"/g, '""')}"`;
-  const csv = [cols.join(","), ...events.map(e => cols.map(c => cell(c === "time" ? new Date(e.t).toISOString() : e[c])).join(","))].join("\n");
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
-  a.download = `rapidplus-analytics-${dayKey(Date.now())}.csv`;
-  a.click();
-  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  download(`rapidplus-events-${dayKey(Date.now())}.csv`, [cols.join(","), ...S.events.slice().sort((a, b) => a.t - b.t).map(e => cols.map(c => cell(c === "time" ? new Date(e.t).toISOString() : e[c])).join(","))].join("\n"));
+});
+$("csvDayBtn").addEventListener("click", () => {
+  const rows = [...$("dayTbl").querySelectorAll("tbody tr")].map(tr => [...tr.children].map(td => cell(td.textContent)).join(","));
+  download(`rapidplus-daily-${dayKey(Date.now())}.csv`, ["Date,Views,Sessions,New,Bounce,Avg time,Clicks,Android,Windows", ...rows].join("\n"));
 });
 
 async function load() {
+  const R = resolveRange();
   $("note").textContent = "Loading…";
   try {
-    events = await fetchEvents();
-    sessions = buildSessions(events);
+    const cur = await fetchUpTo(R.startMs, R.endMs, CAP_START);
+    S.events = cur.events; S.cursor = cur.cursor; S.exhausted = cur.exhausted; S.sessions = buildSessions(S.events);
+    S.prev = null;
+    if (S.compare && R.from) {
+      const pFrom = addDays(R.from, -R.days), pEnd = R.from.getTime();
+      const pr = await fetchUpTo(pFrom.getTime(), pEnd, CAP_START);
+      const k = kpiOf(pr.events, buildSessions(pr.events));
+      k.span = `previous ${R.days === 1 ? "day" : R.days + " days"} (${fmtDay(pFrom, { day: "numeric", month: "short" })} to ${fmtDay(addDays(R.from, -1), { day: "numeric", month: "short" })})`;
+      S.prev = k;
+    }
     render();
-  } catch (err) {
-    $("note").textContent = "Couldn't load analytics: " + (err.code || err.message);
-  }
+  } catch (err) { $("note").textContent = "Couldn't load analytics: " + (err.code || err.message); }
 }
 
-// Only the "active now" count refreshes on its own, with a small 5-minute query, so leaving the dashboard
-// open doesn't re-read thousands of events a minute against the free Firestore quota.
 async function refreshLive() {
   try {
     const snap = await getDocs(query(collection(db, "analytics_events"), where("ts", ">=", Timestamp.fromMillis(Date.now() - 5 * 60e3)), orderBy("ts", "desc"), limit(500)));
@@ -518,10 +694,9 @@ async function refreshLive() {
 
 let timer;
 onAuthStateChanged(auth, user => {
-  $("loginView").hidden = !!user;
-  $("dashView").hidden = !user;
+  $("loginView").hidden = !!user; $("dashView").hidden = !user;
   clearInterval(timer);
-  if (user) { load(); timer = setInterval(() => { if (document.visibilityState === "visible") refreshLive(); }, 30000); }
+  if (user) { syncControls(); load(); timer = setInterval(() => { if (document.visibilityState === "visible") refreshLive(); }, 30000); }
 });
 </script>
 </body></html>
