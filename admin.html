@@ -109,6 +109,20 @@
   .journey div{display:flex;gap:10px;padding:3px 0}
   .journey time{color:var(--muted);width:54px;flex:none;font-variant-numeric:tabular-nums}
   td.jr{padding:6px 10px 12px;white-space:normal}
+  #blogNote:empty{display:none}
+  .bpill{display:inline-block;font-size:11px;font-weight:800;border-radius:999px;padding:2px 8px;margin-left:6px;vertical-align:middle}
+  .bpill.spam{background:#fde8e2;color:#b3361a}.bpill.hid{background:var(--bg2);color:var(--muted)}
+  .cmod{list-style:none;margin:0;padding:0}
+  .cmod li{display:flex;gap:12px;justify-content:space-between;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line)}
+  .cmod li.is-hidden{opacity:.6}
+  .cmod .cbody{min-width:0;flex:1}
+  .cmod .cmeta{font-size:12px;color:var(--muted);margin-bottom:3px}
+  .cmod .ctext{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13.5px}
+  .cmod .cact{display:flex;gap:6px;flex:none;flex-wrap:wrap;justify-content:flex-end}
+  .chips{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px}
+  .chips button{border:1px solid var(--line);background:var(--card);font:inherit;font-size:12.5px;font-weight:700;border-radius:999px;padding:5px 12px;cursor:pointer;color:var(--text)}
+  .chips button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  @media(max-width:640px){.cmod li{flex-direction:column}.cmod .cact{justify-content:flex-start}}
 </style>
 </head>
 <body>
@@ -206,6 +220,20 @@
     <div class="grid2">
       <div class="ad-card"><h3>New vs returning</h3><p class="hint">Sessions from first-time browsers and repeat ones.</p><div id="newret"></div></div>
       <div class="ad-card"><h3>Campaigns</h3><p class="hint">Visits with utm_source / utm_medium / utm_campaign tags.</p><div id="campaigns"></div></div>
+    </div>
+
+    <div class="ad-card">
+      <h3>Blog: views, votes and comments</h3>
+      <p class="hint">Views and votes are the public counters readers see. "Page views" is from the analytics for the date range above.</p>
+      <div class="tblwrap"><table class="pt" id="blogPosts"></table></div>
+    </div>
+
+    <div class="ad-card">
+      <h3>Comment moderation</h3>
+      <p class="hint">New comments go live straight away. Links and ad words are blocked before they are saved. Hide anything you don't want shown, or delete it for good.</p>
+      <div class="chips" id="cmFilters"></div>
+      <p class="note" id="blogNote"></p>
+      <ul class="cmod" id="cmList"></ul>
     </div>
 
     <div class="ad-card">
@@ -702,7 +730,7 @@ async function load() {
       k.span = `previous ${R.days === 1 ? "day" : R.days + " days"} (${fmtDay(pFrom, { day: "numeric", month: "short" })} to ${fmtDay(addDays(R.from, -1), { day: "numeric", month: "short" })})`;
       S.prev = k;
     }
-    render();
+    render(); renderBlog(); loadBlog();
   } catch (err) { $("note").textContent = "Couldn't load analytics: " + (err.code || err.message); }
 }
 
@@ -713,6 +741,68 @@ async function refreshLive() {
     $("liveNow").textContent = s.size;
   } catch { }
 }
+
+// ---------- blog: counters and comment moderation ----------
+const B = { posts: [], comments: [], filter: "all", loaded: false };
+const SPAMRE = /(https?:|www\.|\.com|\.net|\.org|\.ru|\.xyz|\.top|\.cn|\.io|bit\.ly|casino|viagra|porn|loan offer|click here|[a-z0-9_.]+@[a-z0-9-]+\.[a-z]{2,})/i;
+function spamWhy(c) {
+  const r = [], t = c.text || "";
+  if (SPAMRE.test(t) || SPAMRE.test(c.name || "")) r.push("link or ad words");
+  const L = t.replace(/[^A-Za-z]/g, ""); if (L.length >= 20 && L.replace(/[^A-Z]/g, "").length / L.length > .7) r.push("all caps");
+  if (/(.)\1{7,}/.test(t)) r.push("repeated characters");
+  const same = B.comments.filter(x => x.id !== c.id && x.text.trim().toLowerCase() === t.trim().toLowerCase()).length;
+  if (same) r.push("same text posted " + (same + 1) + " times");
+  return r;
+}
+async function loadBlog() {
+  try {
+    const [ps, cs] = await Promise.all([getDocs(collection(db, "blog_posts")), getDocs(query(collection(db, "blog_comments"), orderBy("ts", "desc"), limit(300)))]);
+    B.posts = ps.docs.map(d => ({ slug: d.id, views: d.data().views || 0, up: d.data().up || 0, down: d.data().down || 0 }));
+    B.comments = cs.docs.map(d => { const e = d.data(); return { id: d.id, post: e.post || "", name: e.name || "", text: e.text || "", status: e.status || "visible", up: e.up || 0, down: e.down || 0, t: e.ts && e.ts.toMillis ? e.ts.toMillis() : 0 }; });
+    B.loaded = true; $("blogNote").textContent = ""; renderBlog();
+  } catch (err) { $("blogNote").textContent = "Couldn't load blog data: " + (err.code || err.message); }
+}
+function renderBlog() {
+  const pv = count(S.events.filter(e => e.type === "page_view" && /^\/blog\/[^/]+/.test(e.path || "")), e => e.path.replace(/\/+$/, "").split("/").pop().replace(/\.html$/, ""));
+  const slugs = new Set([...B.posts.map(p => p.slug), ...pv.keys()]);
+  const rows = [...slugs].map(sl => {
+    const p = B.posts.find(x => x.slug === sl) || { views: 0, up: 0, down: 0 }, cm = B.comments.filter(c => c.post === sl);
+    return { sl, views: p.views, up: p.up, down: p.down, pv: pv.get(sl) || 0, cv: cm.filter(c => c.status === "visible").length, ct: cm.length };
+  }).sort((a, b) => b.views - a.views || b.pv - a.pv);
+  const sum = k => rows.reduce((a, r) => a + r[k], 0);
+  $("blogPosts").innerHTML = rows.length ? `<thead><tr><th class="l">Post</th><th>Views</th><th>Page views (range)</th><th>Upvotes</th><th>Downvotes</th><th>Comments</th></tr></thead><tbody>${rows.map(r => `<tr><td class="l"><a href="/blog/${esc(r.sl)}" target="_blank" rel="noopener">${esc(r.sl)}</a></td><td>${nf(r.views)}</td><td>${nf(r.pv)}</td><td>${nf(r.up)}</td><td>${nf(r.down)}</td><td>${nf(r.cv)}${r.ct > r.cv ? ` <span class="hint">(+${r.ct - r.cv} hidden)</span>` : ""}</td></tr>`).join("")}</tbody><tfoot><tr><td class="l">Total</td><td>${nf(sum("views"))}</td><td>${nf(sum("pv"))}</td><td>${nf(sum("up"))}</td><td>${nf(sum("down"))}</td><td>${nf(sum("cv"))}</td></tr></tfoot>` : `<tbody><tr><td class="l">No blog activity yet.</td></tr></tbody>`;
+
+  const flagged = B.comments.filter(c => spamWhy(c).length);
+  const F = { all: ["All", B.comments.length], visible: ["Visible", B.comments.filter(c => c.status === "visible").length], hidden: ["Hidden", B.comments.filter(c => c.status !== "visible").length], flagged: ["Possible spam", flagged.length] };
+  $("cmFilters").innerHTML = Object.entries(F).map(([k, [l, c]]) => `<button data-f="${k}" class="${B.filter === k ? "on" : ""}">${l} (${c})</button>`).join("") + (flagged.some(c => c.status === "visible") ? `<button data-act="hideflagged">Hide all possible spam</button>` : "");
+  const list = B.comments.filter(c => B.filter === "all" || (B.filter === "visible" && c.status === "visible") || (B.filter === "hidden" && c.status !== "visible") || (B.filter === "flagged" && spamWhy(c).length));
+  $("cmList").innerHTML = list.length ? list.map(c => {
+    const why = spamWhy(c), hid = c.status !== "visible";
+    return `<li class="${hid ? "is-hidden" : ""}" data-id="${esc(c.id)}"><div class="cbody"><div class="cmeta"><b>${esc(c.name || "Anonymous")}</b> on <a href="/blog/${esc(c.post)}" target="_blank" rel="noopener">${esc(c.post)}</a> · ${c.t ? new Date(c.t).toLocaleString() : "just now"} · ${nf(c.up - c.down)} votes${hid ? '<span class="bpill hid">Hidden</span>' : ""}${why.length ? `<span class="bpill spam" title="${esc(why.join(", "))}">Possible spam: ${esc(why.join(", "))}</span>` : ""}</div><div class="ctext">${esc(c.text)}</div></div><div class="cact"><button class="sbtn" data-act="toggle">${hid ? "Show" : "Hide"}</button><button class="sbtn" data-act="del">Delete</button></div></li>`;
+  }).join("") : `<li><div class="cbody"><div class="cmeta">${B.loaded ? "Nothing here." : "Loading…"}</div></div></li>`;
+}
+async function blogWrite(fn) {
+  const b = writeBatch(db); fn(b);
+  try { await b.commit(); await loadBlog(); } catch (err) { $("blogNote").textContent = "Couldn't save: " + (err.code || err.message); }
+}
+$("cmFilters").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  if (b.dataset.f) { B.filter = b.dataset.f; renderBlog(); return; }
+  if (b.dataset.act === "hideflagged") {
+    const ids = B.comments.filter(c => c.status === "visible" && spamWhy(c).length).map(c => c.id);
+    if (b.dataset.armed !== "1") { b.dataset.armed = "1"; b.textContent = "Click again to hide " + ids.length; return; }
+    blogWrite(bt => ids.forEach(id => bt.update(doc(db, "blog_comments", id), { status: "hidden" })));
+  }
+});
+$("cmList").addEventListener("click", e => {
+  const b = e.target.closest("button[data-act]"), li = e.target.closest("li[data-id]"); if (!b || !li) return;
+  const id = li.dataset.id, c = B.comments.find(x => x.id === id); if (!c) return;
+  if (b.dataset.act === "toggle") blogWrite(bt => bt.update(doc(db, "blog_comments", id), { status: c.status === "visible" ? "hidden" : "visible" }));
+  else if (b.dataset.act === "del") {
+    if (b.dataset.armed !== "1") { b.dataset.armed = "1"; b.textContent = "Click again to delete forever"; return; }
+    blogWrite(bt => bt.delete(doc(db, "blog_comments", id)));
+  }
+});
 
 const getIgnore = () => { try { return localStorage.getItem("rp_ignore") === "1"; } catch { return false; } };
 $("ignoreChk").addEventListener("change", e => { try { e.target.checked ? localStorage.setItem("rp_ignore", "1") : localStorage.removeItem("rp_ignore"); } catch { } });
