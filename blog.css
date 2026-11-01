@@ -126,3 +126,18 @@ table.cmp td:first-child{font-weight:700;width:30%}
 .bfoot-links a{color:var(--muted);padding:4px 0}
 .bfoot-links a:hover{color:var(--accent)}
 @media(max-width:560px){.bfoot-links{grid-template-rows:none;grid-auto-flow:row;grid-template-columns:1fr 1fr;gap:2px 18px;width:100%}}
+
+/* Hub: compact title and category tabs */
+[hidden]{display:none!important}
+.blogtop{padding:34px 0 6px}
+.blogtop h1{font-size:clamp(28px,4vw,40px);letter-spacing:-1px;line-height:1.1;margin:0 0 8px}
+.blogtop p{color:var(--muted);margin:0 0 20px;font-size:16.5px;max-width:620px}
+.cats{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 12px;margin:0 -2px;scrollbar-width:none;border-bottom:1px solid var(--line)}
+.cats::-webkit-scrollbar{display:none}
+.cats a{flex:none;display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--text);font-weight:700;font-size:14px;white-space:nowrap;transition:background .15s ease,border-color .15s ease,color .15s ease}
+.cats a i{font-style:normal;font-weight:700;font-size:12px;color:var(--muted);background:var(--bg2);border-radius:999px;padding:1px 8px}
+.cats a:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.cats a.on{background:var(--accent);border-color:var(--accent);color:var(--on-accent);box-shadow:0 8px 20px rgba(255,107,0,.28)}
+.cats a.on i{background:rgba(255,255,255,.24);color:#fff}
+.bloglist{padding-top:26px}
+.bloglist .feature-post{margin-bottom:0}
