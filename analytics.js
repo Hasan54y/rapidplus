@@ -17,7 +17,12 @@ const q0 = new URLSearchParams(location.search);
 if (q0.has("notrack")) flag(true); else if (q0.has("track")) flag(false);
 const ignored = flag();
 
-const off = !cfg.apiKey || !cfg.projectId || navigator.webdriver || ignored ||
+// Visitor's privacy choice: "yes" keeps the anonymous statistics on, "no" switches them off (and the blog's view
+// counter). Nothing is stored as a cookie either way. No choice yet means the statistics run (they are anonymous
+// and cookie-free) and the banner asks.
+const choice = (set) => { try { if (set) localStorage.setItem("rp_consent", set); return localStorage.getItem("rp_consent"); } catch { return null; } };
+
+let off = choice() === "no" || !cfg.apiKey || !cfg.projectId || navigator.webdriver || ignored ||
   /^\/admin/.test(location.pathname) || !/^https?:$/.test(location.protocol) ||
   /^(localhost|127\.)/.test(location.hostname);
 
@@ -137,3 +142,28 @@ document.addEventListener("click", e => {
   else if (el.matches(".win-btn") || /\.exe(\?|$)/i.test(href)) send("download_click", { platform: "windows", label, target }, true);
   else send("click", { label, target }, true);
 }, { capture: true });
+
+// ---- Privacy banner: shown once, reopened from "Privacy choices" buttons and links
+function banner(force) {
+  if (!force && (ignored || navigator.webdriver || /^\/admin/.test(location.pathname) || !/^https?:$/.test(location.protocol) || choice())) return;
+  if (document.getElementById("rp-consent")) return;
+  if (!document.getElementById("rp-consent-css")) {
+    const st = document.createElement("style"); st.id = "rp-consent-css";
+    st.textContent = "#rp-consent{position:fixed;left:16px;bottom:16px;z-index:400;max-width:400px;box-sizing:border-box;padding:18px 18px 16px;border-radius:18px;border:1px solid var(--line,#e7e5e0);background:var(--card,#fff);color:var(--text,#15130f);box-shadow:0 22px 50px -14px rgba(20,18,12,.35);font:14px/1.5 'Plus Jakarta Sans',-apple-system,'Segoe UI',Roboto,sans-serif}" +
+      "#rp-consent b{display:block;font-size:15.5px;margin-bottom:4px}#rp-consent p{margin:0 0 12px;color:var(--muted,#6b6a65)}#rp-consent a{color:var(--accent,#ff6b00);font-weight:600}" +
+      "#rp-consent .rp-row{display:flex;gap:8px;flex-wrap:wrap}#rp-consent button{flex:1 1 130px;font:inherit;font-weight:700;font-size:14px;padding:10px 14px;border-radius:12px;cursor:pointer;border:1px solid var(--line,#e7e5e0);background:var(--card,#fff);color:var(--text,#15130f)}" +
+      "#rp-consent button.rp-yes{background:var(--accent,#ff6b00);border-color:var(--accent,#ff6b00);color:#fff}#rp-consent button:hover{filter:brightness(.97)}#rp-consent button:focus-visible{outline:2px solid var(--accent,#ff6b00);outline-offset:2px}" +
+      "@media(max-width:700px){#rp-consent{left:12px;right:12px;max-width:none;bottom:" + (document.querySelector(".dlbar") ? "92px" : "12px") + "}}@media print{#rp-consent{display:none!important}}";
+    document.head.appendChild(st);
+  }
+  const box = document.createElement("div");
+  box.id = "rp-consent"; box.setAttribute("role", "dialog"); box.setAttribute("aria-label", "Privacy choices");
+  const cur = choice();
+  box.innerHTML = '<b>No cookies here</b><p>This site sets no cookies and shows no ads. It keeps a few small settings in your browser (like your votes and name) and counts anonymous page statistics so we can see which articles help. <a href="/privacy#analytics">Privacy Policy</a></p>' +
+    '<div class="rp-row"><button type="button" class="rp-yes">' + (cur === "yes" ? "Keep statistics on" : "Accept") + '</button><button type="button" class="rp-no">' + (cur === "no" ? "Keep statistics off" : "Decline statistics") + '</button></div>';
+  box.querySelector(".rp-yes").addEventListener("click", () => { choice("yes"); off = !cfg.apiKey || !cfg.projectId || navigator.webdriver || ignored || /^\/admin/.test(location.pathname) || !/^https?:$/.test(location.protocol) || /^(localhost|127\.)/.test(location.hostname); box.remove(); });
+  box.querySelector(".rp-no").addEventListener("click", () => { choice("no"); off = true; box.remove(); });
+  document.body.appendChild(box);
+}
+if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", () => banner()); else banner();
+document.addEventListener("click", e => { if (e.target.closest("[data-privacy-choice]")) { e.preventDefault(); banner(true); } });

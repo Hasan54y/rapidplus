@@ -268,3 +268,41 @@ body.noscroll{overflow:hidden}
 .bsearch-hint:empty{display:none}
 @media(max-width:560px){.bsearch-box{margin-top:2vh;max-height:92vh}.bsearch-res img{width:64px;height:40px}}
 @media print{.bsearch-ov,.bmenu{display:none!important}}
+
+/* Newsletter card */
+.nl{margin:0;padding:22px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 9%,var(--card)),var(--card) 60%)}
+.nl h2{font-size:22px;letter-spacing:-.4px;margin:0 0 4px}
+.nl-sub{margin:0 0 14px;color:var(--muted);font-size:15.5px}
+.nl-form{display:flex;gap:10px;flex-wrap:wrap}
+.nl-form input[type=email]{flex:1 1 240px;min-width:0;box-sizing:border-box;font:inherit;font-size:16px;color:var(--text);background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:11px 14px}
+.nl-form input[type=email]:focus{outline:0;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 20%,transparent)}
+.nl-form .btn{padding:11px 22px}
+.nl .hp{position:absolute!important;left:-9999px;width:1px;height:1px;opacity:0}
+.nl .cm-msg{margin-top:10px}
+.nl-fine{margin:12px 0 0;font-size:12.5px;line-height:1.5;color:var(--muted)}
+.nl-fine a{color:var(--muted);text-decoration:underline}
+.nl-done{display:flex;align-items:center;gap:14px}
+.nl-done svg{flex:none;width:44px;height:44px;padding:11px;box-sizing:border-box;border-radius:50%;background:var(--accent);fill:none;stroke:#fff;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.nl-done b{font-size:17px}
+.nl-done p{margin:2px 0 0;color:var(--muted);font-size:14.5px}
+.nlsec{padding:10px 0 60px}
+.nlsec .wrap{max-width:760px}
+@media print{.nl,.nlsec{display:none!important}}
+
+/* Static pages: About, Contact */
+.pagebody{padding:40px 0 70px}
+.pagebody .wrap{max-width:760px}
+.pagebody .crumbs{font-size:13.5px;color:var(--muted);margin-bottom:10px}
+.pagebody .crumbs a{color:var(--muted)}
+.pagebody h1{font-size:clamp(32px,5vw,46px);letter-spacing:-1.2px;line-height:1.1;margin:0 0 12px}
+.pagebody .lead{font-size:19px;line-height:1.55;color:var(--muted);margin:0 0 26px}
+.pagebody h2{font-size:24px;letter-spacing:-.5px;margin:34px 0 8px}
+.pagebody h3{font-size:17px;margin:20px 0 4px}
+.pagebody p,.pagebody li{font-size:17px;line-height:1.7}
+.pagebody p{margin:0 0 12px}
+.pagebody ul{padding-left:22px;margin:0 0 12px}
+.pagebody li{margin-bottom:6px}
+.pagebody .nlsec-inline{margin-top:34px}
+.contact-card{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:20px 22px;border:1px solid var(--line);border-radius:18px;background:var(--card);box-shadow:var(--shadow)}
+.contact-card .k{display:block;font-size:11.5px;font-weight:800;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.contact-card .email{font-size:clamp(18px,3.4vw,24px);font-weight:800;letter-spacing:-.4px;overflow-wrap:anywhere}

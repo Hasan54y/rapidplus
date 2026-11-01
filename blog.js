@@ -55,6 +55,7 @@ const store = {
   get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch { return d; } },
   set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch { } }
 };
+const declined = () => { try { return localStorage.getItem("rp_consent") === "no"; } catch { return false; } };
 const ignored = () => { try { return localStorage.getItem("rp_ignore") === "1"; } catch { return false; } };
 const myVotes = () => store.get("rp_votes", {});
 const setMyVote = (k, v) => { const m = myVotes(); if (v) m[k] = v; else delete m[k]; store.set("rp_votes", m); };
@@ -226,6 +227,7 @@ async function initPost() {
   engage.append(
     el("div", { class: "eng-row" }, el("div", { class: "eng-q" }, el("b", { text: "Was this article helpful?" }), el("span", { text: "Your vote tells us what to write more of." })), voteSlot),
     el("div", { class: "eng-row" }, el("b", { text: "Share this article" }), shareBar()),
+    subscribeCard("article"),
     commentsSection());
   (end || article).after(engage);
 
@@ -234,7 +236,7 @@ async function initPost() {
   voteSlot.append(voteBox("blog_posts/" + slug, cur, "Vote on this article"));
 
   let views = cur.views, counted = false;
-  const skip = ignored() || navigator.webdriver || /^(localhost|127\.)/.test(location.hostname) || !live;
+  const skip = ignored() || declined() || navigator.webdriver || /^(localhost|127\.)/.test(location.hostname) || !live;
   let seen = false; try { seen = sessionStorage.getItem("rp_v_" + slug) === "1"; } catch { }
   if (!skip && !seen) {
     try { await bump("blog_posts/" + slug, { views: 1 }); views += 1; counted = true; try { sessionStorage.setItem("rp_v_" + slug, "1"); } catch { } } catch { }
@@ -244,12 +246,53 @@ async function initPost() {
 }
 
 async function initHub() {
+  const mainEl = document.querySelector("main");
+  if (mainEl) mainEl.append(el("section", { class: "nlsec" }, el("div", { class: "wrap" }, subscribeCard("hub"))));
   const counts = await loadCounts();
   document.querySelectorAll("[data-cat]").forEach(card => {
     const s = (card.getAttribute("href") || "").replace(/\/+$/, "").split("/").pop();
     const v = counts[s] && counts[s].views, meta = card.querySelector(".postmeta");
     if (v > 0 && meta) meta.append(el("span", { class: "dot", text: "·" }), el("span", { text: `${nf(v)} ${v === 1 ? "view" : "views"}` }));
   });
+}
+
+// ---- newsletter: collects an address into Firestore; emails are sent from the admin's own mail tool
+async function emailId(e) {
+  try { const b = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(e)); return Array.from(new Uint8Array(b), x => x.toString(16).padStart(2, "0")).join(""); }
+  catch { let h1 = 5381, h2 = 52711; for (const c of e) { h1 = ((h1 * 33) ^ c.charCodeAt(0)) >>> 0; h2 = (h2 * 31 + c.charCodeAt(0)) | 0; } return "f" + h1.toString(16) + (h2 >>> 0).toString(16); }
+}
+function subscribeCard(source) {
+  const card = el("section", { class: "nl", "aria-labelledby": "nlh-" + source });
+  const done = () => { card.replaceChildren(el("div", { class: "nl-done" }, svg("M5 12.5l4.5 4.5L19 7.5"), el("div", {}, el("b", { text: "You're on the list." }), el("p", { text: "We'll email you when a new article is published." })))); };
+  if (store.get("rp_sub", false)) { done(); return card; }
+  const input = el("input", { type: "email", name: "email", placeholder: "you@example.com", autocomplete: "email", inputmode: "email", maxlength: "120", "aria-label": "Email address", required: true });
+  const trap = el("input", { type: "text", name: "company", tabindex: "-1", autocomplete: "off", class: "hp", "aria-hidden": "true" });
+  const btn = el("button", { type: "submit", class: "btn primary sm", text: "Subscribe" });
+  const msg = el("p", { class: "cm-msg", role: "status" });
+  const form = el("form", { class: "nl-form", novalidate: true }, input, trap, btn);
+  card.append(
+    el("h2", { id: "nlh-" + source, text: "Get new articles by email" }),
+    el("p", { class: "nl-sub", text: "One short email when we publish something new. No spam, and you can leave any time." }),
+    form, msg,
+    el("p", { class: "nl-fine" }, "By subscribing you agree to get these emails. We use your address for nothing else. To unsubscribe, email ", el("a", { href: "mailto:admin@rapidplusbrowser.online", text: "admin@rapidplusbrowser.online" }), ". See our ", el("a", { href: "/privacy", text: "Privacy Policy" }), "."));
+  const born = Date.now();
+  form.addEventListener("submit", async e => {
+    e.preventDefault(); msg.className = "cm-msg"; msg.textContent = "";
+    const addr = input.value.trim().toLowerCase();
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(addr) || addr.length > 120) { msg.classList.add("err"); msg.textContent = "Enter a valid email address."; return; }
+    if (trap.value || Date.now() - born < 1500) { done(); return; } // quietly drop bots
+    if (!live) { msg.classList.add("err"); msg.textContent = "Sign-up is unavailable right now."; return; }
+    btn.disabled = true; btn.textContent = "Subscribing…";
+    try {
+      const id = await emailId(addr);
+      await commit([{ update: { name: `${DOCS}/subscribers/${id}`, fields: { email: { stringValue: addr }, source: { stringValue: source }, consent: { booleanValue: true } } }, currentDocument: { exists: false }, updateTransforms: [{ fieldPath: "ts", setToServerValue: "REQUEST_TIME" }] }]);
+      store.set("rp_sub", true); done();
+    } catch (err) {
+      btn.disabled = false; btn.textContent = "Subscribe"; msg.classList.add("err");
+      msg.textContent = /403|409/.test(String(err.message)) ? "Looks like you're already on the list. If you don't get our emails, write to us." : "Couldn't sign you up. Check your connection and try again.";
+    }
+  });
+  return card;
 }
 
 // ---- header: mobile menu
@@ -334,4 +377,6 @@ addEventListener("keydown", e => {
   else if (e.key === "/" && !e.ctrlKey && !e.metaKey && !e.altKey && !/^(INPUT|TEXTAREA|SELECT)$/.test((document.activeElement || {}).tagName || "") && !(document.activeElement || {}).isContentEditable) { e.preventDefault(); openSearch(); }
 });
 
+document.querySelectorAll("[data-copy]").forEach(b => b.addEventListener("click", async () => toast((await copyText(b.dataset.copy)) ? "Copied" : "Couldn't copy. Select it and copy by hand.")));
+document.querySelectorAll("[data-subscribe]").forEach(h => h.append(subscribeCard(h.dataset.subscribe || "page")));
 if (isPost) initPost(); else if (document.querySelector("#list")) initHub();

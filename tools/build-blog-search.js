@@ -5,7 +5,7 @@ const root = path.join(__dirname, '..'), dir = path.join(root, 'blog');
 const dec = s => s.replace(/&nbsp;/g, ' ').replace(/&mdash;|&ndash;/g, ' ').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;|&apos;/g, "'").replace(/&#(\d+);/g, (_, n) => String.fromCharCode(+n));
 const strip = h => dec(h.replace(/<(script|style|svg|nav)[\s\S]*?<\/\1>/gi, ' ').replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').replace(/ ([.,;:!?)])/g, '$1').replace(/([.!?])\1+/g, '$1').trim();
 const posts = [];
-for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.html') && f !== 'index.html')) {
+for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.html') && !['index.html', 'about.html', 'contact.html'].includes(f))) {
   const h = fs.readFileSync(path.join(dir, f), 'utf8');
   const slug = f.replace(/\.html$/, '');
   const m = (re) => { const x = h.match(re); return x ? strip(x[1]) : ''; };

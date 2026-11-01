@@ -237,6 +237,14 @@
     </div>
 
     <div class="ad-card">
+      <h3>Newsletter subscribers <span class="bpill hid" id="subCount"></span></h3>
+      <p class="hint">People who signed up on the blog. Copy or download the list to send your newsletter from your own email tool, and remove anyone who asks to leave.</p>
+      <p class="note"><button class="sbtn" id="subCopy">Copy all emails</button> <button class="sbtn" id="subCsv">Download CSV</button></p>
+      <p class="note" id="subNote"></p>
+      <div class="tblwrap"><table class="pt" id="subTbl"></table></div>
+    </div>
+
+    <div class="ad-card">
       <h3>Sessions</h3>
       <p class="hint">Newest 150 sessions in this range. Click one to see exactly what that visitor did.</p>
       <div class="tblwrap"><table class="pt" id="sessTbl"></table></div>
@@ -730,7 +738,7 @@ async function load() {
       k.span = `previous ${R.days === 1 ? "day" : R.days + " days"} (${fmtDay(pFrom, { day: "numeric", month: "short" })} to ${fmtDay(addDays(R.from, -1), { day: "numeric", month: "short" })})`;
       S.prev = k;
     }
-    render(); renderBlog(); loadBlog();
+    render(); renderBlog(); loadBlog(); loadSubs();
   } catch (err) { $("note").textContent = "Couldn't load analytics: " + (err.code || err.message); }
 }
 
@@ -763,7 +771,7 @@ async function loadBlog() {
   } catch (err) { $("blogNote").textContent = "Couldn't load blog data: " + (err.code || err.message); }
 }
 function renderBlog() {
-  const pv = count(S.events.filter(e => e.type === "page_view" && /^\/blog\/[^/]+/.test(e.path || "")), e => e.path.replace(/\/+$/, "").split("/").pop().replace(/\.html$/, ""));
+  const pv = count(S.events.filter(e => e.type === "page_view" && /^\/blog\/(?!about|contact)[^/]+/.test(e.path || "")), e => e.path.replace(/\/+$/, "").split("/").pop().replace(/\.html$/, ""));
   const slugs = new Set([...B.posts.map(p => p.slug), ...pv.keys()]);
   const rows = [...slugs].map(sl => {
     const p = B.posts.find(x => x.slug === sl) || { views: 0, up: 0, down: 0 }, cm = B.comments.filter(c => c.post === sl);
@@ -803,6 +811,32 @@ $("cmList").addEventListener("click", e => {
     blogWrite(bt => bt.delete(doc(db, "blog_comments", id)));
   }
 });
+
+// ---------- newsletter subscribers ----------
+const SUBS = { list: [] };
+async function loadSubs() {
+  try {
+    const snap = await getDocs(query(collection(db, "subscribers"), orderBy("ts", "desc"), limit(2000)));
+    SUBS.list = snap.docs.map(d => { const e = d.data(); return { id: d.id, email: e.email || "", source: e.source || "", t: e.ts && e.ts.toMillis ? e.ts.toMillis() : 0 }; });
+    $("subNote").textContent = ""; renderSubs();
+  } catch (err) { $("subNote").textContent = "Couldn't load subscribers: " + (err.code || err.message); }
+}
+function renderSubs() {
+  $("subCount").textContent = nf(SUBS.list.length);
+  $("subTbl").innerHTML = SUBS.list.length ? `<thead><tr><th class="l">Email</th><th class="l">Signed up on</th><th class="l">Date</th><th></th></tr></thead><tbody>${SUBS.list.map(x => `<tr data-id="${esc(x.id)}"><td class="l">${esc(x.email)}</td><td class="l">${esc(x.source || "–")}</td><td class="l">${x.t ? new Date(x.t).toLocaleDateString() : "just now"}</td><td><button class="sbtn" data-del>Remove</button></td></tr>`).join("")}</tbody>` : `<tbody><tr><td class="l">No subscribers yet.</td></tr></tbody>`;
+}
+$("subTbl").addEventListener("click", async e => {
+  const b = e.target.closest("button[data-del]"), tr = e.target.closest("tr[data-id]"); if (!b || !tr) return;
+  if (b.dataset.armed !== "1") { b.dataset.armed = "1"; b.textContent = "Click again to remove"; return; }
+  try { const bt = writeBatch(db); bt.delete(doc(db, "subscribers", tr.dataset.id)); await bt.commit(); await loadSubs(); }
+  catch (err) { $("subNote").textContent = "Couldn't remove: " + (err.code || err.message); }
+});
+$("subCopy").addEventListener("click", async () => {
+  const txt = SUBS.list.map(x => x.email).join(", ");
+  try { await navigator.clipboard.writeText(txt); $("subNote").textContent = "Copied " + nf(SUBS.list.length) + " addresses."; }
+  catch { $("subNote").textContent = "Couldn't copy automatically. Use Download CSV instead."; }
+});
+$("subCsv").addEventListener("click", () => download(`rapidplus-subscribers-${dayKey(Date.now())}.csv`, ["email,source,signed_up", ...SUBS.list.map(x => [cell(x.email), cell(x.source), cell(x.t ? new Date(x.t).toISOString() : "")].join(","))].join("\n")));
 
 const getIgnore = () => { try { return localStorage.getItem("rp_ignore") === "1"; } catch { return false; } };
 $("ignoreChk").addEventListener("change", e => { try { e.target.checked ? localStorage.setItem("rp_ignore", "1") : localStorage.removeItem("rp_ignore"); } catch { } });
