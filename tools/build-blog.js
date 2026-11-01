@@ -63,7 +63,7 @@ const header = current => `<header class="bnav" id="bnav"><div class="wrap">
     <p class="bmenu-h">Rapid+ Blog</p>
     <a href="/blog/about">About${CHEV}</a>
     <a href="/blog/contact">Contact${CHEV}</a>
-    <a href="/blog/feed.xml">RSS feed${CHEV}</a>
+    <a href="/blog/rss">RSS feed${CHEV}</a>
     <p class="bmenu-h">Rapid+ Browser</p>
     <a href="/">About Rapid+ Browser${CHEV}</a>
     <a href="/download">Download the app${CHEV}</a>
@@ -76,7 +76,7 @@ const header = current => `<header class="bnav" id="bnav"><div class="wrap">
 const footer = `<footer class="bfoot"><div class="wrap">
   <div class="bfoot-top">
     <div><a class="bbrand" href="/blog/"><img src="/assets/logo.png" alt=""><span>Rapid<b>+</b> Blog</span></a><p>Researched guides on privacy, browsers and the web, from the team behind Rapid+ Browser.</p></div>
-    <div class="bfoot-links"><a href="/blog/">All articles</a><a href="/blog/about">About</a><a href="/blog/contact">Contact</a><a href="/blog/feed.xml">RSS feed</a><a href="/">Rapid+ Browser</a><a href="/download">Download</a><a href="/privacy">Privacy Policy</a><a href="/terms">Terms of Use</a><a href="/privacy#analytics" data-privacy-choice>Privacy choices</a><a href="https://www.facebook.com/rapidplusbrowser" target="_blank" rel="noopener">Facebook</a><a href="mailto:admin@rapidplusbrowser.online">admin@rapidplusbrowser.online</a></div>
+    <div class="bfoot-links"><a href="/blog/">All articles</a><a href="/blog/about">About</a><a href="/blog/contact">Contact</a><a href="/blog/rss">RSS feed</a><a href="/">Rapid+ Browser</a><a href="/download">Download</a><a href="/privacy">Privacy Policy</a><a href="/terms">Terms of Use</a><a href="/privacy#analytics" data-privacy-choice>Privacy choices</a><a href="https://www.facebook.com/rapidplusbrowser" target="_blank" rel="noopener">Facebook</a><a href="mailto:admin@rapidplusbrowser.online">admin@rapidplusbrowser.online</a></div>
   </div>
   <div class="copy">© 2026 HM Dev Studio · Rapid+ Blog</div>
 </div></footer>`;
@@ -136,7 +136,7 @@ const side = current => `<aside class="side" aria-label="Sidebar">
   <section class="side-card"><h3>Categories</h3><ul class="side-cats">${usedCats.map(([l, s]) => `<li><a href="/blog/category/${s}"${current === s ? ' class="on"' : ''}>${l}<i>${count(s)}</i></a></li>`).join('')}</ul></section>
   <section class="side-card" id="popular"><h3>Popular articles</h3><ol class="side-pop">${posts.slice(0, 5).map(p => `<li data-slug="${p.slug}"><a href="/blog/${p.slug}">${esc(p.title)}</a><span class="sv"></span></li>`).join('')}</ol></section>
   <div data-subscribe="sidebar"></div>
-  <section class="side-card"><h3>About Rapid+ Blog</h3><p class="side-about">Plain-language guides on browser privacy, security and speed from the team behind Rapid+ Browser. <a href="/blog/about">More about us</a> · <a href="/blog/feed.xml">RSS</a></p></section>
+  <section class="side-card"><h3>About Rapid+ Blog</h3><p class="side-about">Plain-language guides on browser privacy, security and speed from the team behind Rapid+ Browser. <a href="/blog/about">More about us</a> · <a href="/blog/rss">RSS</a></p></section>
 </aside>`;
 const chipsNav = current => `<nav class="cats cats-m" aria-label="Categories"><a href="/blog/"${current ? '' : ' class="on"'}>All<i>${posts.length}</i></a>${usedCats.map(([l, s]) => `<a href="/blog/category/${s}"${current === s ? ' class="on"' : ''}>${l}<i>${count(s)}</i></a>`).join('')}</nav>`;
 const crumbLd = (...items) => ({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: items.map(([name, url], i) => ({ '@type': 'ListItem', position: i + 1, name, item: SITE + url })) });
@@ -210,6 +210,29 @@ ${posts.map(p => `<item><title>${esc(p.title)}</title><link>${SITE}/blog/${p.slu
 </channel></rss>
 `;
 write(path.join(dir, 'feed.xml'), rss);
+
+// A normal page that explains the feed (linked from the footer, menu and sidebar). Feed readers use feed.xml directly.
+write(path.join(dir, 'rss.html'), shell({
+  title: 'RSS Feed | Rapid+ Blog', desc: 'Follow Rapid+ Blog in your news reader with the RSS feed.', canonical: '/blog/rss',
+  ogImage: `/assets/blog/${top.slug}.jpg`, ogAlt: top.alt,
+  body: `<section class="pagebody"><div class="wrap">
+  <div class="crumbs"><a href="/blog/">Rapid+ Blog</a> / RSS feed</div>
+  <h1>RSS feed</h1>
+  <p class="lead">Get every new article in your news reader, with no account needed.</p>
+  <div class="contact-card">
+    <div><span class="k">Feed address</span><a class="email" href="/blog/feed.xml">${SITE}/blog/feed.xml</a></div>
+    <button type="button" class="btn sm" data-copy="${SITE}/blog/feed.xml">Copy address</button>
+  </div>
+  <h2>How to use it</h2>
+  <ol>
+    <li>Open a feed reader such as Feedly, Inoreader or NetNewsWire.</li>
+    <li>Choose "Add feed" and paste the address above.</li>
+    <li>New Rapid+ Blog articles will show up there as soon as they are published.</li>
+  </ol>
+  <p>Prefer email? You can <a href="#subscribe">get new articles by email</a> instead.</p>
+  <div id="subscribe" data-subscribe="rss" class="nlsec-inline"></div>
+</div></section>`
+}));
 
 // ---------- search index
 write(path.join(dir, 'search.json'), JSON.stringify(posts.map(p => ({ slug: p.slug, title: p.title, desc: p.desc, cat: p.cat, cs: p.cs, date: p.date, mins: p.mins, text: p.text }))));
