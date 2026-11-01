@@ -400,3 +400,4 @@ body.noscroll{overflow:hidden}
 .homemain .feature-post .txt{padding:26px 30px 28px}
 .homemain .feature-post h2{font-size:clamp(26px,3.2vw,36px);letter-spacing:-.9px}
 @media(max-width:620px){.homemain .feature-post .txt{padding:20px}}
+.contact-card .feedurl{color:var(--text);font-size:clamp(15px,2.8vw,19px);user-select:all;cursor:text}

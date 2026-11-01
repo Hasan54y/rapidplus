@@ -26,7 +26,7 @@ const I_SEARCH = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy
 const I_BURGER = '<svg class="ib-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="ib-close" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>';
 
 // ---------- read the articles
-const SKIP = new Set(['index.html', 'about.html', 'contact.html', 'search.html']);
+const SKIP = new Set(['index.html', 'about.html', 'contact.html', 'search.html', 'rss.html']);
 const posts = [];
 for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.html') && !SKIP.has(f))) {
   const h = read(path.join(dir, f)), slug = f.replace(/\.html$/, '');
@@ -220,7 +220,7 @@ write(path.join(dir, 'rss.html'), shell({
   <h1>RSS feed</h1>
   <p class="lead">Get every new article in your news reader, with no account needed.</p>
   <div class="contact-card">
-    <div><span class="k">Feed address</span><a class="email" href="/blog/feed.xml">${SITE}/blog/feed.xml</a></div>
+    <div><span class="k">Feed address</span><span class="email feedurl">${SITE}/blog/feed.xml</span></div>
     <button type="button" class="btn sm" data-copy="${SITE}/blog/feed.xml">Copy address</button>
   </div>
   <h2>How to use it</h2>
