@@ -144,6 +144,7 @@
       <span>From</span><input type="date" id="fromDate"><span>to</span><input type="date" id="toDate">
       <button class="sbtn pri" id="applyBtn">Apply</button>
       <label class="chk"><input type="checkbox" id="cmpChk"> Compare with previous period</label>
+      <label class="chk" title="When on, visits from this browser are not recorded. Use yoursite/?notrack on other devices."><input type="checkbox" id="ignoreChk"> Don't count my visits in this browser</label>
       <span class="rangelbl" id="rangeLbl"></span>
     </div>
   </div>
@@ -224,7 +225,7 @@
 <script type="module">
 import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-import { getFirestore, collection, query, where, orderBy, limit, startAfter, getDocs, Timestamp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+import { getFirestore, collection, query, where, orderBy, limit, startAfter, getDocs, Timestamp, writeBatch, doc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
 const app = getApps().length ? getApp() : initializeApp(window.RAPID_FIREBASE || {});
 const auth = getAuth(app);
@@ -365,7 +366,7 @@ async function fetchPage(startMs, endMs, cursor, n) {
   if (cursor) cons.push(startAfter(cursor));
   cons.push(limit(n));
   const snap = await getDocs(query(collection(db, "analytics_events"), ...cons));
-  const out = snap.docs.map(d => { const e = d.data(); if (!e.ts) return null; e.t = e.ts.toMillis(); e.sid = e.sid || "x" + d.id; return e; }).filter(Boolean);
+  const out = snap.docs.map(d => { const e = d.data(); if (!e.ts) return null; e.t = e.ts.toMillis(); e.id = d.id; e.sid = e.sid || "x" + d.id; return e; }).filter(Boolean);
   return { out, last: snap.docs[snap.docs.length - 1], full: snap.docs.length === n };
 }
 async function fetchUpTo(startMs, endMs, cap, cursor = null, have = 0) {
@@ -611,7 +612,25 @@ $("pagesTbl").addEventListener("click", e => {
   if (tr) { S.selected = tr.dataset.p; render(); $("detail").scrollIntoView({ behavior: "smooth", block: "start" }); }
 });
 $("pageFilter").addEventListener("input", e => { S.filter = e.target.value.trim(); render(); });
-$("sessTbl").addEventListener("click", e => {
+const fpOf = s => { const e = s.entry; return [e.device, e.browser, e.os, e.screen, e.tz, e.lang].join("|"); };
+async function deleteEvents(ids) {
+  for (let i = 0; i < ids.length; i += 400) {
+    const b = writeBatch(db);
+    ids.slice(i, i + 400).forEach(id => b.delete(doc(db, "analytics_events", id)));
+    await b.commit();
+  }
+}
+$("sessTbl").addEventListener("click", async e => {
+  const del = e.target.closest("button[data-del]");
+  if (del) {
+    const sess = S.sessions.get(del.dataset.sid); if (!sess) return;
+    const list = del.dataset.del === "like" ? [...S.sessions.values()].filter(x => fpOf(x) === fpOf(sess)) : [sess];
+    const ids = list.flatMap(x => x.events.map(ev => ev.id)).filter(Boolean);
+    if (del.dataset.armed !== "1") { del.dataset.armed = "1"; del.textContent = "Click again to permanently delete " + ids.length + " events"; return; }
+    del.disabled = true; del.textContent = "Deleting…";
+    try { await deleteEvents(ids); await load(); } catch (err) { del.textContent = "Couldn't delete: " + (err.code || err.message); }
+    return;
+  }
   const tr = e.target.closest("tr[data-s]"); if (!tr) return;
   const next = tr.nextElementSibling;
   if (next && next.classList.contains("jrow")) { next.remove(); return; }
@@ -626,7 +645,10 @@ $("sessTbl").addEventListener("click", e => {
     else if (ev.type === "download_click") txt = `<b>Download click</b>: ${esc(ev.platform || "")} ${esc(ev.label || "")}`;
     return `<div><time>${t}</time><span>${txt}</span></div>`;
   }).join("");
-  tr.insertAdjacentHTML("afterend", `<tr class="jrow"><td class="jr" colspan="8"><div class="journey">${lines}</div></td></tr>`);
+  const like = [...S.sessions.values()].filter(x => fpOf(x) === fpOf(s));
+  const likeEv = like.reduce((a, x) => a + x.events.length, 0);
+  const btns = `<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="sbtn" data-del="one" data-sid="${esc(s.sid)}">Delete this session (${s.events.length} events)</button>${like.length > 1 ? `<button class="sbtn" data-del="like" data-sid="${esc(s.sid)}">Delete all ${like.length} sessions from this same device and browser (${likeEv} events)</button>` : ""}</div>`;
+  tr.insertAdjacentHTML("afterend", `<tr class="jrow"><td class="jr" colspan="8"><div class="journey">${lines}${btns}</div></td></tr>`);
 });
 
 function syncControls() {
@@ -692,8 +714,11 @@ async function refreshLive() {
   } catch { }
 }
 
+const getIgnore = () => { try { return localStorage.getItem("rp_ignore") === "1"; } catch { return false; } };
+$("ignoreChk").addEventListener("change", e => { try { e.target.checked ? localStorage.setItem("rp_ignore", "1") : localStorage.removeItem("rp_ignore"); } catch { } });
 let timer;
 onAuthStateChanged(auth, user => {
+  if (user) { try { if (!localStorage.getItem("rp_ignore_asked")) { localStorage.setItem("rp_ignore_asked", "1"); localStorage.setItem("rp_ignore", "1"); } } catch { } $("ignoreChk").checked = getIgnore(); }
   $("loginView").hidden = !!user; $("dashView").hidden = !user;
   clearInterval(timer);
   if (user) { syncControls(); load(); timer = setInterval(() => { if (document.visibilityState === "visible") refreshLive(); }, 30000); }

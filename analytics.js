@@ -3,7 +3,21 @@
 // No cookies and no ID that follows a visitor across visits: a random per-tab session id (sessionStorage) and a
 // one-bit "has visited before" flag (localStorage) are the only things kept in the browser.
 const cfg = window.RAPID_FIREBASE || {};
-const off = !cfg.apiKey || !cfg.projectId || navigator.webdriver ||
+
+// "Don't count me": visit any page once with ?notrack on a device/browser to stop counting it (kept in
+// localStorage), and ?track to start counting it again. The admin dashboard also sets this on sign-in.
+const flag = (set) => {
+  try {
+    if (set === true) localStorage.setItem("rp_ignore", "1");
+    else if (set === false) localStorage.removeItem("rp_ignore");
+    return localStorage.getItem("rp_ignore") === "1";
+  } catch { return false; }
+};
+const q0 = new URLSearchParams(location.search);
+if (q0.has("notrack")) flag(true); else if (q0.has("track")) flag(false);
+const ignored = flag();
+
+const off = !cfg.apiKey || !cfg.projectId || navigator.webdriver || ignored ||
   /^\/admin/.test(location.pathname) || !/^https?:$/.test(location.protocol) ||
   /^(localhost|127\.)/.test(location.hostname);
 
