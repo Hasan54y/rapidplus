@@ -155,11 +155,12 @@
       <div class="seg" id="presets">
         <button data-p="today">Today</button><button data-p="yesterday">Yesterday</button><button data-p="7" class="on">7 days</button><button data-p="30">30 days</button><button data-p="90">90 days</button><button data-p="all">All time</button>
       </div>
+      <div class="seg" id="scopeSeg" title="Which part of the site the numbers below are about"><button data-s="all" class="on">Everything</button><button data-s="site">Website only</button><button data-s="blog">Blog only</button></div>
       <span>From</span><input type="date" id="fromDate"><span>to</span><input type="date" id="toDate">
       <button class="sbtn pri" id="applyBtn">Apply</button>
       <label class="chk"><input type="checkbox" id="cmpChk"> Compare with previous period</label>
       <label class="chk" title="When on, visits from this browser are not recorded. Use yoursite/?notrack on other devices."><input type="checkbox" id="ignoreChk"> Don't count my visits in this browser</label>
-      <span class="rangelbl" id="rangeLbl"></span>
+      <span class="rangelbl" id="rangeLbl"></span><span class="rangelbl" id="scopeLbl" style="color:var(--accent);font-weight:700"></span>
     </div>
   </div>
 
@@ -377,8 +378,8 @@ const TZ = {
 const country = tz => tz ? (TZ[tz] || tz) : undefined;
 
 // ---------- state ----------
-const S = { preset: "7", from: null, to: null, compare: false, cap: CAP_START, events: [], prev: null, cursor: null, exhausted: true, sessions: new Map(), selected: null, pSort: ["views", -1], dSort: ["day", -1], filter: "" };
-try { const saved = JSON.parse(localStorage.getItem("rp_admin") || "null"); if (saved) { S.preset = saved.preset || "7"; S.compare = !!saved.compare; if (saved.preset === "custom") { S.from = saved.from; S.to = saved.to; } } } catch { }
+const S = { scope: "all", prevRaw: null, preset: "7", from: null, to: null, compare: false, cap: CAP_START, events: [], prev: null, cursor: null, exhausted: true, sessions: new Map(), selected: null, pSort: ["views", -1], dSort: ["day", -1], filter: "" };
+try { const saved = JSON.parse(localStorage.getItem("rp_admin") || "null"); if (saved) { S.preset = saved.preset || "7"; S.compare = !!saved.compare; S.scope = ["all", "site", "blog"].includes(saved.scope) ? saved.scope : "all"; if (saved.preset === "custom") { S.from = saved.from; S.to = saved.to; } } } catch { }
 
 function resolveRange() {
   const today = new Date(); today.setHours(0, 0, 0, 0);
@@ -444,6 +445,9 @@ function kpiOf(evs, sess) {
 }
 
 // ---------- render ----------
+const isBlogPath = p => /^\/blog(\/|$)/.test(p || "");
+const inScope = e => S.scope === "all" || (S.scope === "blog" ? isBlogPath(e.path) : !isBlogPath(e.path));
+const SCOPE_NAME = { all: "Everything (website and blog)", site: "Website only (blog excluded)", blog: "Blog only" };
 function delta(cur, prev, lowerBetter) {
   if (!S.prev) return "";
   if (!prev && !cur) return `<span class="dlt flat">–</span>`;
@@ -456,13 +460,18 @@ function delta(cur, prev, lowerBetter) {
 
 function render() {
   const R = resolveRange();
-  const ev = S.events, sess = S.sessions;
+  const ev = S.events.filter(inScope), sess = S.scope === "all" ? S.sessions : buildSessions(ev);
+  let PK = null;
+  if (S.prevRaw) { const pe = S.prevRaw.events.filter(inScope); PK = kpiOf(pe, buildSessions(pe)); PK.span = S.prevRaw.span; }
+  S.prev = PK;
   const pv = ev.filter(e => e.type === "page_view"), eng = ev.filter(e => e.type === "engage"), dl = ev.filter(e => e.type === "download_click"), ck = ev.filter(e => e.type === "click");
   const ss = [...sess.values()], nS = ss.length;
-  const K = kpiOf(ev, sess), PK = S.prev;
+  const K = kpiOf(ev, sess);
 
   $("rangeLbl").textContent = R.from ? (R.days === 1 ? fmtDay(R.from, { weekday: "long", day: "numeric", month: "long", year: "numeric" }) : `${fmtDay(R.from, { day: "numeric", month: "short", year: "numeric" })} to ${fmtDay(R.to, { day: "numeric", month: "short", year: "numeric" })} (${R.days} days)`) : "All time";
-  $("liveNow").textContent = new Set(ev.filter(e => e.t > Date.now() - 5 * 60e3).map(e => e.sid)).size;
+  $("liveNow").textContent = new Set(S.events.filter(e => e.t > Date.now() - 5 * 60e3).map(e => e.sid)).size;
+  $("scopeSeg").querySelectorAll("button").forEach(b => b.classList.toggle("on", b.dataset.s === S.scope));
+  document.body.dataset.scope = S.scope;
 
   const kpi = (label, val, sub, d) => `<div class="kpi"><span>${label}</span><b>${val}${d || ""}</b>${sub ? `<small>${sub}</small>` : ""}</div>`;
   $("kpis").innerHTML =
@@ -475,7 +484,14 @@ function render() {
     kpi("Bounce rate", pct(K.bounce * nS, nS), "1 page, no clicks", delta(K.bounce, PK?.bounce, true)) +
     kpi("Android downloads", nf(K.android), "", delta(K.android, PK?.android)) +
     kpi("Windows downloads", nf(K.windows), "", delta(K.windows, PK?.windows)) +
-    kpi("Download conversion", pct(K.conv * nS, nS), "sessions that clicked a download", delta(K.conv, PK?.conv));
+    kpi("Download conversion", pct(K.conv * nS, nS), "sessions that clicked a download", delta(K.conv, PK?.conv)) +
+    (S.scope === "all" ? (() => {
+      const bPv = pv.filter(e => isBlogPath(e.path)), bSess = new Set(bPv.map(e => e.sid)).size;
+      const pb = S.prevRaw ? S.prevRaw.events.filter(e => e.type === "page_view" && isBlogPath(e.path)) : null;
+      const pbS = pb ? new Set(pb.map(e => e.sid)).size : 0;
+      return kpi("Blog page views", nf(bPv.length), `${pct(bPv.length, K.views)} of all page views`, delta(bPv.length, pb ? pb.length : 0)) +
+        kpi("Blog readers", nf(bSess), "sessions that read a blog page", delta(bSess, pbS));
+    })() : "");
 
   // ---- per-day and per-hour series
   const sessDay = new Map();
@@ -582,8 +598,9 @@ function render() {
     return `<div><time>${new Date(e.t).toLocaleString(undefined, { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" })}</time><span class="tag ${esc(e.type)}">${esc(e.type.replace("_", " "))}</span><span class="what">${what}${meta ? ` <span style="color:var(--muted)">· ${esc(meta)}</span>` : ""}</span></div>`;
   }).join("") : `<p class="empty">No events in this range.</p>`;
 
-  $("note").textContent = `${nf(ev.length)} events loaded${S.exhausted ? " (everything in this range)" : " (more exist in this range; load more for exact totals)"}. Dates use your local time zone. Location is estimated from time zone; no IP addresses are collected.${PK ? ` Comparing with the ${PK.span}.` : ""}`;
+  $("note").textContent = `${nf(S.events.length)} events loaded${S.scope === "all" ? "" : ` (${nf(ev.length)} shown: ${SCOPE_NAME[S.scope].toLowerCase()})`}${S.exhausted ? " (everything in this range)" : " (more exist in this range; load more for exact totals)"}. Dates use your local time zone. Location is estimated from time zone; no IP addresses are collected.${PK ? ` Comparing with the ${PK.span}.` : ""}`;
   $("moreBtn").hidden = S.exhausted || S.events.length >= CAP_MAX;
+  $("scopeLbl").textContent = S.scope === "all" ? "" : "Showing: " + SCOPE_NAME[S.scope];
   if (S.selected) renderDetail(S.selected); else $("detail").hidden = true;
 }
 
@@ -692,7 +709,7 @@ function syncControls() {
   $("presets").querySelectorAll("button").forEach(b => b.classList.toggle("on", b.dataset.p === S.preset));
   $("fromDate").value = R.from ? inputDate(R.from) : ""; $("toDate").value = inputDate(R.to);
   $("cmpChk").checked = S.compare; $("cmpChk").disabled = S.preset === "all";
-  try { localStorage.setItem("rp_admin", JSON.stringify({ preset: S.preset, from: S.from, to: S.to, compare: S.compare })); } catch { }
+  try { localStorage.setItem("rp_admin", JSON.stringify({ preset: S.preset, from: S.from, to: S.to, compare: S.compare, scope: S.scope })); } catch { }
 }
 $("presets").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; S.preset = b.dataset.p; S.selected = null; syncControls(); load(); });
 $("applyBtn").addEventListener("click", () => {
@@ -700,6 +717,7 @@ $("applyBtn").addEventListener("click", () => {
   if (!t && !f) return;
   S.preset = "custom"; S.from = f || t; S.to = t || f; S.selected = null; syncControls(); load();
 });
+$("scopeSeg").addEventListener("click", e => { const b = e.target.closest("button[data-s]"); if (!b || b.dataset.s === S.scope) return; S.scope = b.dataset.s; S.selected = null; syncControls(); render(); });
 $("cmpChk").addEventListener("change", e => { S.compare = e.target.checked; syncControls(); load(); });
 $("refreshBtn").addEventListener("click", load);
 $("moreBtn").addEventListener("click", async () => {
@@ -717,7 +735,7 @@ function download(name, csv) {
 }
 $("csvBtn").addEventListener("click", () => {
   const cols = ["time", "type", "path", "title", "sid", "refHost", "ref", "utmSource", "utmMedium", "utmCampaign", "device", "browser", "os", "lang", "tz", "screen", "newVisitor", "dur", "scroll", "platform", "label", "target"];
-  download(`rapidplus-events-${dayKey(Date.now())}.csv`, [cols.join(","), ...S.events.slice().sort((a, b) => a.t - b.t).map(e => cols.map(c => cell(c === "time" ? new Date(e.t).toISOString() : e[c])).join(","))].join("\n"));
+  download(`rapidplus-events-${dayKey(Date.now())}.csv`, [cols.join(","), ...S.events.filter(inScope).slice().sort((a, b) => a.t - b.t).map(e => cols.map(c => cell(c === "time" ? new Date(e.t).toISOString() : e[c])).join(","))].join("\n"));
 });
 $("csvDayBtn").addEventListener("click", () => {
   const rows = [...$("dayTbl").querySelectorAll("tbody tr")].map(tr => [...tr.children].map(td => cell(td.textContent)).join(","));
@@ -730,13 +748,13 @@ async function load() {
   try {
     const cur = await fetchUpTo(R.startMs, R.endMs, CAP_START);
     S.events = cur.events; S.cursor = cur.cursor; S.exhausted = cur.exhausted; S.sessions = buildSessions(S.events);
-    S.prev = null;
+    S.prev = null; S.prevRaw = null;
     if (S.compare && R.from) {
       const pFrom = addDays(R.from, -R.days), pEnd = R.from.getTime();
       const pr = await fetchUpTo(pFrom.getTime(), pEnd, CAP_START);
-      const k = kpiOf(pr.events, buildSessions(pr.events));
+      const k = { events: pr.events };
       k.span = `previous ${R.days === 1 ? "day" : R.days + " days"} (${fmtDay(pFrom, { day: "numeric", month: "short" })} to ${fmtDay(addDays(R.from, -1), { day: "numeric", month: "short" })})`;
-      S.prev = k;
+      S.prevRaw = k;
     }
     render(); renderBlog(); loadBlog(); loadSubs();
   } catch (err) { $("note").textContent = "Couldn't load analytics: " + (err.code || err.message); }
