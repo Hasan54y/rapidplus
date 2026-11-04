@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>How Wars Cut the Internet: What Iran and Russia Show, and What Actually Helps | Rapid+ Blog</title>
+<meta name="description" content="Iran's 88-day blackout and Russia's regional shutdowns show how wars cut the internet. What happened, what a VPN or proxy can and cannot do, and how to prepare.">
+<meta name="theme-color" content="#ff6b00">
+<link rel="canonical" href="https://rapidplusbrowser.online/blog/internet-shutdowns-in-war">
+<link rel="icon" type="image/png" href="/assets/logo.png">
+<link rel="apple-touch-icon" href="/assets/logo.png">
+<meta property="og:type" content="article"><meta property="og:site_name" content="Rapid+ Blog">
+<meta property="og:title" content="How Wars Cut the Internet: What Iran and Russia Show, and What Actually Helps | Rapid+ Blog"><meta property="og:description" content="Iran's 88-day blackout and Russia's regional shutdowns show how wars cut the internet. What happened, what a VPN or proxy can and cannot do, and how to prepare.">
+<meta property="og:url" content="https://rapidplusbrowser.online/blog/internet-shutdowns-in-war"><meta property="og:image" content="https://rapidplusbrowser.online/assets/blog/internet-blackout-war.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Illustration of a cracked globe, an unplugged network cable and a crossed-out Wi-Fi symbol on a dark background"><meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-11-04"><meta property="article:section" content="Privacy">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="How Wars Cut the Internet: What Iran and Russia Show, and What Actually Helps | Rapid+ Blog"><meta name="twitter:description" content="Iran's 88-day blackout and Russia's regional shutdowns show how wars cut the internet. What happened, what a VPN or proxy can and cannot do, and how to prepare."><meta name="twitter:image" content="https://rapidplusbrowser.online/assets/blog/internet-blackout-war.jpg">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How Wars Cut the Internet: What Iran and Russia Show, and What Actually Helps","description":"Iran's 88-day blackout and Russia's regional shutdowns show how wars cut the internet. What happened, what a VPN or proxy can and cannot do, and how to prepare.","image":"https://rapidplusbrowser.online/assets/blog/internet-blackout-war.jpg","datePublished":"2026-11-04","dateModified":"2026-11-04","author":{"@type":"Organization","name":"Rapid+ Team","url":"https://rapidplusbrowser.online/","logo":{"@type":"ImageObject","url":"https://rapidplusbrowser.online/assets/logo.png"}},"publisher":{"@type":"Organization","name":"HM Dev Studio","url":"https://rapidplusbrowser.online/","logo":{"@type":"ImageObject","url":"https://rapidplusbrowser.online/assets/logo.png"}},"mainEntityOfPage":{"0":"h","1":"t","2":"t","3":"p","4":"s","5":":","6":"/","7":"/","8":"r","9":"a","10":"p","11":"i","12":"d","13":"p","14":"l","15":"u","16":"s","17":"b","18":"r","19":"o","20":"w","21":"s","22":"e","23":"r","24":".","25":"o","26":"n","27":"l","28":"i","29":"n","30":"e","31":"/","32":"b","33":"l","34":"o","35":"g","36":"/","37":"b","38":"i","39":"n","40":"a","41":"n","42":"c","43":"e","44":"-","45":"h","46":"a","47":"c","48":"k","@id":"https://rapidplusbrowser.online/blog/internet-shutdowns-in-war"},"wordCount":2267,"articleSection":"Privacy"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://rapidplusbrowser.online/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://rapidplusbrowser.online/blog/"},{"@type":"ListItem","position":3,"name":"How Wars Cut the Internet: What Iran and Russia Show, and What Actually Helps","item":"https://rapidplusbrowser.online/blog/internet-shutdowns-in-war"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Can a VPN work during a total internet shutdown?","acceptedAnswer":{"@type":"Answer","text":"No. A VPN needs an internet connection to reach its server. If the country's link to the outside world is cut, the VPN has nothing to connect through. It only helps when the connection works but certain sites or apps are blocked."}},{"@type":"Question","name":"What is the difference between a shutdown, filtering and a whitelist?","acceptedAnswer":{"@type":"Answer","text":"A shutdown cuts most or all connections to the outside internet. Filtering lets the internet work but blocks specific sites and apps. A whitelist allows only approved services and leaves everything else unreachable."}},{"@type":"Question","name":"Why do governments cut the internet in wartime?","acceptedAnswer":{"@type":"Answer","text":"Officials usually say they are protecting national systems from cyberattacks or preventing drone attacks. Human rights groups say the cuts also hide abuses and stop people sharing information. Both claims exist in the reporting above, and we cannot independently verify either."}},{"@type":"Question","name":"Is it legal to use a VPN?","acceptedAnswer":{"@type":"Answer","text":"It depends on the country, and the rules change. In some places VPNs are legal but certain uses are not, and in Iran, for example, Starlink terminals are outlawed with heavy penalties. Check the law where you are before you decide."}},{"@type":"Question","name":"How can I check whether a country's internet is being cut?","acceptedAnswer":{"@type":"Answer","text":"Public trackers publish live measurements. NetBlocks, Cloudflare Radar, OONI and the Access Now campaign against shutdowns are the common ones. They measure different things, so compare more than one."}}]}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<link rel="alternate" type="application/rss+xml" title="Rapid+ Blog" href="/blog/feed.xml">
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/blog.css">
+</head>
+<body>
+<header class="bnav" id="bnav"><div class="wrap">
+  <a class="bbrand" href="/blog/"><img src="/assets/logo.png" alt=""><span>Rapid<b>+</b> Blog</span></a>
+  <nav class="bnav-cats" aria-label="Categories"><a href="/blog/category/security">Security</a><a href="/blog/category/privacy">Privacy</a><a href="/blog/category/how-the-web-works">How the web works</a><a href="/blog/category/productivity">Productivity</a><a href="/blog/category/performance">Performance</a></nav>
+  <div class="bnav-r">
+    <button type="button" class="bicon" id="bsearch" aria-label="Search articles" title="Search (press /)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg></button>
+    <a class="btn primary sm bnav-dl" href="/download">Download</a>
+    <button type="button" class="bicon bburger" id="bburger" aria-label="Menu" aria-expanded="false" aria-controls="bmenu"><svg class="ib-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="ib-close" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+  </div>
+</div>
+<nav class="bmenu" id="bmenu" aria-label="Menu">
+  <div class="bmenu-in">
+    <p class="bmenu-h">Browse</p>
+    <a href="/blog/">All articles<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/category/security">Security<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/category/privacy">Privacy<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/category/how-the-web-works">How the web works<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/category/productivity">Productivity<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/category/performance">Performance<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/search">Search<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <p class="bmenu-h">Rapid+ Blog</p>
+    <a href="/blog/about">About<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/contact">Contact<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/rss">RSS feed<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <p class="bmenu-h">Rapid+ Browser</p>
+    <a href="/">About Rapid+ Browser<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/download">Download the app<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/privacy">Privacy Policy<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/terms">Terms of Use<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="https://www.facebook.com/rapidplusbrowser" target="_blank" rel="noopener">Facebook page<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+  </div>
+</nav></header>
+<main>
+<article>
+<header class="post-head">
+  <div class="crumbs"><a href="/blog/">Rapid+ Blog</a> / <a href="/blog/category/privacy">Privacy</a></div>
+  <a class="chip" href="/blog/category/privacy">Privacy</a>
+  <h1>How Wars Cut the Internet: What Iran and Russia Show, and What Actually Helps</h1>
+  <p class="dek">Iran spent 88 days almost fully offline and Russia switches off mobile internet region by region. Here is what happened, what a VPN can and cannot do, and what you can prepare.</p>
+  <div class="byline"><img src="/assets/logo.png" alt=""><div><span><b>Rapid+ Team</b> · 4 Nov 2026 · 11 min read</span></div></div>
+</header>
+<figure class="post-hero"><img src="/assets/blog/internet-blackout-war.jpg" width="1200" height="630" alt="Illustration of a cracked globe, an unplugged network cable and a crossed-out Wi-Fi symbol on a dark background" fetchpriority="high"></figure>
+<div class="post-layout">
+  <nav class="post-toc" aria-label="On this page"><h4>On this page</h4><a href="#short-version">The short version</a><a href="#three-things">Three different things people call "an internet shutdown"</a><a href="#iran">Iran: from protests to war</a><a href="#russia">Russia: switching off by region, and narrowing the exits</a><a href="#vpn-limits">What a VPN or proxy can and cannot do</a><a href="#prepare">What ordinary people can prepare before a cut</a><a href="#rapid">Where Rapid+ fits, and where it does not</a><a href="#faq">FAQ</a><a href="#sources">Sources</a></nav>
+  <div class="prose">
+<div class="note"><b>Written on 4 November 2026.</b> Rules on the internet change often in countries at war. The newest reporting we could find on Iran is from mid-October, and on Russia from the spring. Treat the numbers below as a snapshot, and check the live trackers listed in the sources before you rely on them.</div>
+
+<p class="lede">When a war starts, the first thing many people try is to message their family. In Iran on 28 February 2026, that stopped working. On the day the strikes began, the monitoring group NetBlocks measured the country's connection to the outside internet at about 4 percent of normal. About a week later it was around 1 percent. The country stayed cut off for 88 days.</p>
+<p>Wartime internet cuts are not new, but 2026 has shown how complete they can get, and how different governments use them. Iran switched much of its population off. Russia switches off mobile internet region by region, saying it is a response to Ukrainian drones, and slowly squeezes the tools people use to get around blocks. This article explains what happened in both countries, what a VPN or proxy can and cannot do in each case, and what ordinary people can prepare in advance.</p>
+
+<h2 id="short-version">The short version</h2>
+<ul>
+<li>Iran's blackout that began with the strikes on 28 February lasted 88 days. NetBlocks called it the longest nationwide internet shutdown in modern history. Partial restoration began on 26 May, and social media stayed blocked.</li>
+<li>Iran's officials now say more restrictions are possible if the war escalates. They have also described a "tiered" system where some groups, such as traders, researchers and journalists, would keep international access.</li>
+<li>In Russia, authorities cut mobile internet in many regions, citing the threat of Ukrainian drones, and keep a growing list of approved websites that still work during cuts.</li>
+<li>A VPN or proxy cannot work if the whole connection is switched off. It can help when specific sites or apps are blocked, until the blockers learn to spot it.</li>
+<li>Using circumvention tools or satellite equipment can be illegal or dangerous in some countries. Know your local law before you decide.</li>
+</ul>
+
+<h2 id="three-things">Three different things people call "an internet shutdown"</h2>
+<p>News reports use one phrase for several different problems, and the fix for each is different.</p>
+<div class="tablewrap"><table class="cmp" style="min-width:0">
+<thead><tr><th>What it is</th><th>What you see</th><th>Does a VPN help?</th></tr></thead>
+<tbody>
+<tr><td><b>Full shutdown</b></td><td>Almost nothing connects to the outside world. Domestic services may still work.</td><td>No. A VPN needs a working connection to reach its server.</td></tr>
+<tr><td><b>Filtering</b></td><td>The internet works, but certain sites and apps are blocked.</td><td>Often, until the blocking system learns to recognise the VPN.</td></tr>
+<tr><td><b>Whitelisting or throttling</b></td><td>Only approved services load, or everything is very slow.</td><td>Only if the VPN's own traffic is on the approved list, which is rare.</td></tr>
+</tbody></table></div>
+<p>Most of the confusion comes from mixing these up. Advice that works against filtering, such as "install a VPN", does nothing in a full shutdown.</p>
+
+<h2 id="iran">Iran: from protests to war</h2>
+<h3 id="iran-timeline">What happened, and when</h3>
+<p>Iran's year of disruption began before the war. During nationwide protests in January, authorities cut access for about three weeks, according to Al Jazeera. When the war began, the internet went down again.</p>
+<div class="tablewrap"><table class="cmp" style="min-width:0">
+<thead><tr><th>When</th><th>What happened</th></tr></thead>
+<tbody>
+<tr><td>8 January</td><td>Nationwide internet and phone blackout during protests. NetBlocks confirms the country is almost fully offline.</td></tr>
+<tr><td>Late January</td><td>Access relaxes, but most users are limited to a list of approved sites.</td></tr>
+<tr><td>28 February</td><td>US and Israeli strikes on Iran begin. NetBlocks reports connectivity at about 4 percent of ordinary levels.</td></tr>
+<tr><td>6 March</td><td>Traffic is about 1 percent of normal.</td></tr>
+<tr><td>April</td><td>A ceasefire takes effect on 8 April, but the shutdown continues. Around 21 April, authorities begin restoring access to "favoured groups".</td></tr>
+<tr><td>25 to 26 May</td><td>The president orders the blackout ended. NetBlocks confirms partial restoration on day 88, after about 2,093 hours.</td></tr>
+<tr><td>Late May onward</td><td>Fixed broadband returns first and mobile networks in stages. Foreign social media stays blocked.</td></tr>
+</tbody></table></div>
+<p>The timeline above follows the Wikipedia summary of the blackout and the NetBlocks and Al Jazeera reporting it cites. The dates of the ceasefire are described differently in different sources, and Al Jazeera notes that fighting later eased but that there is still no permanent ceasefire.</p>
+
+<h3 id="iran-cost">What it cost</h3>
+<p>NetBlocks estimated the economic loss at up to $37 million a day, and about $1.8 billion in total by mid-April. Iran's communications minister gave a similar figure of $35.7 million a day. These are estimates, not audited numbers, but both the monitor and the government are in the same range.</p>
+<p>The human cost is harder to count. Families abroad could not reach relatives, including over the Nowruz holiday. Because Iran has no official public alert system, a crowdsourced app called Mahsa Alert was used to share missile warnings. Human rights groups including Amnesty International and Human Rights Watch have said the blackout hid violence during the crackdown on protesters. The government says it limits the internet to protect national systems from cyberattacks, and a spokesperson told reporters in October, "We don't deny this issue."</p>
+
+<h3 id="iran-now">Where it stands now</h3>
+<p>The newest reporting is about satellite internet. Starlink is outlawed in Iran. According to Al Jazeera, using or owning a terminal carries a sentence of six months to two years, importing or distributing them up to five years, and the death penalty is possible if national security or espionage charges are added. Officials call Starlink a "tool of war" and say they have systems to cut off terminals. On 4 October, Iran summoned the Norwegian ambassador over the service.</p>
+<p>Officials also say more restrictions are possible if the war intensifies. The secretary of the Supreme National Cyberspace Council has backed tiered access, with protected international connections for selected groups. When a version of the idea was proposed in April, students and creators publicly called it discriminatory. A governance framework released in October says some platforms could be unblocked in future, but gives no timeline.</p>
+
+<h2 id="russia">Russia: switching off by region, and narrowing the exits</h2>
+<p>Russia's approach looks different. There is no single national blackout. The reporting here comes mostly from Mediazona, an independent outlet, and much of it rests on residents' accounts rather than measurements.</p>
+<ul>
+<li><b>Regional mobile shutdowns.</b> Authorities say they are a response to Ukrainian drones. Reports name regions including Omsk, Tyumen, Arkhangelsk, Rostov-on-Don, Bryansk and Krasnodar. Moscow's mobile internet was out for nearly three weeks in March, according to The Bell, which cited the FSB as the body that ordered base stations switched off. In February the State Duma passed a bill that lets the FSB demand shutdowns without the earlier condition of a security threat.</li>
+<li><b>A list of approved services.</b> A "registry of socially significant services" was introduced in September 2025 with 57 websites. It includes state media, banks, government services and Russian apps such as VK, Yandex and the state-backed messenger Max. These keep working when ordinary internet is cut.</li>
+<li><b>Pressure on VPNs.</b> Apple has removed VPN apps from its Russian App Store almost monthly. Mobile operators were told to charge for international mobile traffic above 15 GB a month from 1 May. Big Russian companies were told to block users who connect through a VPN or risk losing their place on the approved list.</li>
+<li><b>Messaging apps.</b> Calls on Telegram and WhatsApp were restricted from August 2025, and tougher limits on Telegram were announced in February 2026.</li>
+</ul>
+<p>The day-to-day effects described to Mediazona are small and practical. Taxis could not be ordered, bus-tracking apps stopped, and in Bryansk many shops stopped accepting card payments. The article also says shutdowns do not appear to stop the drone strikes they are meant to prevent, and that the military has been frustrated by disrupted communications. That is the outlet's reading, not an official statement.</p>
+
+<h2 id="vpn-limits">What a VPN or proxy can and cannot do</h2>
+<h3 id="how-blocking-works">How blocking works</h3>
+<p>Networks block in layers. They can remove a site's name from the directory that turns names into addresses (DNS). They can block the server addresses themselves. And they can inspect the traffic and block anything that looks like a known VPN, a method called deep packet inspection. Mediazona reports that the blocking of one VPN protocol in late 2025 was patchier than first claimed, and that most providers answered with new configurations. It is a game of catch-up, and it is why a tool that works one week may not work the next.</p>
+<h3 id="no-connection">When there is no connection at all</h3>
+<p>In a full shutdown, the problem is not a blocked website. The link to the outside world is cut. A VPN, a proxy or a different browser cannot create a connection that is not there. Only a different physical route can, such as satellite, and in Iran that route carries serious legal risk.</p>
+<h3 id="false-hopes">Three things to be careful about</h3>
+<ul>
+<li><b>Fake VPN apps.</b> When blocking increases, demand for VPNs jumps and so does the number of fake ones. Proton's censorship tracker, which is published by a VPN company and measures against an undefined baseline, reports surges of hundreds or thousands of percent in VPN use in countries during shutdowns and crackdowns, including Iran and Russia. Treat its figures as signs of demand, not exact measurements. Install any such tool only from its maker's own official page or a trusted app store.</li>
+<li><b>Free and unknown servers.</b> A proxy or VPN operator can see the sites you visit and any unencrypted traffic. A server you do not know is a risk, not just a convenience.</li>
+<li><b>Legal risk.</b> The law differs by country and changes quickly. This article is not advice to break any law.</li>
+</ul>
+
+<h2 id="prepare">What ordinary people can prepare before a cut</h2>
+<p>Most of what helps is not about software tricks. It is about what you have ready if the connection drops for days.</p>
+<ul>
+<li><b>Agree a plan with family.</b> Decide in advance who contacts whom, at what time, and by which fallback, such as a regular phone call or SMS if those still work.</li>
+<li><b>Save the essentials offline.</b> Download offline maps for your area, keep key phone numbers on paper, and save copies of important documents on your device.</li>
+<li><b>Know your local alert channels.</b> Many countries send emergency alerts by SMS or cell broadcast, which can work when apps do not.</li>
+<li><b>Keep your apps and system updated,</b> and install software only from official sources. Do this before a crisis, not during one.</li>
+<li><b>Keep sensitive accounts apart.</b> A separate browser profile for banking and email keeps those logins away from everything else. The <a href="/blog/browser-profiles">profiles guide</a> explains how.</li>
+<li><b>If you are abroad and cannot reach someone,</b> keep calls short and avoid pushing relatives to take risks to get online. Rely on verified news sources and not on forwarded messages.</li>
+</ul>
+
+<h2 id="rapid">Where Rapid+ fits, and where it does not</h2>
+<p>We build Rapid+ Browser, so here is the honest version. Rapid+ has a proxy and VPN mode that sends a profile's traffic through a SOCKS5 or HTTP proxy server that you provide. We do not run proxy servers or sell access. It cannot restore a connection that has been cut, and it does not make you anonymous. An HTTP proxy can read unencrypted traffic, and whoever runs the server can see where you go.</p>
+<p>It may help with filtering if you already have a proxy you trust and it is legal to use where you are. Rapid+ for Windows 1.3 also has a WebRTC setting that hides your real IP address from websites when you use a proxy, and a time zone setting. The matching options arrive on Android in the next update. None of this is a promise of safety in a country that actively hunts for circumvention tools.</p>
+
+<h2 id="faq">Frequently asked questions</h2>
+<details><summary>Can a VPN work during a total internet shutdown?</summary><p>No. A VPN needs an internet connection to reach its server. If the country's link to the outside world is cut, the VPN has nothing to connect through. It only helps when the connection works but certain sites or apps are blocked.</p></details>
+<details><summary>What is the difference between a shutdown, filtering and a whitelist?</summary><p>A shutdown cuts most or all connections to the outside internet. Filtering lets the internet work but blocks specific sites and apps. A whitelist allows only approved services and leaves everything else unreachable.</p></details>
+<details><summary>Why do governments cut the internet in wartime?</summary><p>Officials usually say they are protecting national systems from cyberattacks or preventing drone attacks. Human rights groups say the cuts also hide abuses and stop people sharing information. Both claims exist in the reporting above, and we cannot independently verify either.</p></details>
+<details><summary>Is it legal to use a VPN?</summary><p>It depends on the country, and the rules change. In some places VPNs are legal but certain uses are not, and in Iran, for example, Starlink terminals are outlawed with heavy penalties. Check the law where you are before you decide.</p></details>
+<details><summary>How can I check whether a country's internet is being cut?</summary><p>Public trackers publish live measurements. NetBlocks, Cloudflare Radar, OONI and the Access Now campaign against shutdowns are the common ones. They measure different things, so compare more than one.</p></details>
+
+<h2 id="sources">Sources</h2>
+<ol class="sources">
+<li><a href="https://www.aljazeera.com/news/2026/10/14/iran-targets-starlink-as-tool-of-war-with-hints-at-internet-restrictions" target="_blank" rel="noopener">Al Jazeera: Iran targets Starlink as "tool of war" with hints of more internet curbs (14 Oct 2026)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/2026_Internet_blackout_in_Iran" target="_blank" rel="noopener">Wikipedia: 2026 Internet blackout in Iran (timeline and cost estimates, with its own cited sources)</a></li>
+<li><a href="https://x.com/netblocks/status/2059256883274240508" target="_blank" rel="noopener">NetBlocks on X: partial restoration of connectivity in Iran on day 88 (26 May 2026)</a></li>
+<li><a href="https://www.iranintl.com/en/202605251140" target="_blank" rel="noopener">Iran International: Iran restores internet after 88-day blackout, keeps social media blocked (25 May 2026)</a></li>
+<li><a href="https://en.zona.media/article/2026/04/07/russian_internet_censorship_2026" target="_blank" rel="noopener">Mediazona: Russia's internet censorship in 2026: VPN crackdowns, mobile shutdowns, Telegram blocks and the state messenger Max (7 Apr 2026)</a></li>
+<li><a href="https://protonvpn.com/internet-censorship-observatory/2026" target="_blank" rel="noopener">Proton VPN: Internet censorship observatory 2026 (published by a VPN vendor; baseline not defined)</a></li>
+<li><a href="https://netblocks.org" target="_blank" rel="noopener">NetBlocks</a> · <a href="https://radar.cloudflare.com" target="_blank" rel="noopener">Cloudflare Radar</a> · <a href="https://ooni.org" target="_blank" rel="noopener">OONI</a> · <a href="https://www.accessnow.org/campaign/keepiton/" target="_blank" rel="noopener">Access Now #KeepItOn</a> (live trackers)</li>
+</ol>
+<div class="post-end"><img src="/assets/logo.png" alt=""><p><b>Written by the Rapid+ Team</b>. We build Rapid+ Browser for Android and Windows. Spotted a mistake or have a question? Email us at <a href="mailto:admin@rapidplusbrowser.online">admin@rapidplusbrowser.online</a>.</p></div>
+
+  </div>
+</div>
+</article>
+<section class="alt"><div class="wrap">
+  <h2 class="title">Keep reading</h2>
+  <div class="postgrid"><a class="postcard" href="/blog/proxy-vs-vpn"><div class="thumb"><img src="/assets/blog/proxy-vs-vpn.jpg" width="1200" height="630" alt="Illustration of two routes between a computer and a globe: an orange route through a single relay server watched by an eye, and a teal encrypted tunnel with a keyhole." loading="lazy"></div><div class="txt"><span class="chip">Privacy</span><h3>Proxy vs VPN: What Each One Actually Hides</h3><p>Both put another server between you and the web. They cover different traffic, protect it differently, and hide different things from different people.</p><div class="postmeta"><span>30 Oct 2026</span><span class="dot">·</span><span>10 min read</span></div></div></a><a class="postcard" href="/blog/browser-profiles"><div class="thumb"><img src="/assets/blog/browser-profiles.jpg" width="1200" height="630" alt="Illustration of one browser window split into three colored rooms, each with its own avatar, padlock and cookies, separated by walls." loading="lazy"></div><div class="txt"><span class="chip">Productivity</span><h3>Separate Browser Profiles for Work, Personal and Shopping: Why They Work</h3><p>One browser, several separate lives. How profiles keep logins and cookies apart, what they do not protect, and how to set them up well.</p><div class="postmeta"><span>30 Oct 2026</span><span class="dot">·</span><span>8 min read</span></div></div></a><a class="postcard" href="/blog/browser-fingerprinting"><div class="thumb"><img src="/assets/blog/browser-fingerprinting.jpg" width="1200" height="630" alt="Illustration of a fingertip whose ridges are built from tiny screens, batteries, gears and text blocks, standing for the device details that make a browser recognizable." loading="lazy"></div><div class="txt"><span class="chip">Privacy</span><h3>Browser Fingerprinting: How Websites Recognize You Without Cookies</h3><p>Nothing is stored on your device, so there is nothing to clear. Here is what fingerprinting measures, how well it works in practice, and what helps.</p><div class="postmeta"><span>30 Oct 2026</span><span class="dot">·</span><span>8 min read</span></div></div></a></div>
+</div></section>
+</main>
+<footer class="bfoot"><div class="wrap">
+  <div class="bfoot-top">
+    <div><a class="bbrand" href="/blog/"><img src="/assets/logo.png" alt=""><span>Rapid<b>+</b> Blog</span></a><p>Researched guides on privacy, browsers and the web, from the team behind Rapid+ Browser.</p></div>
+    <div class="bfoot-links"><a href="/blog/">All articles</a><a href="/blog/about">About</a><a href="/blog/contact">Contact</a><a href="/blog/rss">RSS feed</a><a href="/">Rapid+ Browser</a><a href="/download">Download</a><a href="/privacy">Privacy Policy</a><a href="/terms">Terms of Use</a><a href="/privacy#analytics" data-privacy-choice>Privacy choices</a><a href="https://www.facebook.com/rapidplusbrowser" target="_blank" rel="noopener">Facebook</a><a href="mailto:admin@rapidplusbrowser.online">admin@rapidplusbrowser.online</a></div>
+  </div>
+  <div class="copy">© 2026 HM Dev Studio · Rapid+ Blog</div>
+</div></footer>
+<div class="dlbar"><img src="/assets/logo.png" alt=""><div><b>Rapid+ Browser</b>Free, always</div><a class="btn primary" href="/download">Get app</a></div>
+<script>
+if(/\.html$/.test(location.pathname)){var cp=location.pathname.replace(/index\.html$/,'').replace(/\.html$/,'')||'/';history.replaceState(null,'',cp+location.search+location.hash)}
+</script>
+<script src="/firebase-config.js"></script>
+<script type="module" src="/analytics.js"></script>
+<script type="module" src="/blog.js"></script>
+</body></html>
