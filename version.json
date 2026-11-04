@@ -1,7 +1,7 @@
 {
-  "versionCode": 30,
-  "versionName": "1.4",
-  "notes": "Rapid+ Pro is gone: every feature, including unlimited profiles and the ad & tracker blocker, is now free for everyone, with no subscription and no account needed. Fixed \"For you\" feed thumbnails and refreshing for new stories. Added an optional daily digest notification and an in-app media downloader, both off by default in Settings. Removed account sign-in and cross-device sync, so Rapid+ now stays fully on your device.",
+  "versionCode": 31,
+  "versionName": "1.5",
+  "notes": "Music and video now keep playing when you leave the app, with previous, next, shuffle and repeat buttons and the cover art in the notification. Rapid+ can open mp3, mp4, pictures and text files from other apps with its own player. Background tabs keep running and pages open at the right size. New in Settings: unload inactive tabs, hide your IP from WebRTC, and choose the time zone websites see.",
   "url": "https://rapidplusbrowser.online/download",
   "minVersionCode": 0,
   "desktop": {
