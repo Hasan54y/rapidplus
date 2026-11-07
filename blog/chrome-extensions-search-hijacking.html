@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Chrome Extensions Hijacked Search for 13.4 Million Users: What Happened and How to Check Your Browser | Rapid+ Blog</title>
+<meta name="description" content="319 Chrome extensions with 13.4 million installs changed the default search engine and routed searches through the operator. What was found, the real risk, and how to check your browser.">
+<meta name="theme-color" content="#ff6b00">
+<link rel="canonical" href="https://rapidplusbrowser.online/blog/chrome-extensions-search-hijacking">
+<link rel="icon" type="image/png" href="/assets/logo.png">
+<link rel="apple-touch-icon" href="/assets/logo.png">
+<meta property="og:type" content="article"><meta property="og:site_name" content="Rapid+ Blog">
+<meta property="og:title" content="Chrome Extensions Hijacked Search for 13.4 Million Users: What Happened and How to Check Your Browser | Rapid+ Blog"><meta property="og:description" content="319 Chrome extensions with 13.4 million installs changed the default search engine and routed searches through the operator. What was found, the real risk, and how to check your browser.">
+<meta property="og:url" content="https://rapidplusbrowser.online/blog/chrome-extensions-search-hijacking"><meta property="og:image" content="https://rapidplusbrowser.online/assets/blog/chrome-extensions-search-hijacking.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Illustration of a red puzzle-piece extension redirecting a search bar through a proxy box to a gold coin on a dark background"><meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-11-05"><meta property="article:section" content="Security">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Chrome Extensions Hijacked Search for 13.4 Million Users: What Happened and How to Check Your Browser | Rapid+ Blog"><meta name="twitter:description" content="319 Chrome extensions with 13.4 million installs changed the default search engine and routed searches through the operator. What was found, the real risk, and how to check your browser."><meta name="twitter:image" content="https://rapidplusbrowser.online/assets/blog/chrome-extensions-search-hijacking.jpg">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Chrome Extensions Hijacked Search for 13.4 Million Users: What Happened and How to Check Your Browser","description":"319 Chrome extensions with 13.4 million installs changed the default search engine and routed searches through the operator. What was found, the real risk, and how to check your browser.","image":"https://rapidplusbrowser.online/assets/blog/chrome-extensions-search-hijacking.jpg","datePublished":"2026-11-05","dateModified":"2026-11-05","author":{"@type":"Organization","name":"Rapid+ Team","url":"https://rapidplusbrowser.online/","logo":{"@type":"ImageObject","url":"https://rapidplusbrowser.online/assets/logo.png"}},"publisher":{"@type":"Organization","name":"HM Dev Studio","url":"https://rapidplusbrowser.online/","logo":{"@type":"ImageObject","url":"https://rapidplusbrowser.online/assets/logo.png"}},"mainEntityOfPage":{"0":"h","1":"t","2":"t","3":"p","4":"s","5":":","6":"/","7":"/","8":"r","9":"a","10":"p","11":"i","12":"d","13":"p","14":"l","15":"u","16":"s","17":"b","18":"r","19":"o","20":"w","21":"s","22":"e","23":"r","24":".","25":"o","26":"n","27":"l","28":"i","29":"n","30":"e","31":"/","32":"b","33":"l","34":"o","35":"g","36":"/","37":"b","38":"i","39":"n","40":"a","41":"n","42":"c","43":"e","44":"-","45":"h","46":"a","47":"c","48":"k","@id":"https://rapidplusbrowser.online/blog/chrome-extensions-search-hijacking"},"wordCount":1705,"articleSection":"Security"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://rapidplusbrowser.online/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://rapidplusbrowser.online/blog/"},{"@type":"ListItem","position":3,"name":"Chrome Extensions Hijacked Search for 13.4 Million Users: What Happened and How to Check Your Browser","item":"https://rapidplusbrowser.online/blog/chrome-extensions-search-hijacking"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How many Chrome extensions were involved?","acceptedAnswer":{"@type":"Answer","text":"Socket researcher John Tuckner documented 319 extensions with about 13.4 million reported installs. That includes 57 extensions from his April 2025 report and 264 newly identified ones."}},{"@type":"Question","name":"What did the extensions do?","acceptedAnswer":{"@type":"Answer","text":"They replaced the browser's default search engine and sent searches through servers controlled by the operator before passing them to Bing or Yahoo. The operators earned referral payments for the traffic."}},{"@type":"Question","name":"Were passwords or files stolen?","acceptedAnswer":{"@type":"Answer","text":"No theft of passwords or files has been reported. Socket says it found no evidence that searches were redirected to phishing or malware pages, though the redirect could be changed at any time."}},{"@type":"Question","name":"Does this affect browsers other than Chrome?","acceptedAnswer":{"@type":"Answer","text":"The extensions were found in the Chrome Web Store. Other Chromium-based browsers, such as Edge and Brave, can install Chrome extensions, so it is sensible to check the extension list there too. Reports in this campaign focus on Chrome."}},{"@type":"Question","name":"I removed the extension. Is my browser clean?","acceptedAnswer":{"@type":"Answer","text":"Check that the default search engine is back to the one you chose and run a scan with a security tool you trust. Search results that still look unfamiliar are a reason to look further."}}]}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<link rel="alternate" type="application/rss+xml" title="Rapid+ Blog" href="/blog/feed.xml">
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/blog.css">
+</head>
+<body>
+<header class="bnav" id="bnav"><div class="wrap">
+  <a class="bbrand" href="/blog/"><img src="/assets/logo.png" alt=""><span>Rapid<b>+</b> Blog</span></a>
+  <nav class="bnav-cats" aria-label="Categories"><a href="/blog/category/security">Security</a><a href="/blog/category/privacy">Privacy</a><a href="/blog/category/how-the-web-works">How the web works</a><a href="/blog/category/productivity">Productivity</a><a href="/blog/category/performance">Performance</a></nav>
+  <div class="bnav-r">
+    <button type="button" class="bicon" id="bsearch" aria-label="Search articles" title="Search (press /)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg></button>
+    <a class="btn primary sm bnav-dl" href="/download">Download</a>
+    <button type="button" class="bicon bburger" id="bburger" aria-label="Menu" aria-expanded="false" aria-controls="bmenu"><svg class="ib-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="ib-close" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+  </div>
+</div>
+<nav class="bmenu" id="bmenu" aria-label="Menu">
+  <div class="bmenu-in">
+    <p class="bmenu-h">Browse</p>
+    <a href="/blog/">All articles<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/category/security">Security<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/category/privacy">Privacy<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/category/how-the-web-works">How the web works<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/category/productivity">Productivity<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/category/performance">Performance<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/search">Search<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <p class="bmenu-h">Rapid+ Blog</p>
+    <a href="/blog/about">About<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/contact">Contact<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/rss">RSS feed<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <p class="bmenu-h">Rapid+ Browser</p>
+    <a href="/">About Rapid+ Browser<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/download">Download the app<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/privacy">Privacy Policy<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/terms">Terms of Use<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="https://www.facebook.com/rapidplusbrowser" target="_blank" rel="noopener">Facebook page<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+  </div>
+</nav></header>
+<main>
+<article>
+<header class="post-head">
+  <div class="crumbs"><a href="/blog/">Rapid+ Blog</a> / <a href="/blog/category/security">Security</a></div>
+  <a class="chip" href="/blog/category/security">Security</a>
+  <h1>Chrome Extensions Hijacked Search for 13.4 Million Users: What Happened and How to Check Your Browser</h1>
+  <p class="dek">Security researchers found 319 extensions that quietly changed the default search engine and sent every query through the operator's servers. What is confirmed, what is not, and a two-minute check.</p>
+  <div class="byline"><img src="/assets/logo.png" alt=""><div><span><b>Rapid+ Team</b> · 5 Nov 2026 · 8 min read</span></div></div>
+</header>
+<figure class="post-hero"><img src="/assets/blog/chrome-extensions-search-hijacking.jpg" width="1200" height="630" alt="Illustration of a red puzzle-piece extension redirecting a search bar through a proxy box to a gold coin on a dark background" fetchpriority="high"></figure>
+<div class="post-layout">
+  <nav class="post-toc" aria-label="On this page"><h4>On this page</h4><a href="#short-version">The short version</a><a href="#what-was-found">What the researchers found</a><a href="#how-it-worked">How the hijack worked</a><a href="#risk">What the risk actually is</a><a href="#check">How to check your browser</a><a href="#habits">Habits that reduce the risk</a><a href="#rapid">Where Rapid+ fits</a><a href="#faq">FAQ</a><a href="#sources">Sources</a></nav>
+  <div class="prose">
+<div class="note"><b>Written on 5 November 2026.</b> The campaign is still being tracked, and researchers keep finding new extensions. Most of the facts below come from the security firm Socket and from reports by BleepingComputer and Malwarebytes. We did not retrieve Socket's own report, so the list of affected extensions is not reproduced here. Use the link in the sources to check it.</div>
+
+<p class="lede">Socket researcher John Tuckner has documented 319 Chrome extensions that changed the default search engine in users' browsers and sent every search through servers run by the extension's operator before the results appeared. The extensions report a combined 13.4 million installs. Their operators were paid referral fees by Yahoo or Bing for the traffic.</p>
+<p>It is a search hijack, not a ransomware attack or a stolen password database, and so far there is no public evidence of stolen files or installed malware. It still matters, because a search box is where people type health questions, money worries and workplace problems. This article sets out what was found, what the extensions could and could not do, and how to check your own browser in about two minutes.</p>
+
+<h2 id="short-version">The short version</h2>
+<ul>
+<li>Socket found 319 extensions with about 13.4 million reported installs. BleepingComputer reported the findings on 29 October 2026.</li>
+<li>The new report builds on Tuckner's April 2025 finding of 57 extensions with 6 million users. It adds 264 extensions and about 8.7 million users.</li>
+<li>The extensions replaced the default search engine and routed queries through the operator's proxy before sending them to Bing or Yahoo. The operators earned referral payments.</li>
+<li>They were disguised as PDF converters, manual finders, "safe search" tools and "AI search" tools, and were promoted through ads.</li>
+<li>Socket did not find evidence that searches were redirected to phishing or malware pages. It warns that the destination could change at any time.</li>
+<li>The 13.4 million figure is a cumulative total over roughly a decade, not the number of people affected this week.</li>
+<li>Check <b>chrome://extensions</b> and the default search engine setting. Instructions are below.</li>
+</ul>
+
+<h2 id="what-was-found">What the researchers found</h2>
+<p>In April 2025 Tuckner described 57 extensions with about 6 million users that behaved this way. The October 2026 report widens the picture. It adds 264 extensions with about 8.7 million users, for a total of 319 and 13.4 million.</p>
+<p>BleepingComputer describes two large clusters. One, labelled "Bing-Search", has 37 extensions and about 2.2 million users and was often promoted through ads from a network called Bidbrain. The other, "SecuryBrowse", has 58 extensions and about 4.9 million users, and uses security-themed names such as Fire Shield, Securify and WatchTower.</p>
+<p>Most of the extensions had already been removed from the Chrome Web Store by the time of publication. New ones keep appearing. BleepingComputer asked Google for comment and had not received a reply when it published.</p>
+
+<h2 id="how-it-worked">How the hijack worked</h2>
+<h3 id="settings-override">A single manifest setting</h3>
+<p>Chrome lets an extension declare a replacement search provider through a manifest field called <code>chrome_settings_overrides</code>. The field exists for legitimate search tools. The campaign used it as the whole attack. Socket noted that one example had only a manifest and icons, with no background scripts, no content scripts and no requested permissions. An extension like that can look harmless in a review of what it is allowed to do.</p>
+<h3 id="proxy">The detour</h3>
+<p>Once the extension is installed, a search typed in the address bar goes first to a server controlled by the operator. That server passes the query on to Bing or Yahoo, tagged with a partner identifier that tells the search engine whom to pay. Tuckner ties the revenue to a syndication partner ID, which is how these referral programs normally track traffic.</p>
+<p>In one of his tests, an extension called Predator Search sent six identical searches to four different places: Yahoo with partner tags, a landing page on searchlio.net, a chain through searchtosearch.com to another domain, and a Cloudflare error page. The same search did not always lead to the same result.</p>
+<h3 id="distribution">How people ended up installing them</h3>
+<p>The extensions presented themselves as PDF converters, manual finders, safe-search tools and AI search tools. Most were unlisted in the Chrome Web Store, which means they did not appear in store search results and could only be installed through a direct link. Ads sent people to those links. Malwarebytes says the ads ran on networks that include Google Ads.</p>
+
+<h2 id="risk">What the risk actually is</h2>
+<p>Malwarebytes quotes Socket on the main risk: the operators could see what users searched for. Queries were often tied to a unique identifier, which would let an operator link searches from the same browser over time. A person's searches can reveal medical concerns, finances and workplace issues.</p>
+<p>The second risk is the destination. Because the redirect sits on the operator's server, the page a user lands on can change without any extension update. Socket said it did not find evidence that the extensions had sent users to phishing or malware sites. It treats the behaviour as closer to a potentially unwanted program than to malware, but says the risk of malware remains.</p>
+<div class="tablewrap"><table class="cmp" style="min-width:0">
+<thead><tr><th>Claim</th><th>What the reporting supports</th></tr></thead>
+<tbody>
+<tr><td>13.4 million people were infected</td><td>Not quite. It is the combined reported install count over about a decade, not the number of people newly affected this week.</td></tr>
+<tr><td>The extensions stole passwords</td><td>No such finding has been reported.</td></tr>
+<tr><td>The extensions saw search queries</td><td>Yes. Queries went through operator-controlled servers.</td></tr>
+<tr><td>Users were sent to malware pages</td><td>Socket found no evidence of it, but the destination could be changed at any time.</td></tr>
+<tr><td>The problem is over</td><td>No. Many of the listed extensions are gone, but new ones keep appearing.</td></tr>
+</tbody></table></div>
+
+<h2 id="check">How to check your browser</h2>
+<p>Malwarebytes recommends three checks. They take a few minutes and work the same way in other Chromium-based browsers, with a different address at the start.</p>
+<ol>
+<li><b>Review your extensions.</b> Type <code>chrome://extensions</code> in the address bar. In Microsoft Edge the address is <code>edge://extensions</code>, and in Brave it is <code>brave://extensions</code>. Remove anything you do not recognise, no longer use or do not trust. If you are unsure about one, compare it with the list at the end of Socket's report.</li>
+<li><b>Check your search engine.</b> Open the three-dot menu, choose Settings, then Search engine, and confirm the default is the one you picked. If the page says an extension controls this setting, open that extension and remove it.</li>
+<li><b>Run a security scan.</b> Use an antivirus or anti-malware tool you already trust to look for other unwanted software.</li>
+</ol>
+<p>Do not treat a missing warning as proof of safety. Malwarebytes points out that the absence of a notice about an extension controlling a setting does not mean your extensions are clean.</p>
+<h3 id="signs">Signs that something changed</h3>
+<ul>
+<li>Your default search engine changed and you did not change it.</li>
+<li>Results look unfamiliar, or a search leads to a site you did not expect.</li>
+<li>The extension list contains tools you do not remember installing.</li>
+<li>You installed a "PDF", "manual" or "safe search" tool after clicking an ad.</li>
+</ul>
+
+<h2 id="habits">Habits that reduce the risk</h2>
+<ul>
+<li><b>Treat an ad for an extension as a warning sign.</b> The campaign relied on advertising. A legitimate tool rarely needs it.</li>
+<li><b>Install only what you use.</b> Each extension is code that runs inside your browser with access you granted once and may have forgotten.</li>
+<li><b>Look at the publisher, the install history and the reviews,</b> and remember that a tool can sit in the official store for a long time before it is removed.</li>
+<li><b>Review your extension list and default search engine every few months.</b> The two screens above take a minute.</li>
+<li><b>Keep work and personal browsing apart.</b> A separate browser profile for work and money limits what a single bad extension can see. The reasons are covered in the <a href="/blog/browser-profiles">profiles guide</a>.</li>
+<li><b>Know who can see your searches.</b> The same logic applies to proxies and VPN services. The <a href="/blog/proxy-vs-vpn">proxy and VPN comparison</a> explains what each one can and cannot hide.</li>
+</ul>
+
+<h2 id="rapid">Where Rapid+ fits</h2>
+<p>We build Rapid+ Browser, so the relevant fact is plain. Rapid+ for Android and Windows does not run browser extensions. This kind of hijack cannot arrive through an extension store because the feature does not exist. That is a limit as well as a protection, since you cannot add the tools that extensions provide. The search engine is set in Settings, and a change there is made by you. Rapid+ also has a built-in ad and tracker blocker, so there is less reason to install a separate blocking extension. None of this replaces the habits above on the computers and browsers where you do use extensions.</p>
+
+<h2 id="faq">Frequently asked questions</h2>
+<details><summary>How many Chrome extensions were involved?</summary><p>Socket researcher John Tuckner documented 319 extensions with about 13.4 million reported installs. That includes 57 extensions from his April 2025 report and 264 newly identified ones.</p></details>
+<details><summary>What did the extensions do?</summary><p>They replaced the browser's default search engine and sent searches through servers controlled by the operator before passing them to Bing or Yahoo. The operators earned referral payments for the traffic.</p></details>
+<details><summary>Were passwords or files stolen?</summary><p>No theft of passwords or files has been reported. Socket says it found no evidence that searches were redirected to phishing or malware pages, though the redirect could be changed at any time.</p></details>
+<details><summary>Does this affect browsers other than Chrome?</summary><p>The extensions were found in the Chrome Web Store. Other Chromium-based browsers, such as Edge and Brave, can install Chrome extensions, so it is sensible to check the extension list there too. Reports in this campaign focus on Chrome.</p></details>
+<details><summary>I removed the extension. Is my browser clean?</summary><p>Check that the default search engine is back to the one you chose and run a scan with a security tool you trust. Search results that still look unfamiliar are a reason to look further.</p></details>
+
+<h2 id="sources">Sources</h2>
+<ol class="sources">
+<li><a href="https://bleepingcomputer.com/news/security/chrome-extensions-with-134-million-installs-caught-hijacking-searches" target="_blank" rel="noopener">BleepingComputer: Chrome extensions with 13.4 million installs caught hijacking searches (29 Oct 2026)</a></li>
+<li><a href="https://www.malwarebytes.com/blog/news/2026/10/fake-pdf-and-search-tools-hijacked-searches-for-13-4-million-chrome-users" target="_blank" rel="noopener">Malwarebytes: Fake PDF and search tools hijacked searches for 13.4 million Chrome users (Oct 2026)</a></li>
+<li><a href="https://www.esecurityplanet.com/threats/news-319-chrome-extensions-search-hijacking/" target="_blank" rel="noopener">eSecurity Planet: Researchers uncover 319 Chrome extensions hijacking search traffic</a></li>
+<li><a href="https://blog.gridinsoft.com/searchjacked-chrome-extensions-search-proxy/" target="_blank" rel="noopener">Gridinsoft: Searchjacked, hidden Chrome extensions put a proxy between you and search</a></li>
+<li><a href="https://browsers.to/news/this-week-in-browsers-2026-11-01" target="_blank" rel="noopener">browsers.to: This week in browsers (1 Nov 2026)</a></li>
+<li>Socket's own report (the full extension list) is linked from the BleepingComputer and Malwarebytes articles above.</li>
+</ol>
+<div class="post-end"><img src="/assets/logo.png" alt=""><p><b>Written by the Rapid+ Team</b>. We build Rapid+ Browser for Android and Windows. Spotted a mistake or have a question? Email us at <a href="mailto:admin@rapidplusbrowser.online">admin@rapidplusbrowser.online</a>.</p></div>
+
+  </div>
+</div>
+</article>
+<section class="alt"><div class="wrap">
+  <h2 class="title">Keep reading</h2>
+  <div class="postgrid"><a class="postcard" href="/blog/proxy-vs-vpn"><div class="thumb"><img src="/assets/blog/proxy-vs-vpn.jpg" width="1200" height="630" alt="Illustration of two routes between a computer and a globe: an orange route through a single relay server watched by an eye, and a teal encrypted tunnel with a keyhole." loading="lazy"></div><div class="txt"><span class="chip">Privacy</span><h3>Proxy vs VPN: What Each One Actually Hides</h3><p>Both put another server between you and the web. They cover different traffic, protect it differently, and hide different things from different people.</p><div class="postmeta"><span>30 Oct 2026</span><span class="dot">·</span><span>10 min read</span></div></div></a><a class="postcard" href="/blog/browser-profiles"><div class="thumb"><img src="/assets/blog/browser-profiles.jpg" width="1200" height="630" alt="Illustration of one browser window split into three colored rooms, each with its own avatar, padlock and cookies, separated by walls." loading="lazy"></div><div class="txt"><span class="chip">Productivity</span><h3>Separate Browser Profiles for Work, Personal and Shopping: Why They Work</h3><p>One browser, several separate lives. How profiles keep logins and cookies apart, what they do not protect, and how to set them up well.</p><div class="postmeta"><span>30 Oct 2026</span><span class="dot">·</span><span>8 min read</span></div></div></a><a class="postcard" href="/blog/browser-fingerprinting"><div class="thumb"><img src="/assets/blog/browser-fingerprinting.jpg" width="1200" height="630" alt="Illustration of a fingertip whose ridges are built from tiny screens, batteries, gears and text blocks, standing for the device details that make a browser recognizable." loading="lazy"></div><div class="txt"><span class="chip">Privacy</span><h3>Browser Fingerprinting: How Websites Recognize You Without Cookies</h3><p>Nothing is stored on your device, so there is nothing to clear. Here is what fingerprinting measures, how well it works in practice, and what helps.</p><div class="postmeta"><span>30 Oct 2026</span><span class="dot">·</span><span>8 min read</span></div></div></a></div>
+</div></section>
+</main>
+<footer class="bfoot"><div class="wrap">
+  <div class="bfoot-top">
+    <div><a class="bbrand" href="/blog/"><img src="/assets/logo.png" alt=""><span>Rapid<b>+</b> Blog</span></a><p>Researched guides on privacy, browsers and the web, from the team behind Rapid+ Browser.</p></div>
+    <div class="bfoot-links"><a href="/blog/">All articles</a><a href="/blog/about">About</a><a href="/blog/contact">Contact</a><a href="/blog/rss">RSS feed</a><a href="/">Rapid+ Browser</a><a href="/download">Download</a><a href="/privacy">Privacy Policy</a><a href="/terms">Terms of Use</a><a href="/privacy#analytics" data-privacy-choice>Privacy choices</a><a href="https://www.facebook.com/rapidplusbrowser" target="_blank" rel="noopener">Facebook</a><a href="mailto:admin@rapidplusbrowser.online">admin@rapidplusbrowser.online</a></div>
+  </div>
+  <div class="copy">© 2026 HM Dev Studio · Rapid+ Blog</div>
+</div></footer>
+<div class="dlbar"><img src="/assets/logo.png" alt=""><div><b>Rapid+ Browser</b>Free, always</div><a class="btn primary" href="/download">Get app</a></div>
+<script>
+if(/\.html$/.test(location.pathname)){var cp=location.pathname.replace(/index\.html$/,'').replace(/\.html$/,'')||'/';history.replaceState(null,'',cp+location.search+location.hash)}
+</script>
+<script src="/firebase-config.js"></script>
+<script type="module" src="/analytics.js"></script>
+<script type="module" src="/blog.js"></script>
+</body></html>
