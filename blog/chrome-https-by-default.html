@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Chrome Now Asks Before Opening Plain HTTP Sites: What Changed and What to Do | Rapid+ Blog</title>
+<meta name="description" content="Chrome 154 now asks before opening public sites that lack HTTPS. What the warning means, what is exempt, how to turn it off, and why certificates now expire sooner.">
+<meta name="theme-color" content="#ff6b00">
+<link rel="canonical" href="https://rapidplusbrowser.online/blog/chrome-https-by-default">
+<link rel="icon" type="image/png" href="/assets/logo.png">
+<link rel="apple-touch-icon" href="/assets/logo.png">
+<meta property="og:type" content="article"><meta property="og:site_name" content="Rapid+ Blog">
+<meta property="og:title" content="Chrome Now Asks Before Opening Plain HTTP Sites: What Changed and What to Do | Rapid+ Blog"><meta property="og:description" content="Chrome 154 now asks before opening public sites that lack HTTPS. What the warning means, what is exempt, how to turn it off, and why certificates now expire sooner.">
+<meta property="og:url" content="https://rapidplusbrowser.online/blog/chrome-https-by-default"><meta property="og:image" content="https://rapidplusbrowser.online/assets/blog/chrome-https-by-default.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Illustration of a browser window with an open red padlock, a red warning card with an exclamation mark and a gold calendar on a dark background"><meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-11-08"><meta property="article:section" content="How the web works">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Chrome Now Asks Before Opening Plain HTTP Sites: What Changed and What to Do | Rapid+ Blog"><meta name="twitter:description" content="Chrome 154 now asks before opening public sites that lack HTTPS. What the warning means, what is exempt, how to turn it off, and why certificates now expire sooner."><meta name="twitter:image" content="https://rapidplusbrowser.online/assets/blog/chrome-https-by-default.jpg">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Chrome Now Asks Before Opening Plain HTTP Sites: What Changed and What to Do","description":"Chrome 154 now asks before opening public sites that lack HTTPS. What the warning means, what is exempt, how to turn it off, and why certificates now expire sooner.","image":"https://rapidplusbrowser.online/assets/blog/chrome-https-by-default.jpg","datePublished":"2026-11-08","dateModified":"2026-11-08","author":{"@type":"Organization","name":"Rapid+ Team","url":"https://rapidplusbrowser.online/","logo":{"@type":"ImageObject","url":"https://rapidplusbrowser.online/assets/logo.png"}},"publisher":{"@type":"Organization","name":"HM Dev Studio","url":"https://rapidplusbrowser.online/","logo":{"@type":"ImageObject","url":"https://rapidplusbrowser.online/assets/logo.png"}},"mainEntityOfPage":{"0":"h","1":"t","2":"t","3":"p","4":"s","5":":","6":"/","7":"/","8":"r","9":"a","10":"p","11":"i","12":"d","13":"p","14":"l","15":"u","16":"s","17":"b","18":"r","19":"o","20":"w","21":"s","22":"e","23":"r","24":".","25":"o","26":"n","27":"l","28":"i","29":"n","30":"e","31":"/","32":"b","33":"l","34":"o","35":"g","36":"/","37":"b","38":"i","39":"n","40":"a","41":"n","42":"c","43":"e","44":"-","45":"h","46":"a","47":"c","48":"k","@id":"https://rapidplusbrowser.online/blog/chrome-https-by-default"},"wordCount":2390,"articleSection":"How the web works"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://rapidplusbrowser.online/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://rapidplusbrowser.online/blog/"},{"@type":"ListItem","position":3,"name":"Chrome Now Asks Before Opening Plain HTTP Sites: What Changed and What to Do","item":"https://rapidplusbrowser.online/blog/chrome-https-by-default"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"When did Chrome start asking before opening HTTP sites?","acceptedAnswer":{"@type":"Answer","text":"Chrome 154 reached the stable channel on 22 September 2026. Its release notes list \"Ask before HTTP on by default\". Updates reach users gradually, so some people received it later than others. An earlier step in Chrome 147, in April 2026, covered users of Enhanced Safe Browsing."}},{"@type":"Question","name":"Does the warning mean the website is dangerous?","acceptedAnswer":{"@type":"Answer","text":"No. It means the connection to the site cannot be protected, so anyone able to watch or change your traffic could read or alter what is sent. A harmless old site can trigger it. What matters is what you do on the page, and logging in or paying on an unprotected page is the real risk."}},{"@type":"Question","name":"Will I see this warning all the time?","acceptedAnswer":{"@type":"Answer","text":"Unlikely. Google's experiment found that the median user saw fewer than one warning a week. Chrome also avoids repeating the warning for sites you visit regularly."}},{"@type":"Question","name":"Does this apply to my home router or a company intranet?","acceptedAnswer":{"@type":"Answer","text":"No. Local IP addresses, single-word hostnames and internal shortlinks are excluded, because they cannot get certificates that browsers trust. Public websites are the target of the default."}},{"@type":"Question","name":"Can I turn it off?","acceptedAnswer":{"@type":"Answer","text":"Yes. Open chrome://settings/security and switch off \"Always use secure connections\". Managed devices can be configured by an administrator with the HttpsOnlyMode policy."}},{"@type":"Question","name":"Does this affect Edge, Brave or other browsers?","acceptedAnswer":{"@type":"Answer","text":"The announcement and the release notes we read describe Chrome. Other browsers set their own defaults, so check the security settings of the browser you use rather than assuming it behaves the same."}}]}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<link rel="alternate" type="application/rss+xml" title="Rapid+ Blog" href="/blog/feed.xml">
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/blog.css">
+</head>
+<body>
+<header class="bnav" id="bnav"><div class="wrap">
+  <a class="bbrand" href="/blog/"><img src="/assets/logo.png" alt=""><span>Rapid<b>+</b> Blog</span></a>
+  <nav class="bnav-cats" aria-label="Categories"><a href="/blog/category/security">Security</a><a href="/blog/category/privacy">Privacy</a><a href="/blog/category/how-the-web-works">How the web works</a><a href="/blog/category/productivity">Productivity</a><a href="/blog/category/performance">Performance</a></nav>
+  <div class="bnav-r">
+    <button type="button" class="bicon" id="bsearch" aria-label="Search articles" title="Search (press /)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg></button>
+    <a class="btn primary sm bnav-dl" href="/download">Download</a>
+    <button type="button" class="bicon bburger" id="bburger" aria-label="Menu" aria-expanded="false" aria-controls="bmenu"><svg class="ib-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="ib-close" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+  </div>
+</div>
+<nav class="bmenu" id="bmenu" aria-label="Menu">
+  <div class="bmenu-in">
+    <p class="bmenu-h">Browse</p>
+    <a href="/blog/">All articles<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/category/security">Security<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/category/privacy">Privacy<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/category/how-the-web-works">How the web works<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/category/productivity">Productivity<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/category/performance">Performance<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/search">Search<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <p class="bmenu-h">Rapid+ Blog</p>
+    <a href="/blog/about">About<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/contact">Contact<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/rss">RSS feed<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <p class="bmenu-h">Rapid+ Browser</p>
+    <a href="/">About Rapid+ Browser<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/download">Download the app<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/privacy">Privacy Policy<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/terms">Terms of Use<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="https://www.facebook.com/rapidplusbrowser" target="_blank" rel="noopener">Facebook page<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+  </div>
+</nav></header>
+<main>
+<article>
+<header class="post-head">
+  <div class="crumbs"><a href="/blog/">Rapid+ Blog</a> / <a href="/blog/category/how-the-web-works">How the web works</a></div>
+  <a class="chip" href="/blog/category/how-the-web-works">How the web works</a>
+  <h1>Chrome Now Asks Before Opening Plain HTTP Sites: What Changed and What to Do</h1>
+  <p class="dek">Since Chrome 154, a public website without HTTPS triggers a warning before it loads. Here is what the new default covers, what it leaves out, and how it ties in with shorter certificate lifetimes.</p>
+  <div class="byline"><img src="/assets/logo.png" alt=""><div><span><b>Rapid+ Team</b> · 8 Nov 2026 · 11 min read</span></div></div>
+</header>
+<figure class="post-hero"><img src="/assets/blog/chrome-https-by-default.jpg" width="1200" height="630" alt="Illustration of a browser window with an open red padlock, a red warning card with an exclamation mark and a gold calendar on a dark background" fetchpriority="high"></figure>
+<div class="post-layout">
+  <nav class="post-toc" aria-label="On this page"><h4>On this page</h4><a href="#short-version">The short version</a><a href="#what-changed">What Chrome does now</a><a href="#why">Why Google did it</a><a href="#redirect">Why a redirect is not enough</a><a href="#exceptions">What is not covered</a><a href="#what-to-do">What to do when you see the warning</a><a href="#certificates">The second change: shorter certificates</a><a href="#owners">If you run a website</a><a href="#habits">Habits for everyone else</a><a href="#rapid">Where Rapid+ fits</a><a href="#faq">FAQ</a><a href="#sources">Sources</a></nav>
+  <div class="prose">
+<div class="note"><b>Written on 8 November 2026.</b> The facts below come from Google's own announcement, the Chrome 154 release notes and news coverage that we opened and read. Browser behaviour can change between builds, so the settings page of your own browser is the final word.</div>
+
+<p class="lede">Since the Chrome 154 stable release on 22 September 2026, Chrome asks before it opens a public website that does not support HTTPS. The setting is called "Always Use Secure Connections". Google first offered it in 2022 as an option that few people switched on. It is now the default for everyone.</p>
+<p>For most people nothing will look different, because the large majority of the web already uses HTTPS. The change matters in the places where it does show up: an old forum, a small shop's website, a link in an old email. This article explains what Chrome does now, why Google decided that the time had come, what the warning means, and how it connects to a second, quieter change in how long HTTPS certificates are allowed to last.</p>
+
+<h2 id="short-version">The short version</h2>
+<ul>
+<li>Chrome 154 reached the stable channel on 22 September 2026. Its release notes list the item "Ask before HTTP on by default".</li>
+<li>Chrome now tries to open every address over HTTPS. If a public site cannot be reached that way, Chrome shows a warning with an option to continue, and you decide.</li>
+<li>Chrome does not keep warning you about the same site. It warns on a new site, or one you have not visited recently.</li>
+<li>Private addresses are excluded. That covers local IP addresses such as 192.168.0.1, single-word hostnames and internal shortlinks.</li>
+<li>You can switch the behaviour off at <b>chrome://settings/security</b>. Administrators can manage it with the <code>HttpsOnlyMode</code> policy.</li>
+<li>Separately, the maximum life of a publicly trusted HTTPS certificate has been 200 days since 15 March 2026. It falls to 100 days in March 2027 and to 47 days in March 2029.</li>
+</ul>
+
+<h2 id="what-changed">What Chrome does now</h2>
+<p>Before this change, typing or following a plain <code>http://</code> address simply loaded the page, usually with a small "Not secure" label in the address bar. Many sites quietly sent the visitor on to the HTTPS version, so the label often never mattered.</p>
+<p>Under the new default, Chrome tries HTTPS first for every navigation. If the site answers over HTTPS, you arrive as usual and see nothing. If it does not, you get a full-page warning before anything loads. One how-to guide published on 6 November 2026 describes it as a screen headed "Connection is not secure" with a "Continue to site" button. If you press that button, the page opens over plain HTTP, as it always did.</p>
+<p>Google's announcement says the warning is meant to be rare. Chrome does not repeat it for sites you visit regularly. It appears for a site that is new to you or that you have not opened for a while. The setting itself is not new. It was added in 2022, and an experiment in Chrome 141 turned it on for a small group of users first. In April 2026, Chrome 147 enabled it for people who use Enhanced Safe Browsing, a group Google puts at over one billion users. Chrome 154 extends it to everyone.</p>
+
+<h2 id="why">Why Google did it</h2>
+<p>Google's reasoning, published in October 2025 under the title "HTTPS by default", rests on a simple observation. HTTPS is already normal, so the exceptions are now the dangerous part.</p>
+<p>The company's HTTPS transparency data shows that the share of page loads over HTTPS rose from roughly 30 to 45 percent in 2015 to about 95 to 99 percent around 2020, and has barely moved since. Google says the remaining plain-HTTP traffic is mostly invisible to users, because the site redirects to HTTPS straight away. That invisibility is the problem. The announcement points out that a single insecure navigation is enough for an attacker who can see or change traffic on the network, because the first request in a redirect chain travels unprotected. In Google's words, an attacker can hijack that navigation and send the visitor to malicious content. The post's conclusion is brief: "Now is the time."</p>
+<p>The company also had evidence that the change would be tolerable. In the Chrome 141 experiment, the median user saw fewer than one warning a week, and the user at the 95th percentile saw fewer than three. Google says warnings would appear on well under 3 percent of navigations, and expects that figure to fall as more sites move over. SecurityWeek reported that Google had already contacted organisations still running insecure connections.</p>
+
+<h2 id="redirect">Why a redirect is not enough</h2>
+<p>Many site owners reasoned that plain HTTP was harmless as long as their server redirected to HTTPS. That redirect has a weak point. When you type <code>example.com</code> without a scheme, or follow an old <code>http://</code> link, the first request leaves your device unencrypted. It asks the server where to go next, and the answer is the redirect. Someone sitting between you and the server, for instance on a shared Wi-Fi network, can answer that first request themselves and send you somewhere else. Everything after that point can look normal.</p>
+<p>The new default shrinks this window. Chrome sends the first request over HTTPS itself, so there is no unprotected hop for a site that supports it. A site that does not support HTTPS is the one that now triggers the warning, which is the correct place for it.</p>
+
+<h2 id="exceptions">What is not covered</h2>
+<p>Google drew a line between public and private sites. A public site is one such as <code>example.com</code>, which can get a certificate that browsers trust. Private sites cannot, because nobody can prove ownership of them in the same way. The announcement lists three kinds:</p>
+<ul>
+<li>Local IP addresses, such as the <code>192.168.0.1</code> address many home routers use.</li>
+<li>Single-label hostnames, which have no dot in them.</li>
+<li>Shortlinks used inside a company, such as <code>intranet/</code>.</li>
+</ul>
+<p>This is why developers and IT teams were not the main target. Your router's admin page, a test server on your own network and an internal company tool should open as before. The announcement adds one related detail. Once a user grants the new local network access permission, an HTTPS page can talk to devices on the local network without mixed-content blocking, which gives those sites a way to move to HTTPS.</p>
+
+<div class="tablewrap"><table class="cmp" style="min-width:0">
+<thead><tr><th>Address you open</th><th>What Chrome 154 does by default</th></tr></thead>
+<tbody>
+<tr><td>A public site that supports HTTPS</td><td>Opens normally over HTTPS. No warning.</td></tr>
+<tr><td>A public site with only HTTP</td><td>Shows a warning first. You can continue.</td></tr>
+<tr><td>The same HTTP-only site, visited often</td><td>Does not repeat the warning.</td></tr>
+<tr><td>A local address such as 192.168.0.1</td><td>Excluded from the default.</td></tr>
+<tr><td>A single-word internal hostname</td><td>Excluded from the default.</td></tr>
+<tr><td>A site with an expired or invalid certificate</td><td>Not this feature. It already gets Chrome's separate certificate error page.</td></tr>
+</tbody></table></div>
+
+<h2 id="what-to-do">What to do when you see the warning</h2>
+<p>The warning is not a verdict that the site is malicious. It says the connection to it cannot be protected. What you do next depends on what you were about to do there.</p>
+<ol>
+<li><b>Read the address.</b> If you followed a link, check that the domain is the one you expected. A warning on an address you did not intend to visit is worth taking seriously.</li>
+<li><b>Try the secure version yourself.</b> Type <code>https://</code> in front of the domain. If the site supports it, it opens. Sites with a setup problem sometimes only work with or without <code>www</code>.</li>
+<li><b>Decide by what you will do on the page.</b> Reading a public article over HTTP exposes less than logging in. Do not enter a password, card number or personal details on a page that is not protected. Anyone on the same network can read or change what you send.</li>
+<li><b>Tell the owner if you can.</b> A shop or club whose site triggers the warning has probably never noticed. A short message often gets it fixed.</li>
+<li><b>Leave if unsure.</b> If the page is not important, closing it costs nothing.</li>
+</ol>
+<p>To switch the feature off, open <b>chrome://settings/security</b> and turn off "Always use secure connections". On Android, one guide gives the route as the three-dot menu, then Settings, then Privacy and security, then Security. We would leave it on. The warning is rare, and the cases where it appears are the ones where the protection matters.</p>
+
+<h2 id="certificates">The second change: shorter certificates</h2>
+<p>HTTPS depends on certificates, which are small files issued by certificate authorities that prove a site controls its domain. A second change, agreed in 2025, makes those certificates expire much sooner. It matters because it makes HTTPS something sites must automate, and a site that fails to renew simply stops working over HTTPS.</p>
+<p>In April 2025 the CA/Browser Forum, the body where certificate authorities and browser makers agree shared rules, approved ballot SC-081v3. It sets a schedule that starts in March 2026 and ends in March 2029. Under it, the maximum validity of a publicly trusted certificate drops from 398 days to 47 days. The steps, as set out by a certificate vendor's summary of the ballot, are:</p>
+<div class="tablewrap"><table class="cmp" style="min-width:0">
+<thead><tr><th>From</th><th>Maximum certificate life</th><th>How long proof of domain control can be reused</th></tr></thead>
+<tbody>
+<tr><td>15 March 2026</td><td>200 days</td><td>200 days</td></tr>
+<tr><td>15 March 2027</td><td>100 days</td><td>100 days</td></tr>
+<tr><td>15 March 2029</td><td>47 days</td><td>10 days</td></tr>
+</tbody></table></div>
+<p>Certificates issued before 15 March 2026 keep their original validity. The limits apply to certificates issued on or after each date, and only to publicly trusted authorities that follow the Forum's rules. Private certificate authorities that sit outside the public trust stores are not covered. Let's Encrypt, which already issues 90-day certificates, sits under the 200-day cap and is not directly affected. The people who feel the change are those who bought a one-year or multi-year certificate and renewed it by hand once a year.</p>
+<p>The two changes point the same way. Chrome now treats a site without HTTPS as the exception that needs your approval, and certificate rules push site owners toward renewing certificates automatically. A small website with a manually installed certificate has more to lose than before.</p>
+
+<h2 id="owners">If you run a website</h2>
+<ul>
+<li><b>Serve everything over HTTPS</b> and redirect <code>http://</code> to <code>https://</code> on the same host.</li>
+<li><b>Fix mixed content.</b> Images, scripts or styles still loaded from <code>http://</code> addresses cause trouble even on an HTTPS page.</li>
+<li><b>Automate renewal.</b> With certificates lasting 200 days now and 47 days in 2029, a calendar reminder is not a plan. Use your host's built-in renewal or an ACME client, and have something alert you if it fails.</li>
+<li><b>Check old links.</b> Search your own pages, newsletters and profiles for <code>http://</code> links to your site.</li>
+<li><b>Test from outside.</b> Open the site on a phone using mobile data, not only on your office network.</li>
+</ul>
+
+<h2 id="habits">Habits for everyone else</h2>
+<ul>
+<li>Look at the address, not only the page. A padlock tells you the connection is encrypted. It does not tell you the site is honest, as the <a href="/blog/chrome-extensions-search-hijacking">search hijack article</a> and the <a href="/blog/binance-hack">Binance hack write-up</a> both show.</li>
+<li>Be more careful on public Wi-Fi. The warning helps, but a proxy or VPN changes who can see your traffic, and each has limits. The <a href="/blog/proxy-vs-vpn">proxy and VPN comparison</a> covers them.</li>
+<li>Remember that HTTPS hides the content of a page, not the fact that you visited the site. The <a href="/blog/browser-fingerprinting">fingerprinting guide</a> explains what else sites learn about you.</li>
+</ul>
+
+<h2 id="rapid">Where Rapid+ fits</h2>
+<p>We build Rapid+ Browser, so here is what we can state about our own app. On Android, when you type a bare domain such as <code>example.com</code>, Rapid+ opens the <code>https://</code> version. When a site's certificate is invalid, Rapid+ shows a full-page warning and never continues silently. If you choose "Proceed anyway", the choice applies to that site in that tab for the current session only and is not saved. The site information panel says "Connection is not secure" for pages that are not protected.</p>
+<p>What Rapid+ does not do today is show a warning before it opens a plain <code>http://</code> link. If you follow an old HTTP link, the page loads and the site information panel is where you see the status. Until that changes, check it before you type anything private. Rapid+ is built on the system's web engine, and this article describes Chrome, so do not assume the two behave the same.</p>
+
+<h2 id="faq">Frequently asked questions</h2>
+<details><summary>When did Chrome start asking before opening HTTP sites?</summary><p>Chrome 154 reached the stable channel on 22 September 2026. Its release notes list "Ask before HTTP on by default". Updates reach users gradually, so some people received it later than others. An earlier step in Chrome 147, in April 2026, covered users of Enhanced Safe Browsing.</p></details>
+<details><summary>Does the warning mean the website is dangerous?</summary><p>No. It means the connection to the site cannot be protected, so anyone able to watch or change your traffic could read or alter what is sent. A harmless old site can trigger it. What matters is what you do on the page, and logging in or paying on an unprotected page is the real risk.</p></details>
+<details><summary>Will I see this warning all the time?</summary><p>Unlikely. Google's experiment found that the median user saw fewer than one warning a week. Chrome also avoids repeating the warning for sites you visit regularly.</p></details>
+<details><summary>Does this apply to my home router or a company intranet?</summary><p>No. Local IP addresses, single-word hostnames and internal shortlinks are excluded, because they cannot get certificates that browsers trust. Public websites are the target of the default.</p></details>
+<details><summary>Can I turn it off?</summary><p>Yes. Open chrome://settings/security and switch off "Always use secure connections". Managed devices can be configured by an administrator with the HttpsOnlyMode policy.</p></details>
+<details><summary>Does this affect Edge, Brave or other browsers?</summary><p>The announcement and the release notes we read describe Chrome. Other browsers set their own defaults, so check the security settings of the browser you use rather than assuming it behaves the same.</p></details>
+
+<h2 id="sources">Sources</h2>
+<ol class="sources">
+<li><a href="https://blog.google/security/https-by-defau/" target="_blank" rel="noopener">Google Chrome Security: HTTPS by default (28 Oct 2025)</a></li>
+<li><a href="https://developer.chrome.com/release-notes/154" target="_blank" rel="noopener">Chrome 154 release notes (stable 22 Sep 2026)</a></li>
+<li><a href="https://www.securityweek.com/chrome-to-turn-https-on-by-default-for-public-sites/" target="_blank" rel="noopener">SecurityWeek: Chrome to Turn HTTPS on by Default for Public Sites (29 Oct 2025)</a></li>
+<li><a href="https://cyberinsider.com/chrome-will-default-to-https-for-all-public-sites-starting-october-2026/" target="_blank" rel="noopener">CyberInsider: Chrome will default to HTTPS for all public sites</a></li>
+<li><a href="https://thetechhacker.com/2026/11/06/fix-chrome-http-not-secure-warning/" target="_blank" rel="noopener">The Tech Hacker: How to fix the Chrome HTTP warning (6 Nov 2026)</a></li>
+<li><a href="https://cabforum.org/2025/04/11/ballot-sc081v3-introduce-schedule-of-reducing-validity-and-data-reuse-periods/" target="_blank" rel="noopener">CA/Browser Forum: Ballot SC-081v3, schedule of reducing validity and data reuse periods (Apr 2025)</a></li>
+<li><a href="https://sslinsights.com/200-day-ssl-certificate-validity/" target="_blank" rel="noopener">SSL Insights: 200-day SSL certificate validity starts 15 March 2026</a></li>
+</ol>
+<div class="post-end"><img src="/assets/logo.png" alt=""><p><b>Written by the Rapid+ Team</b>. We build Rapid+ Browser for Android and Windows. Spotted a mistake or have a question? Email us at <a href="mailto:admin@rapidplusbrowser.online">admin@rapidplusbrowser.online</a>.</p></div>
+
+  </div>
+</div>
+</article>
+<section class="alt"><div class="wrap">
+  <h2 class="title">Keep reading</h2>
+  <div class="postgrid"><a class="postcard" href="/blog/chrome-extensions-search-hijacking"><div class="thumb"><img src="/assets/blog/chrome-extensions-search-hijacking.jpg" width="1200" height="630" alt="Illustration of a red puzzle-piece extension redirecting a search bar through a proxy box to a gold coin on a dark background" loading="lazy"></div><div class="txt"><span class="chip">Security</span><h3>Chrome Extensions Hijacked Search for 13.4 Million Users: What Happened and How to Check Your Browser</h3><p>Security researchers found 319 extensions that quietly changed the default search engine and sent every query through the operator's servers. What is confirmed, what is not, and a two-minute check.</p><div class="postmeta"><span>5 Nov 2026</span><span class="dot">·</span><span>8 min read</span></div></div></a><a class="postcard" href="/blog/internet-shutdowns-in-war"><div class="thumb"><img src="/assets/blog/internet-shutdowns-in-war.jpg" width="1200" height="630" alt="Illustration of a cracked globe, an unplugged network cable and a crossed-out Wi-Fi symbol on a dark background" loading="lazy"></div><div class="txt"><span class="chip">Privacy</span><h3>How Wars Cut the Internet: What Iran and Russia Show, and What Actually Helps</h3><p>Iran spent 88 days almost fully offline and Russia switches off mobile internet region by region. Here is what happened, what a VPN can and cannot do, and what you can prepare.</p><div class="postmeta"><span>4 Nov 2026</span><span class="dot">·</span><span>11 min read</span></div></div></a><a class="postcard" href="/blog/binance-hack"><div class="thumb"><img src="/assets/blog/binance-hack.jpg" width="1200" height="630" alt="Illustration of a cracked crypto coin and a broken padlock on a dark background" loading="lazy"></div><div class="txt"><span class="chip">Security</span><h3>The Binance Hack: What Happened, What Was Lost, and What It Means for You</h3><p>Binance says about $6.3 billion was taken, the largest crypto theft on record. Here is what is confirmed, what is only reported, and what nobody knows yet.</p><div class="postmeta"><span>1 Nov 2026</span><span class="dot">·</span><span>14 min read</span></div></div></a></div>
+</div></section>
+</main>
+<footer class="bfoot"><div class="wrap">
+  <div class="bfoot-top">
+    <div><a class="bbrand" href="/blog/"><img src="/assets/logo.png" alt=""><span>Rapid<b>+</b> Blog</span></a><p>Researched guides on privacy, browsers and the web, from the team behind Rapid+ Browser.</p></div>
+    <div class="bfoot-links"><a href="/blog/">All articles</a><a href="/blog/about">About</a><a href="/blog/contact">Contact</a><a href="/blog/rss">RSS feed</a><a href="/">Rapid+ Browser</a><a href="/download">Download</a><a href="/privacy">Privacy Policy</a><a href="/terms">Terms of Use</a><a href="/privacy#analytics" data-privacy-choice>Privacy choices</a><a href="https://www.facebook.com/rapidplusbrowser" target="_blank" rel="noopener">Facebook</a><a href="mailto:admin@rapidplusbrowser.online">admin@rapidplusbrowser.online</a></div>
+  </div>
+  <div class="copy">© 2026 HM Dev Studio · Rapid+ Blog</div>
+</div></footer>
+<div class="dlbar"><img src="/assets/logo.png" alt=""><div><b>Rapid+ Browser</b>Free, always</div><a class="btn primary" href="/download">Get app</a></div>
+<script>
+if(/\.html$/.test(location.pathname)){var cp=location.pathname.replace(/index\.html$/,'').replace(/\.html$/,'')||'/';history.replaceState(null,'',cp+location.search+location.hash)}
+</script>
+<script src="/firebase-config.js"></script>
+<script type="module" src="/analytics.js"></script>
+<script type="module" src="/blog.js"></script>
+</body></html>
