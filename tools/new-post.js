@@ -21,7 +21,9 @@ if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(spec.slug) || spec.slug.length > 80) fail('
 if (!CATEGORIES[spec.category]) fail('category must be one of: ' + Object.keys(CATEGORIES).join(', '));
 if (!/^\d{4}-\d{2}-\d{2}$/.test(spec.date)) fail('date must be YYYY-MM-DD');
 if (fs.existsSync(path.join(blogDir, spec.slug + '.html'))) fail('an article with this slug already exists');
-if (spec.description.length < 90 || spec.description.length > 175) fail('description should be 90-175 characters (is ' + spec.description.length + ')');
+if (spec.description.length < 90 || spec.description.length > 160) fail('description should be 90-160 characters (is ' + spec.description.length + ')');
+const tagTitle = (spec.seoTitle || spec.title).trim();   // <title>, og:title and twitter:title; the page heading keeps spec.title
+if ((tagTitle + ' | Rapid+ Blog').length > 62) fail('the search title "' + tagTitle + ' | Rapid+ Blog" is ' + (tagTitle + ' | Rapid+ Blog').length + ' characters; add a shorter "seoTitle" so the whole title is 62 or fewer');
 const rel = p => (path.isAbsolute(p) ? p : path.resolve(specDir, p));
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const jsonSafe = s => JSON.stringify(s).replace(/</g, '\\u003c');
@@ -77,18 +79,17 @@ fs.mkdirSync(path.dirname(heroOut), { recursive: true });
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>${esc(spec.title)} | Rapid+ Blog</title>
+<title>${esc(tagTitle)} | Rapid+ Blog</title>
 <meta name="description" content="${esc(spec.description)}">
 <meta name="theme-color" content="#ff6b00">
 <link rel="canonical" href="${URL}">
-<link rel="icon" type="image/png" href="/assets/logo.png">
-<link rel="apple-touch-icon" href="/assets/logo.png">
+<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48.png"><link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta property="og:type" content="article"><meta property="og:site_name" content="Rapid+ Blog">
-<meta property="og:title" content="${esc(spec.title)} | Rapid+ Blog"><meta property="og:description" content="${esc(spec.description)}">
+<meta property="og:title" content="${esc(tagTitle)} | Rapid+ Blog"><meta property="og:description" content="${esc(spec.description)}">
 <meta property="og:url" content="${URL}"><meta property="og:image" content="${SITE}${IMG}">
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="${esc(spec.heroAlt)}"><meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="${spec.date}"><meta property="article:section" content="${esc(spec.category)}">
-<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${esc(spec.title)} | Rapid+ Blog"><meta name="twitter:description" content="${esc(spec.description)}"><meta name="twitter:image" content="${SITE}${IMG}">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${esc(tagTitle)} | Rapid+ Blog"><meta name="twitter:description" content="${esc(spec.description)}"><meta name="twitter:image" content="${SITE}${IMG}">
 <meta name="robots" content="index, follow, max-image-preview:large">
 `;
   const tplObj = JSON.parse(tpl.match(/<script type="application\/ld\+json">(\{"@context":"https:\/\/schema.org","@type":"Article"[\s\S]*?)<\/script>/)[1]);

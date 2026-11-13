@@ -98,8 +98,7 @@ const shell = ({ title, desc, canonical, robots, ogImage, ogAlt, ld, current, bo
 <meta name="description" content="${esc(desc)}">
 <meta name="theme-color" content="#ff6b00">
 <link rel="canonical" href="${SITE}${canonical}">
-<link rel="icon" type="image/png" href="/assets/logo.png">
-<link rel="apple-touch-icon" href="/assets/logo.png">
+<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48.png"><link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta property="og:type" content="website"><meta property="og:site_name" content="Rapid+ Blog">
 <meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(desc)}">
 <meta property="og:url" content="${SITE}${canonical}"><meta property="og:image" content="${SITE}${ogImage}">
@@ -146,7 +145,7 @@ const publisher = { '@type': 'Organization', name: 'HM Dev Studio', url: SITE + 
 const top = posts[0];
 write(path.join(dir, 'index.html'), shell({
   title: 'Rapid+ Blog: Browser Privacy, Speed and How the Web Works',
-  desc: 'Researched guides on proxies and VPNs, browser fingerprinting, user agents, browser profiles, ad blocking and security news, from the team behind Rapid+ Browser.',
+  desc: 'Researched guides on proxies and VPNs, browser fingerprinting, user agents, profiles, ad blocking and security news from the team behind Rapid+ Browser.',
   canonical: '/blog/', ogImage: `/assets/blog/${top.slug}.jpg`, ogAlt: top.alt, bodyClass: 'hub',
   ld: [{ '@context': 'https://schema.org', '@type': 'Blog', name: 'Rapid+ Blog', url: SITE + '/blog/', publisher, blogPost: posts.map(p => ({ '@type': 'BlogPosting', headline: p.title, url: `${SITE}/blog/${p.slug}` })) }, crumbLd(['Home', '/'], ['Blog', '/blog/'])],
   body: `<section class="blogtop"><div class="wrap">
@@ -250,6 +249,17 @@ for (const f of files) {
     s = s.replace(/<div class="crumbs"><a href="\/blog\/">Rapid\+ Blog<\/a> \/ (?:<a[^>]*>)?([^<]+)(?:<\/a>)?<\/div>/, (m, c) => `<div class="crumbs"><a href="/blog/">Rapid+ Blog</a> / <a href="/blog/category/${p.cs}">${c}</a></div>`);
   }
   if (s !== before) fs.writeFileSync(f, crlf ? s.split('\n').join('\r\n') : s);
+}
+
+// ---------- home page: the three newest articles, so every new post is linked from the front page
+{
+  const hp = path.join(root, 'index.html'); let h = read(hp); const crlfH = h.includes('\r\n'); h = h.split('\r\n').join('\n');
+  if (h.includes('<!--latest-posts-->')) {
+    const cards = posts.slice(0, 3).map(p => '<div class="card"><h3><a href="/blog/' + p.slug + '">' + esc(p.title) + '</a></h3><p>' + esc(p.desc) + '</p></div>').join('');
+    const block = '<!--latest-posts--><section><div class="wrap"><div class="center"><div class="eyebrow">Blog</div><h2 class="title">Latest from the Rapid+ Blog</h2><p class="sub">Researched guides on privacy, security and how the web works.</p></div><div class="grid">' + cards + '</div><div class="center"><a class="more" href="blog/">All articles</a></div></div></section><!--/latest-posts-->';
+    h = h.replace(/<!--latest-posts-->[\s\S]*?<!--\/latest-posts-->/, () => block);
+    fs.writeFileSync(hp, crlfH ? h.split('\n').join('\r\n') : h);
+  }
 }
 
 // ---------- sitemap: blog URLs
