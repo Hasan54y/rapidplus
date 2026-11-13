@@ -5,8 +5,8 @@
   "url": "https://rapidplusbrowser.online/download",
   "minVersionCode": 0,
   "desktop": {
-    "version": "1.3.0",
+    "version": "1.4.0",
     "url": "https://rapidplusbrowser.online/download-windows",
-    "notes": "New: a built-in player for music, video, pictures and text files (double-click a file or press Ctrl+O) with Next, Previous, Shuffle, Repeat and Windows media controls. Background tabs keep running at full speed. New settings: unload inactive tabs, WebRTC protection and a time zone override."
+    "notes": "Every profile now opens in its own window, like Chrome. Pick another profile from your picture to open it separately, and the windows you had open come back when you start Rapid+. Your profiles, tabs, bookmarks and passwords stay as they are."
   }
 }
