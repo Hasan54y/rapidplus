@@ -5,8 +5,8 @@
   "url": "https://rapidplusbrowser.online/download",
   "minVersionCode": 0,
   "desktop": {
-    "version": "1.4.0",
+    "version": "1.4.1",
     "url": "https://rapidplusbrowser.online/download-windows",
-    "notes": "Every profile now opens in its own window, like Chrome. Pick another profile from your picture to open it separately, and the windows you had open come back when you start Rapid+. Your profiles, tabs, bookmarks and passwords stay as they are."
+    "notes": "Each profile window now has its own taskbar button with a small profile badge, like Chrome, and you can pin a profile to open it directly. The icon at the left of the address bar opens a site information panel with the connection status, the site's cookies and a shortcut to site settings. Your profiles, tabs, bookmarks and passwords stay as they are."
   }
 }
