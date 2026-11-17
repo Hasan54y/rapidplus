@@ -135,7 +135,6 @@ const side = current => `<aside class="side" aria-label="Sidebar">
   <section class="side-card"><h3>Categories</h3><ul class="side-cats">${usedCats.map(([l, s]) => `<li><a href="/blog/category/${s}"${current === s ? ' class="on"' : ''}>${l}<i>${count(s)}</i></a></li>`).join('')}</ul></section>
   <section class="side-card" id="popular"><h3>Popular articles</h3><ol class="side-pop">${posts.slice(0, 5).map(p => `<li data-slug="${p.slug}"><a href="/blog/${p.slug}">${esc(p.title)}</a><span class="sv"></span></li>`).join('')}</ol></section>
   <div data-subscribe="sidebar"></div>
-  <section class="side-card"><h3>About Rapid+ Blog</h3><p class="side-about">Plain-language guides on browser privacy, security and speed from the team behind Rapid+ Browser. <a href="/blog/about">More about us</a> · <a href="/blog/rss">RSS</a></p></section>
 </aside>`;
 const chipsNav = current => `<nav class="cats cats-m" aria-label="Categories"><a href="/blog/"${current ? '' : ' class="on"'}>All<i>${posts.length}</i></a>${usedCats.map(([l, s]) => `<a href="/blog/category/${s}"${current === s ? ' class="on"' : ''}>${l}<i>${count(s)}</i></a>`).join('')}</nav>`;
 const crumbLd = (...items) => ({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: items.map(([name, url], i) => ({ '@type': 'ListItem', position: i + 1, name, item: SITE + url })) });

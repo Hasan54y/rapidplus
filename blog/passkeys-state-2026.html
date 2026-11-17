@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Passkeys in 2026: Where Things Stand | Rapid+ Blog</title>
+<meta name="description" content="The FIDO Alliance reports 5 billion passkeys in use. How passkeys work, why they resist phishing, where they fall short and how to set them up without lockouts.">
+<meta name="theme-color" content="#ff6b00">
+<link rel="canonical" href="https://rapidplusbrowser.online/blog/passkeys-state-2026">
+<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48.png"><link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="article"><meta property="og:site_name" content="Rapid+ Blog">
+<meta property="og:title" content="Passkeys in 2026: Where Things Stand | Rapid+ Blog"><meta property="og:description" content="The FIDO Alliance reports 5 billion passkeys in use. How passkeys work, why they resist phishing, where they fall short and how to set them up without lockouts.">
+<meta property="og:url" content="https://rapidplusbrowser.online/blog/passkeys-state-2026"><meta property="og:image" content="https://rapidplusbrowser.online/assets/blog/passkeys-state-2026.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="A phone showing a fingerprint prompt and a key icon beside a login form on a laptop"><meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-11-18"><meta property="article:section" content="Security">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Passkeys in 2026: Where Things Stand | Rapid+ Blog"><meta name="twitter:description" content="The FIDO Alliance reports 5 billion passkeys in use. How passkeys work, why they resist phishing, where they fall short and how to set them up without lockouts."><meta name="twitter:image" content="https://rapidplusbrowser.online/assets/blog/passkeys-state-2026.jpg">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Passkeys in 2026: What They Are, Who Uses Them and How to Start","description":"The FIDO Alliance reports 5 billion passkeys in use. How passkeys work, why they resist phishing, where they fall short and how to set them up without lockouts.","image":"https://rapidplusbrowser.online/assets/blog/passkeys-state-2026.jpg","datePublished":"2026-11-18","dateModified":"2026-11-18","author":{"@type":"Organization","name":"Rapid+ Team","url":"https://rapidplusbrowser.online/","logo":{"@type":"ImageObject","url":"https://rapidplusbrowser.online/assets/logo.png"}},"publisher":{"@type":"Organization","name":"HM Dev Studio","url":"https://rapidplusbrowser.online/","logo":{"@type":"ImageObject","url":"https://rapidplusbrowser.online/assets/logo.png"}},"mainEntityOfPage":{"0":"h","1":"t","2":"t","3":"p","4":"s","5":":","6":"/","7":"/","8":"r","9":"a","10":"p","11":"i","12":"d","13":"p","14":"l","15":"u","16":"s","17":"b","18":"r","19":"o","20":"w","21":"s","22":"e","23":"r","24":".","25":"o","26":"n","27":"l","28":"i","29":"n","30":"e","31":"/","32":"b","33":"l","34":"o","35":"g","36":"/","37":"b","38":"i","39":"n","40":"a","41":"n","42":"c","43":"e","44":"-","45":"h","46":"a","47":"c","48":"k","@id":"https://rapidplusbrowser.online/blog/passkeys-state-2026"},"wordCount":1126,"articleSection":"Security"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://rapidplusbrowser.online/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://rapidplusbrowser.online/blog/"},{"@type":"ListItem","position":3,"name":"Passkeys in 2026: What They Are, Who Uses Them and How to Start","item":"https://rapidplusbrowser.online/blog/passkeys-state-2026"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is a passkey the same as a password?","acceptedAnswer":{"@type":"Answer","text":"No. A password is a secret you type and share with the site. A passkey is a key pair: the private key never leaves your device, and the site stores only the public key."}},{"@type":"Question","name":"Can phishing sites steal a passkey?","acceptedAnswer":{"@type":"Answer","text":"Not in the usual way. The browser ties a passkey to the genuine site's domain, so a look-alike site gets no valid response. Attackers have to find other ways in, such as tricking you into approving a login or taking over your device."}},{"@type":"Question","name":"What if I lose my phone?","acceptedAnswer":{"@type":"Answer","text":"If your passkeys sync through a cloud account or a password manager, you can restore them on a new device. If they are stored only on the lost device, use your recovery options. Set those up before you need them."}},{"@type":"Question","name":"Do passkeys work in every browser?","acceptedAnswer":{"@type":"Answer","text":"Major browsers support them on the main platforms, though support varies by operating system and version. Check that the browser and credential manager you use can create and use passkeys."}},{"@type":"Question","name":"Should I delete my passwords?","acceptedAnswer":{"@type":"Answer","text":"Not yet. Keep the password until the passkey works on every device you use and you have a recovery route. Where a site allows it, turning the password off later increases your safety."}}]}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<link rel="alternate" type="application/rss+xml" title="Rapid+ Blog" href="/blog/feed.xml">
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/blog.css">
+</head>
+<body>
+<header class="bnav" id="bnav"><div class="wrap">
+  <a class="bbrand" href="/blog/"><img src="/assets/logo.png" alt=""><span>Rapid<b>+</b> Blog</span></a>
+  <nav class="bnav-cats" aria-label="Categories"><a href="/blog/category/security">Security</a><a href="/blog/category/privacy">Privacy</a><a href="/blog/category/how-the-web-works">How the web works</a><a href="/blog/category/productivity">Productivity</a><a href="/blog/category/performance">Performance</a></nav>
+  <div class="bnav-r">
+    <button type="button" class="bicon" id="bsearch" aria-label="Search articles" title="Search (press /)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg></button>
+    <a class="btn primary sm bnav-dl" href="/download">Download</a>
+    <button type="button" class="bicon bburger" id="bburger" aria-label="Menu" aria-expanded="false" aria-controls="bmenu"><svg class="ib-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="ib-close" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+  </div>
+</div>
+<nav class="bmenu" id="bmenu" aria-label="Menu">
+  <div class="bmenu-in">
+    <p class="bmenu-h">Browse</p>
+    <a href="/blog/">All articles<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/category/security">Security<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/category/privacy">Privacy<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/category/how-the-web-works">How the web works<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/category/productivity">Productivity<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/category/performance">Performance<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/search">Search<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <p class="bmenu-h">Rapid+ Blog</p>
+    <a href="/blog/about">About<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/contact">Contact<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/rss">RSS feed<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <p class="bmenu-h">Rapid+ Browser</p>
+    <a href="/">About Rapid+ Browser<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/download">Download the app<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/privacy">Privacy Policy<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/terms">Terms of Use<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="https://www.facebook.com/rapidplusbrowser" target="_blank" rel="noopener">Facebook page<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+  </div>
+</nav></header>
+<main>
+<article>
+<header class="post-head">
+  <div class="crumbs"><a href="/blog/">Rapid+ Blog</a> / <a href="/blog/category/security">Security</a></div>
+  <a class="chip" href="/blog/category/security">Security</a>
+  <h1>Passkeys in 2026: What They Are, Who Uses Them and How to Start</h1>
+  <p class="dek">Passkeys replace passwords with a key pair that cannot be typed into a fake site. What the 2026 survey says and how to start safely.</p>
+  <div class="byline"><img src="/assets/logo.png" alt=""><div><span><b>Rapid+ Team</b> · 18 Nov 2026 · 5 min read</span></div></div>
+</header>
+<figure class="post-hero"><img src="/assets/blog/passkeys-state-2026.jpg" width="1200" height="630" alt="A phone showing a fingerprint prompt and a key icon beside a login form on a laptop" fetchpriority="high"></figure>
+<div class="post-layout">
+  <nav class="post-toc" aria-label="On this page"><h4>On this page</h4><a href="#short-version">The short version</a><a href="#how-it-works">How a passkey works</a><a href="#numbers">What the surveys show</a><a href="#rough-edges">The rough edges</a><a href="#start">How to start</a><a href="#faq">FAQ</a><a href="#sources">Sources</a></nav>
+  <div class="prose">
+<div class="note"><b>Written on 18 November 2026.</b> The adoption figures come from the FIDO Alliance's "State of Passkeys 2026" report, published on 7 May 2026. The FIDO Alliance promotes passkeys, so read the numbers as its own survey results. We used only figures stated on the report page.</div>
+
+<p class="lede">The FIDO Alliance says 5 billion passkeys are now in use and that 75% of surveyed consumers have turned them on for at least one account. Yet most people still type passwords every day. This article explains what a passkey is, why it resists phishing, what the surveys show, and how to start using them without locking yourself out.</p>
+
+<h2 id="short-version">The short version</h2>
+<ul>
+<li>A passkey replaces a password with a pair of cryptographic keys. The private key stays on your device and the website holds only the public key.</li>
+<li>A passkey cannot be typed into a fake site, so it blocks the most common kind of phishing.</li>
+<li>The FIDO Alliance's May 2026 report claims 5 billion passkeys in active use, 90% consumer familiarity and 75% of consumers having enabled them on at least some accounts.</li>
+<li>In the same report, 68% of surveyed organisations said they are deploying, piloting or rolling out passkeys for employees.</li>
+<li>Passkeys still have rough edges: moving them between password managers and handling lost devices.</li>
+</ul>
+
+<h2 id="how-it-works">How a passkey works</h2>
+<p>When you create a passkey for a website, your device generates two linked keys. The public key goes to the site, and the private key stays with you, protected by your fingerprint, face scan or device PIN. When you log in, the site sends a challenge, your device signs it with the private key after you approve it, and the site checks the signature with the public key.</p>
+<p>Three things follow from this design.</p>
+<ul>
+<li><b>Nothing secret is on the server.</b> A site that is breached leaks public keys, which are useless to attackers.</li>
+<li><b>Nothing can be reused.</b> Each site gets its own key pair, so one leak cannot open other accounts.</li>
+<li><b>Phishing fails.</b> The browser ties a passkey to the real site's domain. A look-alike site gets no signature to steal, because the passkey will not be offered there.</li>
+</ul>
+<p>That last point is the main security gain. Passwords can be typed anywhere, including into a page made by a scammer. Our article on <a href="/blog/black-friday-fake-shops">fake shops</a> shows why that matters at this time of year.</p>
+
+<h2 id="numbers">What the surveys show</h2>
+<div class="tablewrap"><table class="cmp" style="min-width:0">
+<thead><tr><th>Measure (FIDO Alliance, May 2026)</th><th>Result</th></tr></thead>
+<tbody>
+<tr><td>Passkeys in active use</td><td>5 billion</td></tr>
+<tr><td>Consumers familiar with passkeys</td><td>90%</td></tr>
+<tr><td>Consumers who enabled them on at least some accounts</td><td>75%</td></tr>
+<tr><td>Organisations deploying, piloting or rolling out passkeys for employees</td><td>68%</td></tr>
+</tbody></table></div>
+<p>The consumer survey asked 11,000 adults who regularly sign in to services, in ten countries including the United States, the United Kingdom, Germany, Japan and India. Sapio Research ran it online in April 2026, with a margin of error of 0.9 percentage points. The workforce survey asked 1,400 decision-makers at organisations with 500 or more employees, with a margin of error of 2.6 points.</p>
+<p>Two cautions apply. First, "enabled on at least some accounts" is a low bar: one passkey on one account counts. The report page does not give a separate figure for how often people use them. Second, a body that exists to promote passkeys published the survey. The numbers are plausible and useful, but they are not independent. The figures also do not tell you how many of your everyday logins use a passkey, because many sites still keep the password as a fallback.</p>
+
+<h2 id="rough-edges">The rough edges</h2>
+<h3 id="portability">Moving passkeys between systems</h3>
+<p>A passkey lives in a credential manager such as the one built into your phone, your browser or a third-party password app. Moving it from one to another has been difficult. The FIDO Alliance has been working on standards for secure transfer, but support depends on each vendor, and you should check what yours offers.</p>
+<h3 id="lost-device">Losing a device</h3>
+<p>If your passkeys are synced through your phone maker's cloud account or a password manager, a lost phone does not mean lost access. If they are tied to one device, it can. Always keep a second way in, such as a recovery code.</p>
+<h3 id="fallback">Passwords stay as a fallback</h3>
+<p>Many sites let you add a passkey but do not remove the password. An attacker can then try the password route. The security gain is greatest where a site lets you turn the password off, and smaller where it does not.</p>
+
+<h2 id="start">How to start</h2>
+<ol>
+<li><b>Pick where your passkeys will live.</b> A password manager that you trust and use on all your devices is the simplest answer. Browsers and phones also store passkeys.</li>
+<li><b>Start with the accounts that matter most.</b> Your email, your bank and any account that can reset others. A passkey on your email protects everything that relies on it for recovery.</li>
+<li><b>Look for "Create a passkey" in the account's security settings.</b> Many services also offer it right after you sign in.</li>
+<li><b>Keep recovery options current.</b> Store recovery codes offline, and make sure a phone number or backup email is up to date.</li>
+<li><b>Do not delete the password yet.</b> Wait until you have used the passkey on all the devices you need.</li>
+</ol>
+<p>Major browsers support passkeys on the main platforms, though support varies by operating system and version, so check that the browser and credential manager you use can create and use them.</p>
+
+<h2 id="faq">Frequently asked questions</h2>
+<details><summary>Is a passkey the same as a password?</summary><p>No. A password is a secret you type and share with the site. A passkey is a key pair: the private key never leaves your device, and the site stores only the public key.</p></details>
+<details><summary>Can phishing sites steal a passkey?</summary><p>Not in the usual way. The browser ties a passkey to the genuine site's domain, so a look-alike site gets no valid response. Attackers have to find other ways in, such as tricking you into approving a login or taking over your device.</p></details>
+<details><summary>What if I lose my phone?</summary><p>If your passkeys sync through a cloud account or a password manager, you can restore them on a new device. If they are stored only on the lost device, use your recovery options. Set those up before you need them.</p></details>
+<details><summary>Do passkeys work in every browser?</summary><p>Major browsers support them on the main platforms, though support varies by operating system and version. Check that the browser and credential manager you use can create and use passkeys.</p></details>
+<details><summary>Should I delete my passwords?</summary><p>Not yet. Keep the password until the passkey works on every device you use and you have a recovery route. Where a site allows it, turning the password off later increases your safety.</p></details>
+
+<h2 id="sources">Sources</h2>
+<ol class="sources">
+<li><a href="https://fidoalliance.org/the-state-of-passkeys-2026-global-consumer-and-workforce-report/" target="_blank" rel="noopener">FIDO Alliance: The State of Passkeys 2026, global consumer and workforce report (7 May 2026)</a></li>
+<li><a href="https://fidoalliance.org/" target="_blank" rel="noopener">FIDO Alliance: home page and specifications</a></li>
+</ol>
+<div class="post-end"><img src="/assets/logo.png" alt=""><p><b>Written by the Rapid+ Team</b>. We build Rapid+ Browser for Android and Windows. Spotted a mistake or have a question? Email us at <a href="mailto:admin@rapidplusbrowser.online">admin@rapidplusbrowser.online</a>.</p></div>
+
+  </div>
+</div>
+</article>
+<section class="alt"><div class="wrap">
+  <h2 class="title">Keep reading</h2>
+  <div class="postgrid"><a class="postcard" href="/blog/age-verification-privacy"><div class="thumb"><img src="/assets/blog/age-verification-privacy.jpg" width="1200" height="630" alt="A phone showing a verify your age screen with an ID card inside a scanning frame" loading="lazy"></div><div class="txt"><span class="chip">Privacy</span><h3>Online Age Verification: How It Works and What It Costs Your Privacy</h3><p>Age checks are meant to protect children but need data from everyone. A plain look at the methods, the arguments on both sides and your options.</p><div class="postmeta"><span>18 Nov 2026</span><span class="dot">·</span><span>6 min read</span></div></div></a><a class="postcard" href="/blog/ai-browser-prompt-injection"><div class="thumb"><img src="/assets/blog/ai-browser-prompt-injection.jpg" width="1200" height="630" alt="A browser with an AI assistant panel and a web page where hidden highlighted text is being read by the assistant" loading="lazy"></div><div class="txt"><span class="chip">Security</span><h3>AI Browsers and Prompt Injection: How a Web Page Can Give Orders to Your Assistant</h3><p>AI browsers read pages and click for you. Researchers keep showing that a page can talk to the assistant. Here is how it works and how to limit the risk.</p><div class="postmeta"><span>18 Nov 2026</span><span class="dot">·</span><span>6 min read</span></div></div></a><a class="postcard" href="/blog/android-developer-verification"><div class="thumb"><img src="/assets/blog/android-developer-verification.jpg" width="1200" height="630" alt="A phone showing an app install screen with a verified developer badge and a locked advanced install option" loading="lazy"></div><div class="txt"><span class="chip">Security</span><h3>Android Developer Verification: What Changes for Sideloaded Apps</h3><p>Apps must come from a verified developer, even outside the Play Store. The timeline, the advanced sideloading flow and what stays the same.</p><div class="postmeta"><span>18 Nov 2026</span><span class="dot">·</span><span>5 min read</span></div></div></a></div>
+</div></section>
+</main>
+<footer class="bfoot"><div class="wrap">
+  <div class="bfoot-top">
+    <div><a class="bbrand" href="/blog/"><img src="/assets/logo.png" alt=""><span>Rapid<b>+</b> Blog</span></a><p>Researched guides on privacy, browsers and the web, from the team behind Rapid+ Browser.</p></div>
+    <div class="bfoot-links"><a href="/blog/">All articles</a><a href="/blog/about">About</a><a href="/blog/contact">Contact</a><a href="/blog/rss">RSS feed</a><a href="/">Rapid+ Browser</a><a href="/download">Download</a><a href="/privacy">Privacy Policy</a><a href="/terms">Terms of Use</a><a href="/privacy#analytics" data-privacy-choice>Privacy choices</a><a href="https://www.facebook.com/rapidplusbrowser" target="_blank" rel="noopener">Facebook</a><a href="mailto:admin@rapidplusbrowser.online">admin@rapidplusbrowser.online</a></div>
+  </div>
+  <div class="copy">© 2026 HM Dev Studio · Rapid+ Blog</div>
+</div></footer>
+<div class="dlbar"><img src="/assets/logo.png" alt=""><div><b>Rapid+ Browser</b>Free, always</div><a class="btn primary" href="/download">Get app</a></div>
+<script>
+if(/\.html$/.test(location.pathname)){var cp=location.pathname.replace(/index\.html$/,'').replace(/\.html$/,'')||'/';history.replaceState(null,'',cp+location.search+location.hash)}
+</script>
+<script src="/firebase-config.js"></script>
+<script type="module" src="/analytics.js"></script>
+<script type="module" src="/blog.js"></script>
+</body></html>

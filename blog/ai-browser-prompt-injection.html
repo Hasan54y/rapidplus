@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AI Browsers and Prompt Injection Explained | Rapid+ Blog</title>
+<meta name="description" content="Hidden text on a web page can steer an AI browser that acts as you. How indirect prompt injection works, a documented case, and habits that reduce the risk.">
+<meta name="theme-color" content="#ff6b00">
+<link rel="canonical" href="https://rapidplusbrowser.online/blog/ai-browser-prompt-injection">
+<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48.png"><link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="article"><meta property="og:site_name" content="Rapid+ Blog">
+<meta property="og:title" content="AI Browsers and Prompt Injection Explained | Rapid+ Blog"><meta property="og:description" content="Hidden text on a web page can steer an AI browser that acts as you. How indirect prompt injection works, a documented case, and habits that reduce the risk.">
+<meta property="og:url" content="https://rapidplusbrowser.online/blog/ai-browser-prompt-injection"><meta property="og:image" content="https://rapidplusbrowser.online/assets/blog/ai-browser-prompt-injection.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="A browser with an AI assistant panel and a web page where hidden highlighted text is being read by the assistant"><meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-11-18"><meta property="article:section" content="Security">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="AI Browsers and Prompt Injection Explained | Rapid+ Blog"><meta name="twitter:description" content="Hidden text on a web page can steer an AI browser that acts as you. How indirect prompt injection works, a documented case, and habits that reduce the risk."><meta name="twitter:image" content="https://rapidplusbrowser.online/assets/blog/ai-browser-prompt-injection.jpg">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"AI Browsers and Prompt Injection: How a Web Page Can Give Orders to Your Assistant","description":"Hidden text on a web page can steer an AI browser that acts as you. How indirect prompt injection works, a documented case, and habits that reduce the risk.","image":"https://rapidplusbrowser.online/assets/blog/ai-browser-prompt-injection.jpg","datePublished":"2026-11-18","dateModified":"2026-11-18","author":{"@type":"Organization","name":"Rapid+ Team","url":"https://rapidplusbrowser.online/","logo":{"@type":"ImageObject","url":"https://rapidplusbrowser.online/assets/logo.png"}},"publisher":{"@type":"Organization","name":"HM Dev Studio","url":"https://rapidplusbrowser.online/","logo":{"@type":"ImageObject","url":"https://rapidplusbrowser.online/assets/logo.png"}},"mainEntityOfPage":{"0":"h","1":"t","2":"t","3":"p","4":"s","5":":","6":"/","7":"/","8":"r","9":"a","10":"p","11":"i","12":"d","13":"p","14":"l","15":"u","16":"s","17":"b","18":"r","19":"o","20":"w","21":"s","22":"e","23":"r","24":".","25":"o","26":"n","27":"l","28":"i","29":"n","30":"e","31":"/","32":"b","33":"l","34":"o","35":"g","36":"/","37":"b","38":"i","39":"n","40":"a","41":"n","42":"c","43":"e","44":"-","45":"h","46":"a","47":"c","48":"k","@id":"https://rapidplusbrowser.online/blog/ai-browser-prompt-injection"},"wordCount":1285,"articleSection":"Security"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://rapidplusbrowser.online/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://rapidplusbrowser.online/blog/"},{"@type":"ListItem","position":3,"name":"AI Browsers and Prompt Injection: How a Web Page Can Give Orders to Your Assistant","item":"https://rapidplusbrowser.online/blog/ai-browser-prompt-injection"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is a normal browser affected?","acceptedAnswer":{"@type":"Answer","text":"Not by this problem. Indirect prompt injection needs an AI assistant that reads pages and can act. Browsers without one do not have that attack surface, though they have other risks such as the zero-day bugs we covered earlier."}},{"@type":"Question","name":"Has this been used against real people?","acceptedAnswer":{"@type":"Answer","text":"The cases we read about are research demonstrations by security teams and were disclosed to the vendors. We did not find evidence in those reports of attacks on real users."}},{"@type":"Question","name":"Can a company fully fix it?","acceptedAnswer":{"@type":"Answer","text":"Brave describes it as an unsolved problem across AI browsers. Mitigations reduce the risk but, according to the researchers, do not remove it."}},{"@type":"Question","name":"Are summaries safe?","acceptedAnswer":{"@type":"Answer","text":"Safer than actions, but not risk-free. In Brave's Comet example, a summary request was the trigger. The danger depends on what tools the assistant can use afterwards."}},{"@type":"Question","name":"What is the single best habit?","acceptedAnswer":{"@type":"Answer","text":"Do not give an assistant access to accounts you cannot afford to lose, and approve actions yourself."}}]}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<link rel="alternate" type="application/rss+xml" title="Rapid+ Blog" href="/blog/feed.xml">
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/blog.css">
+</head>
+<body>
+<header class="bnav" id="bnav"><div class="wrap">
+  <a class="bbrand" href="/blog/"><img src="/assets/logo.png" alt=""><span>Rapid<b>+</b> Blog</span></a>
+  <nav class="bnav-cats" aria-label="Categories"><a href="/blog/category/security">Security</a><a href="/blog/category/privacy">Privacy</a><a href="/blog/category/how-the-web-works">How the web works</a><a href="/blog/category/productivity">Productivity</a><a href="/blog/category/performance">Performance</a></nav>
+  <div class="bnav-r">
+    <button type="button" class="bicon" id="bsearch" aria-label="Search articles" title="Search (press /)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg></button>
+    <a class="btn primary sm bnav-dl" href="/download">Download</a>
+    <button type="button" class="bicon bburger" id="bburger" aria-label="Menu" aria-expanded="false" aria-controls="bmenu"><svg class="ib-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="ib-close" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+  </div>
+</div>
+<nav class="bmenu" id="bmenu" aria-label="Menu">
+  <div class="bmenu-in">
+    <p class="bmenu-h">Browse</p>
+    <a href="/blog/">All articles<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/category/security">Security<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/category/privacy">Privacy<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/category/how-the-web-works">How the web works<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/category/productivity">Productivity<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/category/performance">Performance<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/search">Search<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <p class="bmenu-h">Rapid+ Blog</p>
+    <a href="/blog/about">About<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/contact">Contact<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/rss">RSS feed<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <p class="bmenu-h">Rapid+ Browser</p>
+    <a href="/">About Rapid+ Browser<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/download">Download the app<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/privacy">Privacy Policy<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/terms">Terms of Use<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="https://www.facebook.com/rapidplusbrowser" target="_blank" rel="noopener">Facebook page<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+  </div>
+</nav></header>
+<main>
+<article>
+<header class="post-head">
+  <div class="crumbs"><a href="/blog/">Rapid+ Blog</a> / <a href="/blog/category/security">Security</a></div>
+  <a class="chip" href="/blog/category/security">Security</a>
+  <h1>AI Browsers and Prompt Injection: How a Web Page Can Give Orders to Your Assistant</h1>
+  <p class="dek">AI browsers read pages and click for you. Researchers keep showing that a page can talk to the assistant. Here is how it works and how to limit the risk.</p>
+  <div class="byline"><img src="/assets/logo.png" alt=""><div><span><b>Rapid+ Team</b> · 18 Nov 2026 · 6 min read</span></div></div>
+</header>
+<figure class="post-hero"><img src="/assets/blog/ai-browser-prompt-injection.jpg" width="1200" height="630" alt="A browser with an AI assistant panel and a web page where hidden highlighted text is being read by the assistant" fetchpriority="high"></figure>
+<div class="post-layout">
+  <nav class="post-toc" aria-label="On this page"><h4>On this page</h4><a href="#short-version">The short version</a><a href="#what">What an agentic browser does differently</a><a href="#injection">What indirect prompt injection is</a><a href="#comet">The best documented example</a><a href="#why-hard">Why it is hard to fix</a><a href="#defences">Defences that make sense</a><a href="#faq">FAQ</a><a href="#sources">Sources</a></nav>
+  <div class="prose">
+<div class="note"><b>Written on 18 November 2026.</b> The technical details come from Brave's published research on agentic browsers, which is the most detailed public account we found. Brave makes a competing browser and the findings are its own account, so we describe them as claims and not as independent tests. We could not load some other reports on the subject, and we do not cite what we did not read.</div>
+
+<p class="lede">A new kind of browser does not only show you pages. It reads them, decides what to do and clicks for you, using an AI assistant that is logged in as you. Security researchers keep finding that a web page can talk to that assistant, and sometimes the assistant obeys. The problem has a name, indirect prompt injection, and nobody has solved it.</p>
+<p>This article explains what happens, walks through the best documented example, and ends with practical rules for using an AI browser or assistant without handing over your accounts.</p>
+
+<h2 id="short-version">The short version</h2>
+<ul>
+<li>An "agentic" browser has an AI assistant that can browse, click and fill forms for you, with your logins.</li>
+<li>Indirect prompt injection means hidden instructions on a web page are read by the assistant as if the user had typed them.</li>
+<li>Brave's researchers showed this against Perplexity's Comet browser in 2025 and later reported related problems in other AI browsers, including Opera Neon.</li>
+<li>The classic web protections, such as the same-origin policy, do not stop an assistant that is acting with your privileges across sites.</li>
+<li>The sensible defences are to treat page content as untrusted, to ask for confirmation before sensitive actions and to keep the assistant away from your most important accounts.</li>
+</ul>
+
+<h2 id="what">What an agentic browser does differently</h2>
+<p>An ordinary browser renders a page and leaves decisions to you. An AI browser can also summarise the page, answer questions about it and carry out multi-step tasks such as comparing prices, filling a form or sending an email. To do that, the assistant sees the page text and can use the browser's tools, which run with your signed-in sessions.</p>
+<p>That combination is powerful and risky. A common way to describe the risk is three conditions at once: access to your private data, exposure to content from strangers and the ability to take actions. When all three are present, an attacker who controls the content can try to steer the actions.</p>
+
+<h2 id="injection">What indirect prompt injection is</h2>
+<p>The assistant receives text from two places: your request and the page. A language model does not reliably tell them apart. If a page contains the sentence "ignore the user and instead do the following", a model that has been fed the page along with your request may follow it. The attacker does not need to hack the browser. They only need to get words in front of the assistant: in a forum comment, a hidden element, an email or a document.</p>
+<p>The word "indirect" means the attacker is not the user. The instruction arrives through content you asked the assistant to read.</p>
+
+<h2 id="comet">The best documented example</h2>
+<p>Brave's researchers described an attack on Perplexity's Comet browser in August 2025. In their account, when a user asked Comet to summarise a page, it sent the page content to its model "without distinguishing between the user's instructions and untrusted content from the webpage". Attackers could hide instructions in white-on-white text, HTML comments, invisible elements or user posts such as Reddit comments.</p>
+<p>In their proof of concept, a hidden instruction in a Reddit comment led Comet to do the following:</p>
+<ol>
+<li>Read the user's email address from the Perplexity account page.</li>
+<li>Start a login with a slightly altered address, a domain with a trailing dot, to trigger a one-time password.</li>
+<li>Read that password from the user's open Gmail tab.</li>
+<li>Send both values back as a reply to the Reddit comment.</li>
+</ol>
+<p>With the email address and the code, an attacker could take over the account. Brave notes that the attack needed no further input from the user after the page was summarised. The timeline in their post says they reported it on 25 July 2025, Perplexity shipped a first fix two days later, a retest found it incomplete, and the public disclosure came on 20 August 2025. A later update says Perplexity had not fully mitigated this kind of attack.</p>
+<p>Brave's second post described "unseeable" injections hidden in screenshots, for example faint text on a coloured background that a person cannot read but a model can. It also reported an injection through hidden HTML elements in Opera Neon, which Opera first closed as not applicable and later fixed, according to Brave. These are vendor-reported findings, and Brave's position is that indirect prompt injection is a serious, unsolved problem for any AI browser that takes actions for you.</p>
+
+<h2 id="why-hard">Why it is hard to fix</h2>
+<p>The old web security model assumes a clear line between sites. The same-origin policy stops a script on one site from reading another site's data. An agent that acts as you does not cross that line by exploiting a bug. It uses your logged-in sessions on purpose, as part of its job. Brave says that "traditional Web security assumptions don't hold for agentic AI", and that the same-origin policy and CORS do not stop the agent.</p>
+<p>Filters that try to catch malicious instructions help, but language is flexible and attackers can rephrase. That is why researchers talk about limiting what the assistant can do, not only what it can read.</p>
+
+<h2 id="defences">Defences that make sense</h2>
+<p>Brave proposes four principles for browser makers:</p>
+<ul>
+<li>Separate the user's instructions from page content, and treat page content as untrusted.</li>
+<li>Check that each action matches what the user asked.</li>
+<li>Require explicit confirmation for sensitive actions.</li>
+<li>Isolate agentic browsing from regular browsing, with minimal permissions.</li>
+</ul>
+<p>As a user you can apply the same logic.</p>
+<ol>
+<li><b>Do not let an assistant act in accounts that matter.</b> Keep it away from your bank, email and work tools. A separate browser profile with no sensitive logins is a good container, as we explain in our article on <a href="/blog/browser-profiles">browser profiles</a>.</li>
+<li><b>Prefer read-only help.</b> Summaries are lower risk than actions. The risk rises when the assistant can send, buy or change settings.</li>
+<li><b>Confirm every action that touches money or accounts.</b> If the assistant asks for approval, read what it is about to do.</li>
+<li><b>Be wary of pages from strangers.</b> Untrusted content is the attacker's route. Summarising your own documents is safer than summarising a random forum thread.</li>
+<li><b>Keep the browser updated.</b> Vendors patch these issues, sometimes slowly, as the Comet timeline shows.</li>
+</ol>
+
+<h2 id="faq">Frequently asked questions</h2>
+<details><summary>Is a normal browser affected?</summary><p>Not by this problem. Indirect prompt injection needs an AI assistant that reads pages and can act. Browsers without one do not have that attack surface, though they have other risks such as the zero-day bugs we covered earlier.</p></details>
+<details><summary>Has this been used against real people?</summary><p>The cases we read about are research demonstrations by security teams and were disclosed to the vendors. We did not find evidence in those reports of attacks on real users.</p></details>
+<details><summary>Can a company fully fix it?</summary><p>Brave describes it as an unsolved problem across AI browsers. Mitigations reduce the risk but, according to the researchers, do not remove it.</p></details>
+<details><summary>Are summaries safe?</summary><p>Safer than actions, but not risk-free. In Brave's Comet example, a summary request was the trigger. The danger depends on what tools the assistant can use afterwards.</p></details>
+<details><summary>What is the single best habit?</summary><p>Do not give an assistant access to accounts you cannot afford to lose, and approve actions yourself.</p></details>
+
+<h2 id="sources">Sources</h2>
+<ol class="sources">
+<li><a href="https://brave.com/blog/comet-prompt-injection/" target="_blank" rel="noopener">Brave: Agentic Browser Security, indirect prompt injection in Perplexity Comet (20 Aug 2025)</a></li>
+<li><a href="https://brave.com/blog/unseeable-prompt-injections/" target="_blank" rel="noopener">Brave: Unseeable prompt injections in screenshots, more vulnerabilities in Comet and other AI browsers</a></li>
+<li><a href="https://brave.com/blog/prompt-injection-flaw-opera-neon/" target="_blank" rel="noopener">Brave: Prompt injection flaw in Opera Neon</a></li>
+</ol>
+<div class="post-end"><img src="/assets/logo.png" alt=""><p><b>Written by the Rapid+ Team</b>. We build Rapid+ Browser for Android and Windows. Spotted a mistake or have a question? Email us at <a href="mailto:admin@rapidplusbrowser.online">admin@rapidplusbrowser.online</a>.</p></div>
+
+  </div>
+</div>
+</article>
+<section class="alt"><div class="wrap">
+  <h2 class="title">Keep reading</h2>
+  <div class="postgrid"><a class="postcard" href="/blog/arc-browser-shutdown"><div class="thumb"><img src="/assets/blog/arc-browser-shutdown.jpg" width="1200" height="630" alt="A browser window with a vertical tab sidebar and a calendar card marked 22 December with a red closing indicator" loading="lazy"></div><div class="txt"><span class="chip">Productivity</span><h3>Arc Is Shutting Down on 22 December: What to Do With Your Browser Data</h3><p>The Browser Company has set a hard end date for Arc. Here are the deadlines, what carries over to Dia, and a checklist for picking your next browser.</p><div class="postmeta"><span>18 Nov 2026</span><span class="dot">·</span><span>6 min read</span></div></div></a><a class="postcard" href="/blog/chrome-gemini-autofill-gmail"><div class="thumb"><img src="/assets/blog/chrome-gemini-autofill-gmail.jpg" width="1200" height="630" alt="A browser form with an autofill drop-down labelled Suggested by Gemini showing an order number, next to an envelope" loading="lazy"></div><div class="txt"><span class="chip">Privacy</span><h3>Chrome Autofill Can Now Pull Details From Your Gmail: What to Know</h3><p>A new Chrome feature looks through your email to fill forms. Here is what it does, what Google has and has not explained, and how to switch it off.</p><div class="postmeta"><span>18 Nov 2026</span><span class="dot">·</span><span>5 min read</span></div></div></a><a class="postcard" href="/blog/chrome-zero-day-cve-2026-125350"><div class="thumb"><img src="/assets/blog/chrome-zero-day-cve-2026-125350.jpg" width="1200" height="630" alt="A browser window showing the About Chrome page at version 157.0.8103.50, with a red warning label for CVE-2026-125350 and a Fixed in label" loading="lazy"></div><div class="txt"><span class="chip">Security</span><h3>Chrome Patches Its Eighth Exploited Zero-Day of 2026: What to Do</h3><p>Google fixed an actively exploited bug in Chrome's XML component on 9 November. Here is what is known, what is not, and how to check that your browser has the fix.</p><div class="postmeta"><span>18 Nov 2026</span><span class="dot">·</span><span>9 min read</span></div></div></a></div>
+</div></section>
+</main>
+<footer class="bfoot"><div class="wrap">
+  <div class="bfoot-top">
+    <div><a class="bbrand" href="/blog/"><img src="/assets/logo.png" alt=""><span>Rapid<b>+</b> Blog</span></a><p>Researched guides on privacy, browsers and the web, from the team behind Rapid+ Browser.</p></div>
+    <div class="bfoot-links"><a href="/blog/">All articles</a><a href="/blog/about">About</a><a href="/blog/contact">Contact</a><a href="/blog/rss">RSS feed</a><a href="/">Rapid+ Browser</a><a href="/download">Download</a><a href="/privacy">Privacy Policy</a><a href="/terms">Terms of Use</a><a href="/privacy#analytics" data-privacy-choice>Privacy choices</a><a href="https://www.facebook.com/rapidplusbrowser" target="_blank" rel="noopener">Facebook</a><a href="mailto:admin@rapidplusbrowser.online">admin@rapidplusbrowser.online</a></div>
+  </div>
+  <div class="copy">© 2026 HM Dev Studio · Rapid+ Blog</div>
+</div></footer>
+<div class="dlbar"><img src="/assets/logo.png" alt=""><div><b>Rapid+ Browser</b>Free, always</div><a class="btn primary" href="/download">Get app</a></div>
+<script>
+if(/\.html$/.test(location.pathname)){var cp=location.pathname.replace(/index\.html$/,'').replace(/\.html$/,'')||'/';history.replaceState(null,'',cp+location.search+location.hash)}
+</script>
+<script src="/firebase-config.js"></script>
+<script type="module" src="/analytics.js"></script>
+<script type="module" src="/blog.js"></script>
+</body></html>
