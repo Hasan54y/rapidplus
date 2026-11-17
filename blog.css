@@ -330,7 +330,17 @@ body.noscroll{overflow:hidden}
 .ptxt h3 a:hover{color:var(--accent);text-decoration:none}
 .ptxt p{margin:0 0 10px;color:var(--muted);font-size:15px;line-height:1.55;overflow-wrap:anywhere}
 .ptxt mark,.bsearch-res mark{background:color-mix(in srgb,var(--accent) 24%,transparent);color:inherit;border-radius:3px;padding:0 1px}
-.more{text-align:center;margin:22px 0 0}
+.more{display:flex;flex-direction:column;align-items:center;gap:14px;margin:26px 0 8px}
+.more-bar{width:min(240px,70%);height:4px;border-radius:99px;background:var(--bg2);overflow:hidden;box-shadow:inset 0 0 0 1px var(--line)}
+.more-bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--accent2),var(--accent));transition:width .45s cubic-bezier(.2,.7,.2,1)}
+.more-count{margin:0;font-size:13px;font-weight:600;letter-spacing:.2px;color:var(--muted)}
+.loadmore{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-width:230px;padding:15px 30px;border-radius:999px;border:1px solid var(--line);background:linear-gradient(180deg,var(--card),var(--bg2));color:var(--text);font:inherit;font-size:15px;font-weight:700;letter-spacing:.1px;cursor:pointer;box-shadow:0 1px 2px rgba(20,18,12,.06),0 14px 28px -14px rgba(20,18,12,.28);transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease,color .2s ease,background .2s ease}
+.loadmore svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;transition:transform .25s ease}
+.loadmore:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--accent) 55%,var(--line));color:var(--accent);box-shadow:0 1px 2px rgba(20,18,12,.06),0 20px 34px -14px rgba(255,107,0,.38)}
+.loadmore:hover svg{transform:translateY(2px)}
+.loadmore:active{transform:translateY(0) scale(.98)}
+.loadmore:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){.loadmore,.loadmore svg,.more-bar i{transition:none}}
 @media(max-width:620px){.pitem{grid-template-columns:minmax(0,1fr);gap:12px;padding:18px 0}.ptxt h3{font-size:19px}}
 
 .side{display:flex;flex-direction:column;gap:18px;min-width:0}

@@ -263,7 +263,11 @@ async function initListing() {
   if (more) more.addEventListener("click", () => {
     const hid = [...document.querySelectorAll("#list [data-extra][hidden]")];
     hid.slice(0, 8).forEach(e => { e.hidden = false; });
-    if (hid.length <= 8) more.parentElement.remove();
+    const box = more.parentElement, total = +box.dataset.total || 0, left = hid.length - 8;
+    if (left <= 0) { box.remove(); return; }
+    const shown = total - left, bar = box.querySelector(".more-bar i"), cnt = box.querySelector("[data-count]");
+    if (bar && total) bar.style.width = Math.round(shown / total * 100) + "%";
+    if (cnt) cnt.textContent = "Showing " + shown + " of " + total + " articles";
   });
   const counts = await loadCounts();
   const viewsText = v => `${nf(v)} ${v === 1 ? "view" : "views"}`;
