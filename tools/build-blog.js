@@ -4,6 +4,7 @@
 // blog/search.json, the shared header/footer on every blog page, and the blog URLs in sitemap.xml.
 // Adding a new article = drop its HTML in blog/ (copy an existing one), then run this.
 const fs = require('fs'), path = require('path');
+const PUSH_ON = fs.existsSync(path.join(__dirname, 'push-enabled')); // create tools/push-enabled once the Firestore rules for push_subscribers are deployed
 const root = path.join(__dirname, '..'), dir = path.join(root, 'blog'), SITE = 'https://rapidplusbrowser.online';
 
 const CATS = [
@@ -23,6 +24,7 @@ const strip = h => dec(h.replace(/<(script|style|svg|nav)[\s\S]*?<\/\1>/gi, ' ')
 const read = f => fs.readFileSync(f, 'utf8');
 const write = (f, s) => { fs.mkdirSync(path.dirname(f), { recursive: true }); fs.writeFileSync(f, s); };
 const CHEV = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>';
+const I_BELL = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9a6 6 0 0 1 12 0c0 6 2.5 7.5 2.5 7.5h-17S6 15 6 9z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>';
 const I_SEARCH = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>';
 const I_BURGER = '<svg class="ib-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="ib-close" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>';
 
@@ -50,6 +52,7 @@ const header = current => `<header class="bnav" id="bnav"><div class="wrap">
   <a class="bbrand" href="/blog/"><img src="/assets/logo.png" alt=""><span>Rapid<b>+</b> Blog</span></a>
   <nav class="bnav-cats" aria-label="Categories">${usedCats.map(([l, s]) => `<a href="/blog/category/${s}"${current === s ? ' aria-current="page"' : ''}>${l}</a>`).join('')}</nav>
   <div class="bnav-r">
+${PUSH_ON ? `<button type="button" class="bicon bnotify" id="bnotify" aria-label="Get an alert for new articles" title="Get an alert for new articles" hidden>${I_BELL}</button>` : ''}
     <button type="button" class="bicon" id="bsearch" aria-label="Search articles" title="Search (press /)">${I_SEARCH}</button>
     <a class="btn primary sm bnav-dl" href="/download">Download</a>
     <button type="button" class="bicon bburger" id="bburger" aria-label="Menu" aria-expanded="false" aria-controls="bmenu">${I_BURGER}</button>
@@ -88,7 +91,8 @@ if(/\\.html$/.test(location.pathname)){var cp=location.pathname.replace(/index\\
 </script>
 <script src="/firebase-config.js"></script>
 <script type="module" src="/analytics.js"></script>
-<script type="module" src="/blog.js"></script>`;
+<script type="module" src="/blog.js"></script>${PUSH_ON ? `
+<script type="module" src="/push.js"></script>` : ''}`;
 const RSS_LINK = '<link rel="alternate" type="application/rss+xml" title="Rapid+ Blog" href="/blog/feed.xml">';
 
 const shell = ({ title, desc, canonical, robots, ogImage, ogAlt, ld, current, body, bodyClass }) => `<!doctype html>
@@ -172,10 +176,10 @@ const adSlot = slot => { const live = liveAds(slot).slice(0, 2); return `<sectio
 // ---------- home (all posts)
 const top = posts[0];
 write(path.join(dir, 'index.html'), shell({
-  title: 'Rapid+ Blog: Browser Privacy, Speed and How the Web Works',
-  desc: 'Researched guides on proxies and VPNs, browser fingerprinting, user agents, profiles, ad blocking and security news from the team behind Rapid+ Browser.',
+  title: 'Rapid+ Blog (Rapid Plus Blog): Browser Privacy and Security',
+  desc: 'Rapid Plus Blog from the team behind Rapid+ Browser: researched guides on browser privacy, security news, VPNs, fingerprinting, passkeys and how the web works.',
   canonical: '/blog/', ogImage: `/assets/blog/${top.slug}.jpg`, ogAlt: top.alt, bodyClass: 'hub',
-  ld: [{ '@context': 'https://schema.org', '@type': 'Blog', name: 'Rapid+ Blog', url: SITE + '/blog/', publisher, blogPost: posts.map(p => ({ '@type': 'BlogPosting', headline: p.title, url: `${SITE}/blog/${p.slug}` })) }, crumbLd(['Home', '/'], ['Blog', '/blog/'])],
+  ld: [{ '@context': 'https://schema.org', '@type': 'Blog', name: 'Rapid+ Blog', alternateName: ['Rapid Plus Blog', 'RapidPlus Blog'], description: 'Researched guides on browser privacy, security and how the web works, from the team behind Rapid+ Browser.', inLanguage: 'en', url: SITE + '/blog/', publisher, blogPost: posts.map(p => ({ '@type': 'BlogPosting', headline: p.title, url: `${SITE}/blog/${p.slug}` })) }, crumbLd(['Home', '/'], ['Blog', '/blog/'])],
   body: `<section class="blogtop slim"><div class="wrap">
   <h1 class="sr-only">Latest articles</h1>
   ${chipsNav(null)}
