@@ -411,3 +411,79 @@ body.noscroll{overflow:hidden}
 .homemain .feature-post h2{font-size:clamp(26px,3.2vw,36px);letter-spacing:-.9px}
 @media(max-width:620px){.homemain .feature-post .txt{padding:20px}}
 .contact-card .feedurl{color:var(--text);font-size:clamp(15px,2.8vw,19px);user-select:all;cursor:text}
+
+/* ---- ad slot under "Latest articles" ---- */
+.adslot{padding:4px 0 6px}
+.adslot .wrap{display:grid;gap:14px}
+.adbanner{position:relative;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);align-items:center;gap:26px;padding:30px 36px;border-radius:26px;overflow:hidden;isolation:isolate;color:#fff;text-decoration:none;background:linear-gradient(120deg,#190f33 0%,#38207a 58%,#ff6b00 170%);box-shadow:0 30px 60px -26px rgba(40,20,90,.7);transition:transform .25s ease,box-shadow .25s ease}
+.adbanner:hover{text-decoration:none;transform:translateY(-3px);box-shadow:0 38px 70px -26px rgba(40,20,90,.8)}
+.adbanner::before{content:"";position:absolute;left:-30%;top:-90%;width:160%;height:280%;z-index:-1;background:conic-gradient(from 0deg,transparent 0 62%,rgba(255,255,255,.13) 78%,transparent 92%);animation:adspin 11s linear infinite}
+.adbanner::after{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(circle at 85% 20%,rgba(255,140,60,.35),transparent 50%)}
+.adtag{position:absolute;left:36px;top:14px;font-size:10.5px;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;color:rgba(255,255,255,.6)}
+.adb-txt{padding-top:12px}
+.adbanner h2{margin:0 0 10px;color:#fff;font-size:clamp(25px,3.3vw,38px);line-height:1.12;letter-spacing:-1px}
+.adbanner .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.adwords{position:relative;display:inline-block;height:1.14em;width:4.9em;overflow:hidden;vertical-align:bottom;color:#ffb36a}
+.adwords b{position:absolute;left:0;top:0;opacity:0;transform:translateY(100%);animation:adword 9s infinite}
+.adwords b:nth-child(2){animation-delay:3s}.adwords b:nth-child(3){animation-delay:6s}
+.adbanner p{margin:0 0 18px;max-width:470px;font-size:16px;line-height:1.55;color:rgba(255,255,255,.8)}
+.adcta{display:inline-flex;align-items:center;gap:6px;padding:11px 20px;border-radius:999px;background:#fff;color:#1b1330;font-weight:800;font-size:14.5px;box-shadow:0 12px 26px -10px rgba(0,0,0,.6);transition:gap .2s ease}
+.adcta svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.adbanner:hover .adcta,.adpaid:hover .adcta{gap:10px}
+.adart{position:relative;height:190px;min-width:0}
+.admain{position:absolute;left:50%;top:50%;width:220px;height:120px;margin:-60px 0 0 -110px;border-radius:20px;display:grid;place-items:center;overflow:hidden;border:2px dashed rgba(255,255,255,.55);background:rgba(255,255,255,.08);backdrop-filter:blur(6px);font-weight:800;letter-spacing:4px;font-size:15px;color:#fff;animation:adpulse 3.2s ease-in-out infinite}
+.admain em{position:absolute;top:0;bottom:0;width:60px;left:-80px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.4),transparent);transform:skewX(-18deg);animation:adsheen 3.6s ease-in-out infinite}
+.adring{position:absolute;left:50%;top:50%;width:150px;height:150px;margin:-75px 0 0 -75px;border-radius:50%;border:2px solid rgba(255,190,120,.6);animation:adripple 3.6s ease-out infinite}
+.adring.r2{animation-delay:1.8s}
+.adc{position:absolute;display:flex;align-items:center;gap:8px;padding:9px 14px 9px 10px;border-radius:14px;background:rgba(255,255,255,.95);color:#1b1330;font-weight:800;font-size:13.5px;box-shadow:0 18px 30px -12px rgba(0,0,0,.6);animation:adfloat 4.2s ease-in-out infinite}
+.adc svg{width:22px;height:22px;padding:4px;box-sizing:border-box;border-radius:8px;background:#ff6b00;fill:none;stroke:#fff;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.adc.c1{left:2%;top:8%}.adc.c2{right:0;top:2%;animation-delay:-1.4s}.adc.c3{right:8%;bottom:4%;animation-delay:-2.8s}.adc.c2 svg{background:#7c5cf0}.adc.c3 svg{background:#14b8a6}
+@keyframes adspin{to{transform:rotate(360deg)}}
+@keyframes adword{0%{opacity:0;transform:translateY(100%)}6%,30%{opacity:1;transform:translateY(0)}36%,100%{opacity:0;transform:translateY(-100%)}}
+@keyframes adfloat{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-9px) rotate(2deg)}}
+@keyframes adpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+@keyframes adsheen{0%,55%{left:-80px}100%{left:260px}}
+@keyframes adripple{0%{transform:scale(.6);opacity:.9}100%{transform:scale(2.3);opacity:0}}
+@media(max-width:760px){.adbanner{grid-template-columns:minmax(0,1fr);padding:30px 22px 22px;gap:12px}.adtag{left:22px}.adart{height:170px}.adbanner p{font-size:15px}}
+@media(prefers-reduced-motion:reduce){.adbanner::before,.admain,.admain em,.adring,.adc{animation:none}.adwords b{animation:none;opacity:0}.adwords b:first-child{opacity:1;transform:none}.adwords{width:auto;height:auto;overflow:visible}.adwords b:not(:first-child){display:none}.adwords b{position:static}}
+/* a paid ad */
+.adpaid{position:relative;display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:22px;align-items:center;padding:14px;border:1px solid var(--line);border-radius:22px;background:var(--card);box-shadow:var(--shadow);color:var(--text);text-decoration:none;transition:transform .2s ease,box-shadow .2s ease}
+.adpaid:hover{text-decoration:none;transform:translateY(-3px)}
+.adpaid:not(:has(.adp-img)){grid-template-columns:minmax(0,1fr);padding:22px 26px}
+.adp-img{display:block;border-radius:14px;overflow:hidden;aspect-ratio:1200/630;background:var(--bg2)}
+.adp-img img{display:block;width:100%;height:100%;object-fit:cover}
+.adp-txt{display:flex;flex-direction:column;align-items:flex-start;gap:8px;min-width:0}
+.adpaid .adtag{position:static;color:var(--muted)}
+.adpaid strong{font-size:clamp(20px,2.6vw,26px);line-height:1.2;letter-spacing:-.5px}
+.adp-p{color:var(--muted);font-size:15.5px;line-height:1.5}
+.adpaid .adcta{background:var(--accent);color:#fff;box-shadow:0 10px 22px -10px rgba(255,107,0,.7)}
+@media(max-width:620px){.adpaid{grid-template-columns:minmax(0,1fr)}}
+/* advertise page */
+.adpage .wrap{max-width:820px}
+.adgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:6px 0 14px}
+.adbox{padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--card);box-shadow:var(--shadow)}
+.adbox b{display:block;font-size:16px;margin-bottom:6px}
+.adbox span{display:block;font-size:14.5px;line-height:1.55;color:var(--muted)}
+.adreq li b{font-weight:700}
+.adsteps{padding-left:22px}
+.adform{display:grid;gap:14px;padding:24px;border:1px solid var(--line);border-radius:20px;background:var(--card);box-shadow:var(--shadow)}
+.adrow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.adform label{display:grid;gap:6px;font-size:13.5px;font-weight:700;color:var(--muted)}
+.adform input,.adform select,.adform textarea{width:100%;box-sizing:border-box;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--text);font:inherit;font-size:16px;font-weight:500}
+.adform textarea{resize:vertical;line-height:1.5}
+.adform input:focus,.adform select:focus,.adform textarea:focus{outline:0;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 20%,transparent)}
+.adform [aria-invalid=true]{border-color:#d93025}
+.adform .btn{justify-self:start}
+.adnote{margin:0;font-size:14px!important;line-height:1.55!important;color:var(--muted)}
+.adfail{display:grid;gap:10px;padding:14px;border-radius:14px;background:var(--bg2)}
+.adfail p{margin:0;font-size:15px}
+@media(max-width:700px){.adgrid,.adrow{grid-template-columns:minmax(0,1fr)}}
+
+/* blog home: no visible heading or intro, the ad slot leads; the h1 stays for screen readers and search engines */
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.blogtop.slim{padding:22px 0 0}
+@media(min-width:981px){.blogtop.slim{padding:14px 0 0}}
+/* six longer category names: keep the brand on one line and tighten the nav on mid-size screens */
+.bbrand{white-space:nowrap;flex:none}
+@media(min-width:981px) and (max-width:1240px){.bnav-cats{margin-left:0}.bnav-cats a{font-size:13px;padding:8px 7px}}
+@media(min-width:981px) and (max-width:1100px){.bnav-dl{display:none}}

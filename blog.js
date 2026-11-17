@@ -441,5 +441,5 @@ addEventListener("keydown", e => {
 document.querySelectorAll("[data-copy]").forEach(b => b.addEventListener("click", async () => toast((await copyText(b.dataset.copy)) ? "Copied" : "Couldn't copy. Select it and copy by hand.")));
 document.querySelectorAll("[data-subscribe]").forEach(h => h.append(subscribeCard(h.dataset.subscribe || "page")));
 // old links like /blog/#privacy now go to the real category page
-if (/^\/blog\/?(index)?(\.html)?$/.test(location.pathname) && /^#(security|privacy|how-the-web-works|productivity|performance)$/.test(location.hash)) location.replace("/blog/category/" + location.hash.slice(1));
+if (/^\/blog\/?(index)?(\.html)?$/.test(location.pathname) && /^#(cybersecurity|privacy-data|browsers-ai|web-technology|online-safety|speed-productivity)$/.test(location.hash)) location.replace("/blog/category/" + location.hash.slice(1));
 if (isPost) initPost(); else { initListing(); initSearchPage(); }

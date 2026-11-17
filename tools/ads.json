@@ -1,0 +1,5 @@
+{
+  "_help": "Paid ads for the Rapid+ Blog. Add an object to the ads list, then run: node tools/build-blog.js and push. If no ad is live, the blog shows the 'Advertise here' banner instead. Fields: id, active (true/false), slot (home-top), sponsor (advertiser name), title (max 60 characters), text (max 120), cta (button text), url (https link), image (path like /assets/ads/name.jpg, 1200x630 or a GIF/WebP), from and to (YYYY-MM-DD, optional; the build checks them, so rebuild on the day an ad starts or ends).",
+  "_example": { "id": "acme-2026-12", "active": true, "slot": "home-top", "sponsor": "Acme", "title": "Acme Cloud Backup", "text": "Encrypted backup for small teams. Try it free for 30 days.", "cta": "Visit Acme", "url": "https://example.com/?ref=rapidplus", "image": "/assets/ads/acme.jpg", "from": "2026-12-01", "to": "2026-12-31" },
+  "ads": []
+}

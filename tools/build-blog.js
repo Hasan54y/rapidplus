@@ -7,11 +7,12 @@ const fs = require('fs'), path = require('path');
 const root = path.join(__dirname, '..'), dir = path.join(root, 'blog'), SITE = 'https://rapidplusbrowser.online';
 
 const CATS = [
-  ['Security', 'security', 'News and explainers on breaches, scams and how to stay safe online.'],
-  ['Privacy', 'privacy', 'How tracking, proxies and VPNs really work, and what actually protects you.'],
-  ['How the web works', 'how-the-web-works', 'Plain-language explanations of the parts of the web you use every day.'],
-  ['Productivity', 'productivity', 'Getting more done in your browser without mixing up your accounts.'],
-  ['Performance', 'performance', 'What makes pages load fast or slow, and what helps.']
+  ["Cybersecurity", 'cybersecurity', "Breaches, zero-days and threats: what happened, what it means and how to stay protected."],
+  ["Privacy & Data", 'privacy-data', "Tracking, fingerprinting, VPNs and data laws, explained with sources."],
+  ["Browsers & AI", 'browsers-ai', "AI assistants in the browser, browser news and what it means for you."],
+  ["Web Technology", 'web-technology', "How the web works: the protocols, standards and plumbing behind every page."],
+  ["Online Safety", 'online-safety', "Scams, passwords and everyday habits that keep your accounts safe."],
+  ["Speed & Productivity", 'speed-productivity', "Faster pages and a tidier workflow in your browser."]
 ];
 const catSlug = name => (CATS.find(c => c[0] === name) || [name, name.toLowerCase().replace(/[^a-z0-9]+/g, '-')])[1];
 
@@ -26,7 +27,7 @@ const I_SEARCH = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy
 const I_BURGER = '<svg class="ib-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="ib-close" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>';
 
 // ---------- read the articles
-const SKIP = new Set(['index.html', 'about.html', 'contact.html', 'search.html', 'rss.html']);
+const SKIP = new Set(['index.html', 'about.html', 'contact.html', 'search.html', 'rss.html', 'advertise.html']);
 const posts = [];
 for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.html') && !SKIP.has(f))) {
   const h = read(path.join(dir, f)), slug = f.replace(/\.html$/, '');
@@ -63,6 +64,7 @@ const header = current => `<header class="bnav" id="bnav"><div class="wrap">
     <p class="bmenu-h">Rapid+ Blog</p>
     <a href="/blog/about">About${CHEV}</a>
     <a href="/blog/contact">Contact${CHEV}</a>
+    <a href="/blog/advertise">Advertise${CHEV}</a>
     <a href="/blog/rss">RSS feed${CHEV}</a>
     <p class="bmenu-h">Rapid+ Browser</p>
     <a href="/">About Rapid+ Browser${CHEV}</a>
@@ -76,7 +78,7 @@ const header = current => `<header class="bnav" id="bnav"><div class="wrap">
 const footer = `<footer class="bfoot"><div class="wrap">
   <div class="bfoot-top">
     <div><a class="bbrand" href="/blog/"><img src="/assets/logo.png" alt=""><span>Rapid<b>+</b> Blog</span></a><p>Researched guides on privacy, browsers and the web, from the team behind Rapid+ Browser.</p></div>
-    <div class="bfoot-links"><a href="/blog/">All articles</a><a href="/blog/about">About</a><a href="/blog/contact">Contact</a><a href="/blog/rss">RSS feed</a><a href="/">Rapid+ Browser</a><a href="/download">Download</a><a href="/privacy">Privacy Policy</a><a href="/terms">Terms of Use</a><a href="/privacy#analytics" data-privacy-choice>Privacy choices</a><a href="https://www.facebook.com/rapidplusbrowser" target="_blank" rel="noopener">Facebook</a><a href="mailto:admin@rapidplusbrowser.online">admin@rapidplusbrowser.online</a></div>
+    <div class="bfoot-links"><a href="/blog/">All articles</a><a href="/blog/about">About</a><a href="/blog/contact">Contact</a><a href="/blog/advertise">Advertise</a><a href="/blog/rss">RSS feed</a><a href="/">Rapid+ Browser</a><a href="/download">Download</a><a href="/privacy">Privacy Policy</a><a href="/terms">Terms of Use</a><a href="/privacy#analytics" data-privacy-choice>Privacy choices</a><a href="https://www.facebook.com/rapidplusbrowser" target="_blank" rel="noopener">Facebook</a><a href="mailto:admin@rapidplusbrowser.online">admin@rapidplusbrowser.online</a></div>
   </div>
   <div class="copy">© 2026 HM Dev Studio · Rapid+ Blog</div>
 </div></footer>`;
@@ -140,6 +142,33 @@ const chipsNav = current => `<nav class="cats cats-m" aria-label="Categories"><a
 const crumbLd = (...items) => ({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: items.map(([name, url], i) => ({ '@type': 'ListItem', position: i + 1, name, item: SITE + url })) });
 const publisher = { '@type': 'Organization', name: 'HM Dev Studio', url: SITE + '/', logo: { '@type': 'ImageObject', url: SITE + '/assets/logo.png' } };
 
+// ---------- ad slot (tools/ads.json); with no live ad the "Advertise here" banner is shown
+const adsCfg = (() => { try { return JSON.parse(read(path.join(__dirname, 'ads.json'))); } catch (e) { return { ads: [] }; } })();
+const adToday = new Date().toISOString().slice(0, 10);
+const liveAds = slot => (adsCfg.ads || []).filter(a => a && a.active !== false && (a.slot || 'home-top') === slot && a.url && a.title && (!a.from || a.from <= adToday) && (!a.to || a.to >= adToday));
+const AD_ICONS = {
+  brand: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.6 5.6 6 .8-4.4 4.2 1.1 6L12 16.7 6.7 19.6l1.1-6L3.4 9.4l6-.8L12 3z"/></svg>',
+  business: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9l1.5-5h15L21 9M3 9h18M3 9v11h18V9M9 20v-6h6v6"/></svg>',
+  service: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4 2.6-2.6z"/></svg>'
+};
+const adHouse = `<a class="adbanner" href="/blog/advertise" aria-label="Advertise your brand, business or service on Rapid+ Blog. See how it works.">
+  <span class="adtag">Ad space</span>
+  <div class="adb-txt">
+    <h2><span class="sr">Advertise your brand, business or service here</span><span aria-hidden="true">Advertise your <span class="adwords"><b>Brand</b><b>Business</b><b>Service</b></span> here</span></h2>
+    <p>Put your name in front of readers who care about browsers, privacy and security. Tap to see the requirements and get in touch.</p>
+    <span class="adcta">See how it works<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></span>
+  </div>
+  <div class="adart" aria-hidden="true">
+    <i class="adring r1"></i><i class="adring r2"></i>
+    <div class="admain"><span>YOUR AD</span><em></em></div>
+    <div class="adc c1">${AD_ICONS.brand}<span>Brand</span></div>
+    <div class="adc c2">${AD_ICONS.business}<span>Business</span></div>
+    <div class="adc c3">${AD_ICONS.service}<span>Service</span></div>
+  </div>
+</a>`;
+const adPaid = a => `<a class="adpaid" href="${esc(a.url)}" target="_blank" rel="sponsored nofollow noopener">${a.image ? `<span class="adp-img"><img src="${esc(a.image)}" width="1200" height="630" alt="" loading="lazy"></span>` : ''}<span class="adp-txt"><span class="adtag">Sponsored${a.sponsor ? ' · ' + esc(a.sponsor) : ''}</span><strong>${esc(a.title)}</strong>${a.text ? `<span class="adp-p">${esc(a.text)}</span>` : ''}<span class="adcta">${esc(a.cta || 'Learn more')}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></span></span></a>`;
+const adSlot = slot => { const live = liveAds(slot).slice(0, 2); return `<section class="adslot" aria-label="Advertisement"><div class="wrap">${live.length ? live.map(adPaid).join('') : adHouse}</div></section>`; };
+
 // ---------- home (all posts)
 const top = posts[0];
 write(path.join(dir, 'index.html'), shell({
@@ -147,11 +176,11 @@ write(path.join(dir, 'index.html'), shell({
   desc: 'Researched guides on proxies and VPNs, browser fingerprinting, user agents, profiles, ad blocking and security news from the team behind Rapid+ Browser.',
   canonical: '/blog/', ogImage: `/assets/blog/${top.slug}.jpg`, ogAlt: top.alt, bodyClass: 'hub',
   ld: [{ '@context': 'https://schema.org', '@type': 'Blog', name: 'Rapid+ Blog', url: SITE + '/blog/', publisher, blogPost: posts.map(p => ({ '@type': 'BlogPosting', headline: p.title, url: `${SITE}/blog/${p.slug}` })) }, crumbLd(['Home', '/'], ['Blog', '/blog/'])],
-  body: `<section class="blogtop"><div class="wrap">
-  <h1>Latest articles</h1>
-  <p>Long-form guides with the sources linked, from the team behind Rapid+ Browser.</p>
+  body: `<section class="blogtop slim"><div class="wrap">
+  <h1 class="sr-only">Latest articles</h1>
   ${chipsNav(null)}
 </div></section>
+${adSlot('home-top')}
 <section class="bloglist"><div class="wrap homegrid">
   <div class="homemain">
     ${featured(top)}
@@ -232,6 +261,71 @@ write(path.join(dir, 'rss.html'), shell({
 </div></section>`
 }));
 
+// ---------- advertise page
+write(path.join(dir, 'advertise.html'), shell({
+  title: 'Advertise | Rapid+ Blog', desc: 'Advertise your brand, business or service on the Rapid+ Blog. Ad formats, requirements, and a form to get in touch.', canonical: '/blog/advertise',
+  ogImage: `/assets/blog/${top.slug}.jpg`, ogAlt: top.alt, ld: [crumbLd(['Home', '/'], ['Blog', '/blog/'], ['Advertise', '/blog/advertise'])],
+  body: `<section class="pagebody adpage"><div class="wrap">
+  <div class="crumbs"><a href="/blog/">Rapid+ Blog</a> / Advertise</div>
+  <h1>Advertise on Rapid+ Blog</h1>
+  <p class="lead">Show your brand, business or service to people who read about browsers, privacy and security. Ads are clearly labelled, and they never change what we write.</p>
+
+  <h2>What you get</h2>
+  <div class="adgrid">
+    <div class="adbox"><b>Top banner</b><span>A sponsored card right under "Latest articles" on the blog home page, with your image, a short headline, a line of text and a button to your site.</span></div>
+    <div class="adbox"><b>Clear label</b><span>Every ad is marked "Sponsored" and links out with rel="sponsored", so readers and search engines can tell it is paid.</span></div>
+    <div class="adbox"><b>Your dates</b><span>You choose the start and end date. The ad goes live and comes down on those days.</span></div>
+  </div>
+  <p>Prices depend on the format and how long the ad runs. Send us your details with the form below and we will reply with a quote by email.</p>
+
+  <h2>What we need from you</h2>
+  <ul class="adreq">
+    <li><b>Headline:</b> up to 60 characters.</li>
+    <li><b>Text:</b> up to 120 characters, plain and honest.</li>
+    <li><b>Button text:</b> one to three words, such as "Visit site" or "Try it free".</li>
+    <li><b>Link:</b> an https address that opens a working page about what the ad says.</li>
+    <li><b>Image:</b> 1200 x 630 pixels as JPG, PNG, WebP or GIF, under 300 KB. A short animated GIF or WebP is welcome. No flashing, and no text that is too small to read.</li>
+    <li><b>Who you are:</b> your name or company, a website and an email we can reach you at.</li>
+    <li><b>Dates:</b> when the ad should start and for how long.</li>
+  </ul>
+
+  <h2>What we do not accept</h2>
+  <ul class="adreq">
+    <li>Adult content, gambling, weapons, drugs, or anything illegal where our readers live.</li>
+    <li>Scams, fake discounts, fake reviews, or claims that cannot be backed up, such as "100% anonymous" or "unhackable".</li>
+    <li>Malware, adware, cracked software, or tools made to harm or spy on people.</li>
+    <li>Misleading ads that look like articles, system warnings or buttons.</li>
+    <li>Privacy or security products that hide who runs them or where to find their policy.</li>
+  </ul>
+  <p>We may refuse or remove an ad at any time if it breaks these rules or the page it points to changes. We read every ad and the page behind it before it goes live.</p>
+
+  <h2>How it works</h2>
+  <ol class="adsteps">
+    <li><b>Tell us what you want.</b> Fill in the form below. It opens an email to us with your details.</li>
+    <li><b>We reply</b> with a quote, the exact sizes and a date that is free.</li>
+    <li><b>You send the image and text.</b> We check them, show you how the ad will look, and agree on dates.</li>
+    <li><b>It goes live</b> on the day you chose.</li>
+  </ol>
+
+  <h2 id="contact">Get in touch</h2>
+  <form class="adform" id="adform" novalidate>
+    <div class="adrow"><label>Your name<input name="name" autocomplete="name" required></label><label>Company or brand<input name="company" autocomplete="organization"></label></div>
+    <div class="adrow"><label>Email<input name="email" type="email" autocomplete="email" required></label><label>Website<input name="website" type="url" inputmode="url" placeholder="https://"></label></div>
+    <div class="adrow"><label>What are you advertising?<select name="type"><option>Brand</option><option>Business</option><option>Service</option><option>Product or app</option><option>Event or other</option></select></label><label>Start date (if you know it)<input name="start" type="date"></label></div>
+    <label>Tell us about the ad<textarea name="message" rows="5" placeholder="What you offer, who it is for, and the page the ad should link to." required></textarea></label>
+    <p class="adnote">Pressing the button opens your email app with the message filled in, addressed to us. Nothing is sent from this page.</p>
+    <button type="submit" class="btn primary">Prepare my email</button>
+    <div class="adfail" id="adfail" hidden><p>If your email app did not open, copy the text below and send it to <a href="mailto:admin@rapidplusbrowser.online">admin@rapidplusbrowser.online</a>.</p><textarea id="adtext" rows="8" readonly></textarea><button type="button" class="btn sm" id="adcopy">Copy text</button></div>
+  </form>
+  <div class="contact-card" style="margin-top:22px">
+    <div><span class="k">Email</span><a class="email" href="mailto:admin@rapidplusbrowser.online?subject=Advertising%20on%20Rapid%2B%20Blog">admin@rapidplusbrowser.online</a></div>
+    <button type="button" class="btn sm" data-copy="admin@rapidplusbrowser.online">Copy address</button>
+  </div>
+  <p class="adnote">Prefer chat? Message us on <a href="https://t.me/hasanmahmud_dev" target="_blank" rel="noopener">Telegram</a>.</p>
+</div></section>
+<script src="/ads.js" defer></script>`
+}));
+
 // ---------- search index
 write(path.join(dir, 'search.json'), JSON.stringify(posts.map(p => ({ slug: p.slug, title: p.title, desc: p.desc, cat: p.cat, cs: p.cs, date: p.date, mins: p.mins, text: p.text }))));
 
@@ -268,6 +362,7 @@ for (const [, s] of usedCats) {
   const loc = `${SITE}/blog/category/${s}`;
   if (!sm.includes(loc)) sm = sm.replace(`  <url><loc>${SITE}/blog/about</loc>`, () => `  <url><loc>${loc}</loc><lastmod>${today}</lastmod><priority>0.6</priority></url>\n  <url><loc>${SITE}/blog/about</loc>`);
 }
+if (!sm.includes(`${SITE}/blog/advertise`)) sm = sm.replace(`  <url><loc>${SITE}/blog/about</loc>`, () => `  <url><loc>${SITE}/blog/advertise</loc><lastmod>${today}</lastmod><priority>0.4</priority></url>\n  <url><loc>${SITE}/blog/about</loc>`);
 fs.writeFileSync(smPath, crlf ? sm.split('\n').join('\r\n') : sm);
 
 console.log(`${posts.length} articles, ${usedCats.length} categories; home, category pages, search page, feed and search index written (${Math.round(fs.statSync(path.join(dir, 'search.json')).size / 1024)} KB index)`);

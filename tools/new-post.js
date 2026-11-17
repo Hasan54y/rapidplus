@@ -8,7 +8,7 @@
 // Needs "sharp" only when the hero is an SVG:  npm i --no-save sharp
 const fs = require('fs'), path = require('path'), cp = require('child_process');
 const root = path.join(__dirname, '..'), blogDir = path.join(root, 'blog'), SITE = 'https://rapidplusbrowser.online';
-const CATEGORIES = { 'Security': 'security', 'Privacy': 'privacy', 'How the web works': 'how-the-web-works', 'Productivity': 'productivity', 'Performance': 'performance' };
+const CATEGORIES = { "Cybersecurity": 'cybersecurity', "Privacy & Data": 'privacy-data', "Browsers & AI": 'browsers-ai', "Web Technology": 'web-technology', "Online Safety": 'online-safety', "Speed & Productivity": 'speed-productivity' };
 const FILLER = ['delve', 'landscape', 'ever-evolving', 'in today\'s', 'it\'s important to note', 'it is important to note', 'navigate the', 'leverage', 'robust', 'seamless', 'unlock', 'game-changer', 'game changer', 'tapestry', 'realm of', 'crucial', 'comprehensive', 'moreover', 'furthermore', 'testament', 'embark', 'empower', 'harness', 'cutting-edge', 'revolutioniz', 'in conclusion', 'dive into', 'deep dive', 'at the end of the day', 'treasure trove', '—', '–'];
 
 const specPath = process.argv[2];
@@ -71,7 +71,7 @@ fs.mkdirSync(path.dirname(heroOut), { recursive: true });
     const d = h.match(/<meta property="article:published_time" content="([^"]+)"/);
     return { slug, title: m(/<h1[^>]*>([\s\S]*?)<\/h1>/), dek: m(/<p class="dek">([\s\S]*?)<\/p>/), cat: m(/<header class="post-head">[\s\S]*?<a class="chip"[^>]*>([^<]+)</), alt: (h.match(/<figure class="post-hero">[\s\S]*?alt="([^"]*)"/) || [, ''])[1], mins: (by.match(/(\d+) min read/) || [, '8'])[1], date: d ? d[1] : '1970-01-01', human: (by.match(/\d{1,2} \w{3} \d{4}/) || [''])[0] };
   };
-  const others = fs.readdirSync(blogDir).filter(f => f.endsWith('.html') && !['index.html', 'about.html', 'contact.html', 'search.html', 'rss.html', spec.slug + '.html'].includes(f)).map(meta).filter(p => p.title).sort((a, b) => b.date.localeCompare(a.date)).slice(0, 3);
+  const others = fs.readdirSync(blogDir).filter(f => f.endsWith('.html') && !['index.html', 'about.html', 'contact.html', 'search.html', 'rss.html', 'advertise.html', spec.slug + '.html'].includes(f)).map(meta).filter(p => p.title).sort((a, b) => b.date.localeCompare(a.date)).slice(0, 3);
   const cards = others.map(p => `<a class="postcard" href="/blog/${p.slug}"><div class="thumb"><img src="/assets/blog/${p.slug}.jpg" width="1200" height="630" alt="${esc(p.alt)}" loading="lazy"></div><div class="txt"><span class="chip">${esc(p.cat)}</span><h3>${esc(p.title)}</h3><p>${esc(p.dek)}</p><div class="postmeta"><span>${esc(p.human)}</span><span class="dot">·</span><span>${p.mins} min read</span></div></div></a>`).join('');
 
   const head = `<!doctype html>
