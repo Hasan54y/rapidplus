@@ -487,3 +487,14 @@ body.noscroll{overflow:hidden}
 .bbrand{white-space:nowrap;flex:none}
 @media(min-width:981px) and (max-width:1240px){.bnav-cats{margin-left:0}.bnav-cats a{font-size:13px;padding:8px 7px}}
 @media(min-width:981px) and (max-width:1100px){.bnav-dl{display:none}}
+
+/* article alerts: bell in the header and its small panel */
+.bnotify[hidden]{display:none}
+.bnotify.on{color:var(--accent)}
+.bnotify.on svg{fill:currentColor;fill-opacity:.18}
+.npop{position:fixed;top:calc(var(--nav-h,64px) + 8px);right:max(16px,calc((100vw - 1100px) / 2 + 16px));z-index:300;width:min(340px,calc(100vw - 32px));box-sizing:border-box;padding:18px 18px 14px;border:1px solid var(--line);border-radius:18px;background:var(--card);color:var(--text);box-shadow:0 26px 60px -16px rgba(20,18,12,.4)}
+.npop[hidden]{display:none}
+.npop b{display:block;font-size:16px;margin-bottom:6px}
+.npop p{margin:0 0 12px;font-size:14.5px;line-height:1.5;color:var(--muted)}
+.np-row{display:flex;gap:8px;margin-bottom:10px}
+.npop .np-f{margin:0;font-size:12.5px}

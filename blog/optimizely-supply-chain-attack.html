@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Optimizely Attack: 178 Sites Served Malware | Rapid+ Blog</title>
+<meta name="description" content="A tampered Optimizely script reached 178 organisations on 16 November. What the code did, who was hit, and what visitors and site owners should do now.">
+<meta name="theme-color" content="#ff6b00">
+<link rel="canonical" href="https://rapidplusbrowser.online/blog/optimizely-supply-chain-attack">
+<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48.png"><link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="article"><meta property="og:site_name" content="Rapid+ Blog">
+<meta property="og:title" content="Optimizely Attack: 178 Sites Served Malware | Rapid+ Blog"><meta property="og:description" content="A tampered Optimizely script reached 178 organisations on 16 November. What the code did, who was hit, and what visitors and site owners should do now.">
+<meta property="og:url" content="https://rapidplusbrowser.online/blog/optimizely-supply-chain-attack"><meta property="og:image" content="https://rapidplusbrowser.online/assets/blog/optimizely-supply-chain-attack.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="A web page script tag with injected code, linked to the logos of CNN, Zoom, GitLab, IKEA, HSBC and Apple, with the number 178"><meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-11-23"><meta property="article:section" content="Cybersecurity">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Optimizely Attack: 178 Sites Served Malware | Rapid+ Blog"><meta name="twitter:description" content="A tampered Optimizely script reached 178 organisations on 16 November. What the code did, who was hit, and what visitors and site owners should do now."><meta name="twitter:image" content="https://rapidplusbrowser.online/assets/blog/optimizely-supply-chain-attack.jpg">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Optimizely Supply-Chain Attack: Malware Hit Visitors of BBC, CNN, Zoom and 170+ Sites","description":"A tampered Optimizely script reached 178 organisations on 16 November. What the code did, who was hit, and what visitors and site owners should do now.","image":"https://rapidplusbrowser.online/assets/blog/optimizely-supply-chain-attack.jpg","datePublished":"2026-11-23","dateModified":"2026-11-23","author":{"@type":"Organization","name":"Rapid+ Team","url":"https://rapidplusbrowser.online/","logo":{"@type":"ImageObject","url":"https://rapidplusbrowser.online/assets/logo.png"}},"publisher":{"@type":"Organization","name":"HM Dev Studio","url":"https://rapidplusbrowser.online/","logo":{"@type":"ImageObject","url":"https://rapidplusbrowser.online/assets/logo.png"}},"mainEntityOfPage":{"0":"h","1":"t","2":"t","3":"p","4":"s","5":":","6":"/","7":"/","8":"r","9":"a","10":"p","11":"i","12":"d","13":"p","14":"l","15":"u","16":"s","17":"b","18":"r","19":"o","20":"w","21":"s","22":"e","23":"r","24":".","25":"o","26":"n","27":"l","28":"i","29":"n","30":"e","31":"/","32":"b","33":"l","34":"o","35":"g","36":"/","37":"b","38":"i","39":"n","40":"a","41":"n","42":"c","43":"e","44":"-","45":"h","46":"a","47":"c","48":"k","@id":"https://rapidplusbrowser.online/blog/optimizely-supply-chain-attack"},"wordCount":1546,"articleSection":"Cybersecurity"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://rapidplusbrowser.online/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://rapidplusbrowser.online/blog/"},{"@type":"ListItem","position":3,"name":"Optimizely Supply-Chain Attack: Malware Hit Visitors of BBC, CNN, Zoom and 170+ Sites","item":"https://rapidplusbrowser.online/blog/optimizely-supply-chain-attack"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Was the BBC or CNN itself hacked?","acceptedAnswer":{"@type":"Answer","text":"Not directly. The code came from Optimizely, a tool those sites use, and ran in visitors' browsers. Report URI says the vendor's network served exactly what it was given, so the tool's own systems were the point of attack."}},{"@type":"Question","name":"Is the attack still going?","acceptedAnswer":{"@type":"Answer","text":"No. Report URI reports that all infected Optimizely files were clean by 23:11 UTC on 16 November and stayed clean. The attacker's domains were also put on hold on 17 November."}},{"@type":"Question","name":"Could my iPhone have been hacked?","acceptedAnswer":{"@type":"Answer","text":"Only if it ran iOS 18.6 or earlier (or iOS 13 to 17) and loaded an affected page. Report URI says it cannot tell how many devices were infected. Updating to iOS 18.7.3, iOS 26.3 or later closes the holes the kit relied on."}},{"@type":"Question","name":"How did the attacker get in?","acceptedAnswer":{"@type":"Answer","text":"That is not fully known. Report URI says it does not know how write access was obtained. Optimizely told BleepingComputer that the attacker used a vulnerability in its account signup flow and says it has fixed it."}},{"@type":"Question","name":"How much money was stolen?","acceptedAnswer":{"@type":"Answer","text":"Report URI counted roughly $7,000 to $7,500 in cryptocurrency across the attacker's wallets. The number of stolen card records and cookies is not known."}}]}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<link rel="alternate" type="application/rss+xml" title="Rapid+ Blog" href="/blog/feed.xml">
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/blog.css">
+</head>
+<body>
+<header class="bnav" id="bnav"><div class="wrap">
+  <a class="bbrand" href="/blog/"><img src="/assets/logo.png" alt=""><span>Rapid<b>+</b> Blog</span></a>
+  <nav class="bnav-cats" aria-label="Categories"><a href="/blog/category/cybersecurity">Cybersecurity</a><a href="/blog/category/privacy-data">Privacy & Data</a><a href="/blog/category/browsers-ai">Browsers & AI</a><a href="/blog/category/web-technology">Web Technology</a><a href="/blog/category/online-safety">Online Safety</a><a href="/blog/category/speed-productivity">Speed & Productivity</a></nav>
+  <div class="bnav-r">
+
+    <button type="button" class="bicon" id="bsearch" aria-label="Search articles" title="Search (press /)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg></button>
+    <a class="btn primary sm bnav-dl" href="/download">Download</a>
+    <button type="button" class="bicon bburger" id="bburger" aria-label="Menu" aria-expanded="false" aria-controls="bmenu"><svg class="ib-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="ib-close" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+  </div>
+</div>
+<nav class="bmenu" id="bmenu" aria-label="Menu">
+  <div class="bmenu-in">
+    <p class="bmenu-h">Browse</p>
+    <a href="/blog/">All articles<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/category/cybersecurity">Cybersecurity<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/category/privacy-data">Privacy & Data<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/category/browsers-ai">Browsers & AI<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/category/web-technology">Web Technology<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/category/online-safety">Online Safety<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/category/speed-productivity">Speed & Productivity<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/search">Search<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <p class="bmenu-h">Rapid+ Blog</p>
+    <a href="/blog/about">About<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/contact">Contact<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/advertise">Advertise<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/rss">RSS feed<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <p class="bmenu-h">Rapid+ Browser</p>
+    <a href="/">About Rapid+ Browser<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/download">Download the app<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/privacy">Privacy Policy<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/terms">Terms of Use<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="https://www.facebook.com/rapidplusbrowser" target="_blank" rel="noopener">Facebook page<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+  </div>
+</nav></header>
+<main>
+<article>
+<header class="post-head">
+  <div class="crumbs"><a href="/blog/">Rapid+ Blog</a> / <a href="/blog/category/cybersecurity">Cybersecurity</a></div>
+  <a class="chip" href="/blog/category/cybersecurity">Cybersecurity</a>
+  <h1>Optimizely Supply-Chain Attack: Malware Hit Visitors of BBC, CNN, Zoom and 170+ Sites</h1>
+  <p class="dek">One vendor script, 178 organisations, about 17 hours. What the malicious code did on the BBC, CNN, Zoom and others, and what to do if you visited.</p>
+  <div class="byline"><img src="/assets/logo.png" alt=""><div><span><b>Rapid+ Team</b> · 23 Nov 2026 · 7 min read</span></div></div>
+</header>
+<figure class="post-hero"><img src="/assets/blog/optimizely-supply-chain-attack.jpg" width="1200" height="630" alt="A web page script tag with injected code, linked to the logos of CNN, Zoom, GitLab, IKEA, HSBC and Apple, with the number 178" fetchpriority="high"></figure>
+<div class="post-layout">
+  <nav class="post-toc" aria-label="On this page"><h4>On this page</h4><a href="#short-version">The short version</a><a href="#what-is-optimizely">What Optimizely is and why it matters</a><a href="#how-it-worked">How the attack worked</a><a href="#what-it-did">What the malicious code did</a><a href="#who">Who was affected</a><a href="#what-to-do">What you should do</a><a href="#lesson">The lesson about third-party scripts</a><a href="#faq">FAQ</a><a href="#sources">Sources</a></nav>
+  <div class="prose">
+<div class="note"><b>Written on 23 November 2026.</b> This story is still developing. The most detailed account is by Report URI, whose researcher Scott Helme found the attack, and we also drew on Krebs on Security and BleepingComputer. We did not read Optimizely's own incident report. Where sources disagree or nobody knows, we say so.</div>
+
+<p class="lede">On 16 November 2026, malicious code was delivered to visitors of at least 178 well-known organisations through a single marketing tool, Optimizely. The affected sites include the BBC, CNN, Zoom, Equifax and the hardware wallet maker Ledger. For about 17 hours, pages that loaded Optimizely's script could swap cryptocurrency addresses, skim card numbers and try to attack older iPhones. The attack is over, but it shows how one trusted script can reach a very large audience at once.</p>
+<p>This article explains what Optimizely is, what the code did, who might have been affected, and what you can do today, whether you only browse the web or run a website.</p>
+
+<h2 id="short-version">The short version</h2>
+<ul>
+<li>Attackers added malicious JavaScript to customer projects inside Optimizely Web, a tool that websites use for A/B testing and personalisation.</li>
+<li>Report URI found 188 infected snippets belonging to 178 organisations among the 1,611 it could check. It says the real number is likely higher.</li>
+<li>The code swapped crypto wallet addresses, tried to capture card details typed into a site's own forms, and sent cookies and screenshots to the attacker.</li>
+<li>On iPhones and iPads running iOS 18.6 or earlier, it tried to load exploit kits named Coruna and DarkSword.</li>
+<li>Report URI estimates about $7,000 to $7,500 in cryptocurrency reached the attacker's wallets. The number of stolen cards and cookies is unknown.</li>
+<li>Optimizely says it has removed the injected code and fixed the vulnerability. How the attacker got in is not fully explained.</li>
+</ul>
+
+<h2 id="what-is-optimizely">What Optimizely is and why it matters</h2>
+<p>Many large websites use Optimizely Web to test two versions of a page and see which works better. To do that, each customer loads a small script from Optimizely's servers on every page. That script can include a field called Project JavaScript, where the customer can add its own custom code. The script runs as soon as the page loads, before any cookie banner has been answered, as researcher Zach Edwards told Krebs.</p>
+<p>That arrangement is the weak point. A site that trusts one vendor's script has handed that vendor the ability to run code on every visitor's browser. If an attacker can write into the vendor's system, they can reach every site at once, with no need to break into any of them.</p>
+
+<h2 id="how-it-worked">How the attack worked</h2>
+<p>According to Report URI, the attacker wrote malicious code into the Project JavaScript field of customer projects. The rest of each script was unchanged, and it was still served from Optimizely's own domain with Optimizely's own certificate. Report URI stresses this was not a poisoned cache: Optimizely's network served exactly what it was given.</p>
+<p>The injected code loaded a second script from a domain registered that morning. Report URI describes three loader variants, including one that carried a full copy of the payload so that blocking the domain would not stop it.</p>
+<h3 id="timeline">Timeline (UTC, from Report URI)</h3>
+<div class="tablewrap"><table class="cmp" style="min-width:0">
+<thead><tr><th>Time on 16 November</th><th>What happened</th></tr></thead>
+<tbody>
+<tr><td>02:21</td><td>Last clean capture of the BBC's Optimizely script.</td></tr>
+<tr><td>04:21</td><td>First infected script seen, on the BBC.</td></tr>
+<tr><td>13:43</td><td>Card-skimming code added to the payload.</td></tr>
+<tr><td>19:24 to 19:59</td><td>Report URI's sweep finds 186 of 1,611 snippets infected.</td></tr>
+<tr><td>About 20:40 to 21:10</td><td>Mass clean-up begins; Ledger, Smartsheet and the BBC are cleaned.</td></tr>
+<tr><td>23:11</td><td>All infected Optimizely files clean and staying clean.</td></tr>
+</tbody></table></div>
+<p>The attacker's two domains were put on hold by their registrar on 17 November, which stopped the code from loading even where it remained.</p>
+
+<h2 id="what-it-did">What the malicious code did</h2>
+<ol>
+<li><b>Swapped crypto addresses.</b> It replaced Bitcoin, Ethereum, Tron, Solana and other wallet addresses on the page, in the clipboard and in outgoing requests with the attacker's own. Copy an address from an affected site and you might have pasted the attacker's.</li>
+<li><b>Skimmed card details.</b> From 13:43 UTC it watched forms for card numbers, expiry dates and security codes, and sent them to the attacker. Cards typed into hosted payment frames such as Stripe or Adyen were out of reach. Cards typed into a site's own fields were not.</li>
+<li><b>Sent cookies and screenshots.</b> It collected the page address, cookies that are not marked HttpOnly, and a screenshot. Report URI says to treat any session tokens kept in such cookies as exposed.</li>
+<li><b>Tried to exploit iPhones.</b> On iPhones and iPads it loaded exploit kits in a hidden frame: Coruna for iOS 13 to 17 and DarkSword for iOS 18. A third chain for iOS 26 only fingerprinted the device. Pages on iOS 18.6 or earlier reloaded every 60 seconds to retry.</li>
+</ol>
+<p>Report URI cannot say how many cards, cookies or iPhones were affected. Krebs calls the iOS kits "zero-click" and says they chain together about six security holes, a description Report URI does not use. Whether any phone was actually compromised is not confirmed.</p>
+
+<h2 id="who">Who was affected</h2>
+<p>Report URI lists the BBC, CNN, Zoom, Salesforce, GitLab, IKEA, HSBC, Equifax, Air France-KLM, Ledger and Peacock among the 178 organisations. BleepingComputer, which says it confirmed the script on its own, adds Fox News, American Eagle, Smartsheet and UNICEF USA. Banking and finance made up the largest group in Report URI's table, with 32 organisations. At least 12 Dutch websites also warned visitors, according to NL Times.</p>
+<p>Only people who loaded a page during the window could be affected, and the strongest signs of harm are for people who copied a crypto address, typed a card number or used an old iPhone. Most readers who visited these sites will have been unaffected.</p>
+
+<h2 id="what-to-do">What you should do</h2>
+<h3 id="visitors">If you visited an affected site on 16 November</h3>
+<ul>
+<li>Update your iPhone or iPad to iOS 18.7.3 or later, or iOS 26.3 or later, which the kit's own code treats as patched.</li>
+<li>If you sent cryptocurrency that day, check that the address you sent to matches the one you meant to use.</li>
+<li>If you paid by card on one of these sites, watch your statement and ask your bank about anything you do not recognise. Our <a href="/blog/black-friday-fake-shops">advice on paying safely</a> explains why a card gives you the strongest protection.</li>
+<li>Change passwords on sensitive accounts you used that day and prefer <a href="/blog/passkeys-state-2026">passkeys</a> where offered.</li>
+</ul>
+<h3 id="owners">If you run a website that used Optimizely</h3>
+<ul>
+<li>Open every project's Project JavaScript and each experiment's custom code, and look for the attacker's domain, <code>atob(</code> and any code you did not write.</li>
+<li>Review who and what has write access to your Optimizely account, and rotate credentials.</li>
+<li>Treat card data entered on your own forms that day as potentially exposed, and rotate secrets stored in cookies without HttpOnly.</li>
+<li>Deploy a Content Security Policy that limits which domains scripts can load from and send data to. In Report URI's data, 24 of the 256 organisations it checked had a policy that blocked the payload, while 68 had none.</li>
+</ul>
+
+<h2 id="lesson">The lesson about third-party scripts</h2>
+<p>Every extra script on a page is a promise that its owner stays safe. Browsers cannot judge that promise for you, but you can reduce your exposure. A content blocker stops many third-party scripts from running at all, and Krebs notes that modern blockers can block most requests of this kind. Site owners can load fewer vendors, audit what they load and limit what scripts may do. Rapid+ Browser includes content blocking for this reason, though no blocker catches everything.</p>
+
+<h2 id="faq">Frequently asked questions</h2>
+<details><summary>Was the BBC or CNN itself hacked?</summary><p>Not directly. The code came from Optimizely, a tool those sites use, and ran in visitors' browsers. Report URI says the vendor's network served exactly what it was given, so the tool's own systems were the point of attack.</p></details>
+<details><summary>Is the attack still going?</summary><p>No. Report URI reports that all infected Optimizely files were clean by 23:11 UTC on 16 November and stayed clean. The attacker's domains were also put on hold on 17 November.</p></details>
+<details><summary>Could my iPhone have been hacked?</summary><p>Only if it ran iOS 18.6 or earlier (or iOS 13 to 17) and loaded an affected page. Report URI says it cannot tell how many devices were infected. Updating to iOS 18.7.3, iOS 26.3 or later closes the holes the kit relied on.</p></details>
+<details><summary>How did the attacker get in?</summary><p>That is not fully known. Report URI says it does not know how write access was obtained. Optimizely told BleepingComputer that the attacker used a vulnerability in its account signup flow and says it has fixed it.</p></details>
+<details><summary>How much money was stolen?</summary><p>Report URI counted roughly $7,000 to $7,500 in cryptocurrency across the attacker's wallets. The number of stolen card records and cookies is not known.</p></details>
+
+<h2 id="sources">Sources</h2>
+<ol class="sources">
+<li><a href="https://blog.report-uri.com/worlds-largest-brands-infected-with-malware-via-optimizely/" target="_blank" rel="noopener">Report URI: World's largest brands infected with malware via Optimizely (Scott Helme, 16 Nov 2026, updated)</a></li>
+<li><a href="https://krebsonsecurity.com/2026/11/attackers-used-optimizely-to-a-b-test-malware-on-top-websites/" target="_blank" rel="noopener">Krebs on Security: Attackers used Optimizely to A/B test malware on top websites (17 Nov 2026)</a></li>
+<li><a href="https://www.bleepingcomputer.com/news/security/optimizely-supply-chain-attack-delivers-malware-to-cnn-fox-news-bbc-salesforce-sites/" target="_blank" rel="noopener">BleepingComputer: Optimizely supply-chain attack delivers malware to CNN, Fox News, BBC, Salesforce sites (16 Nov 2026)</a></li>
+<li><a href="https://nltimes.nl/2026/11/15/least-12-dutch-websites-warn-malicious-ad-code-tried-hack-old-iphones" target="_blank" rel="noopener">NL Times: At least 12 Dutch websites warn of malicious code that tried to hack old iPhones</a></li>
+</ol>
+<div class="post-end"><img src="/assets/logo.png" alt=""><p><b>Written by the Rapid+ Team</b>. We build Rapid+ Browser for Android and Windows. Spotted a mistake or have a question? Email us at <a href="mailto:admin@rapidplusbrowser.online">admin@rapidplusbrowser.online</a>.</p></div>
+
+  </div>
+</div>
+</article>
+<section class="alt"><div class="wrap">
+  <h2 class="title">Keep reading</h2>
+  <div class="postgrid"><a class="postcard" href="/blog/age-verification-privacy"><div class="thumb"><img src="/assets/blog/age-verification-privacy.jpg" width="1200" height="630" alt="A phone showing a verify your age screen with an ID card inside a scanning frame" loading="lazy"></div><div class="txt"><span class="chip">Privacy &amp;amp; Data</span><h3>Online Age Verification: How It Works and What It Costs Your Privacy</h3><p>Age checks are meant to protect children but need data from everyone. A plain look at the methods, the arguments on both sides and your options.</p><div class="postmeta"><span>18 Nov 2026</span><span class="dot">·</span><span>6 min read</span></div></div></a><a class="postcard" href="/blog/ai-browser-prompt-injection"><div class="thumb"><img src="/assets/blog/ai-browser-prompt-injection.jpg" width="1200" height="630" alt="A browser with an AI assistant panel and a web page where hidden highlighted text is being read by the assistant" loading="lazy"></div><div class="txt"><span class="chip">Browsers &amp;amp; AI</span><h3>AI Browsers and Prompt Injection: How a Web Page Can Give Orders to Your Assistant</h3><p>AI browsers read pages and click for you. Researchers keep showing that a page can talk to the assistant. Here is how it works and how to limit the risk.</p><div class="postmeta"><span>18 Nov 2026</span><span class="dot">·</span><span>6 min read</span></div></div></a><a class="postcard" href="/blog/android-developer-verification"><div class="thumb"><img src="/assets/blog/android-developer-verification.jpg" width="1200" height="630" alt="A phone showing an app install screen with a verified developer badge and a locked advanced install option" loading="lazy"></div><div class="txt"><span class="chip">Cybersecurity</span><h3>Android Developer Verification: What Changes for Sideloaded Apps</h3><p>Apps must come from a verified developer, even outside the Play Store. The timeline, the advanced sideloading flow and what stays the same.</p><div class="postmeta"><span>18 Nov 2026</span><span class="dot">·</span><span>5 min read</span></div></div></a></div>
+</div></section>
+</main>
+<footer class="bfoot"><div class="wrap">
+  <div class="bfoot-top">
+    <div><a class="bbrand" href="/blog/"><img src="/assets/logo.png" alt=""><span>Rapid<b>+</b> Blog</span></a><p>Researched guides on privacy, browsers and the web, from the team behind Rapid+ Browser.</p></div>
+    <div class="bfoot-links"><a href="/blog/">All articles</a><a href="/blog/about">About</a><a href="/blog/contact">Contact</a><a href="/blog/advertise">Advertise</a><a href="/blog/rss">RSS feed</a><a href="/">Rapid+ Browser</a><a href="/download">Download</a><a href="/privacy">Privacy Policy</a><a href="/terms">Terms of Use</a><a href="/privacy#analytics" data-privacy-choice>Privacy choices</a><a href="https://www.facebook.com/rapidplusbrowser" target="_blank" rel="noopener">Facebook</a><a href="mailto:admin@rapidplusbrowser.online">admin@rapidplusbrowser.online</a></div>
+  </div>
+  <div class="copy">© 2026 HM Dev Studio · Rapid+ Blog</div>
+</div></footer>
+<div class="dlbar"><img src="/assets/logo.png" alt=""><div><b>Rapid+ Browser</b>Free, always</div><a class="btn primary" href="/download">Get app</a></div>
+<script>
+if(/\.html$/.test(location.pathname)){var cp=location.pathname.replace(/index\.html$/,'').replace(/\.html$/,'')||'/';history.replaceState(null,'',cp+location.search+location.hash)}
+</script>
+<script src="/firebase-config.js"></script>
+<script type="module" src="/analytics.js"></script>
+<script type="module" src="/blog.js"></script>
+</body></html>
