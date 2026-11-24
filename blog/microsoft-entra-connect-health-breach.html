@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Entra Connect Health Flaw Exploited | Rapid+ Blog</title>
+<meta name="description" content="Microsoft says attackers read tenant metadata through an Entra Connect Health flaw. Admin emails were exposed, passwords were not. What to do.">
+<meta name="theme-color" content="#ff6b00">
+<link rel="canonical" href="https://rapidplusbrowser.online/blog/microsoft-entra-connect-health-breach">
+<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48.png"><link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="article"><meta property="og:site_name" content="Rapid+ Blog">
+<meta property="og:title" content="Entra Connect Health Flaw Exploited | Rapid+ Blog"><meta property="og:description" content="Microsoft says attackers read tenant metadata through an Entra Connect Health flaw. Admin emails were exposed, passwords were not. What to do.">
+<meta property="og:url" content="https://rapidplusbrowser.online/blog/microsoft-entra-connect-health-breach"><meta property="og:image" content="https://rapidplusbrowser.online/assets/blog/microsoft-entra-connect-health-breach.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="A tenant contacts list with blurred admin email addresses marked exposed beside the Microsoft logo and notes that passwords were not exposed"><meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-11-24"><meta property="article:section" content="Cybersecurity">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Entra Connect Health Flaw Exploited | Rapid+ Blog"><meta name="twitter:description" content="Microsoft says attackers read tenant metadata through an Entra Connect Health flaw. Admin emails were exposed, passwords were not. What to do."><meta name="twitter:image" content="https://rapidplusbrowser.online/assets/blog/microsoft-entra-connect-health-breach.jpg">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Microsoft Entra Connect Health Breach: Admin Emails Exposed, What It Means and What to Do","description":"Microsoft says attackers read tenant metadata through an Entra Connect Health flaw. Admin emails were exposed, passwords were not. What to do.","image":"https://rapidplusbrowser.online/assets/blog/microsoft-entra-connect-health-breach.jpg","datePublished":"2026-11-24","dateModified":"2026-11-24","author":{"@type":"Organization","name":"Rapid+ Team","url":"https://rapidplusbrowser.online/","logo":{"@type":"ImageObject","url":"https://rapidplusbrowser.online/assets/logo.png"}},"publisher":{"@type":"Organization","name":"HM Dev Studio","url":"https://rapidplusbrowser.online/","logo":{"@type":"ImageObject","url":"https://rapidplusbrowser.online/assets/logo.png"}},"mainEntityOfPage":{"0":"h","1":"t","2":"t","3":"p","4":"s","5":":","6":"/","7":"/","8":"r","9":"a","10":"p","11":"i","12":"d","13":"p","14":"l","15":"u","16":"s","17":"b","18":"r","19":"o","20":"w","21":"s","22":"e","23":"r","24":".","25":"o","26":"n","27":"l","28":"i","29":"n","30":"e","31":"/","32":"b","33":"l","34":"o","35":"g","36":"/","37":"b","38":"i","39":"n","40":"a","41":"n","42":"c","43":"e","44":"-","45":"h","46":"a","47":"c","48":"k","@id":"https://rapidplusbrowser.online/blog/microsoft-entra-connect-health-breach"},"wordCount":975,"articleSection":"Cybersecurity"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://rapidplusbrowser.online/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://rapidplusbrowser.online/blog/"},{"@type":"ListItem","position":3,"name":"Microsoft Entra Connect Health Breach: Admin Emails Exposed, What It Means and What to Do","item":"https://rapidplusbrowser.online/blog/microsoft-entra-connect-health-breach"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What was exposed in the Entra Connect Health breach?","acceptedAnswer":{"@type":"Answer","text":"Administrator and technical contact email addresses, tenant IDs, display names, domain names, country codes, licence tiers and directory sync status. Microsoft says passwords, hashes, tokens and keys were not exposed."}},{"@type":"Question","name":"Has it been fixed?","acceptedAnswer":{"@type":"Answer","text":"Yes. Microsoft says it deployed a server-side fix on 19 November and that no software updates or customer remediation are needed."}},{"@type":"Question","name":"Who was behind it?","acceptedAnswer":{"@type":"Answer","text":"Microsoft has not said. It also has not said how many tenants were affected."}},{"@type":"Question","name":"Were configurations changed?","acceptedAnswer":{"@type":"Answer","text":"Microsoft says it did not identify any unauthorised configuration changes. The attackers had read-only access."}},{"@type":"Question","name":"What is the real risk now?","acceptedAnswer":{"@type":"Answer","text":"Targeted phishing and social engineering aimed at the exposed administrators and contacts. Microsoft recommends alerting security teams and using phishing-resistant multi-factor authentication."}}]}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<link rel="alternate" type="application/rss+xml" title="Rapid+ Blog" href="/blog/feed.xml">
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/blog.css">
+</head>
+<body>
+<header class="bnav" id="bnav"><div class="wrap">
+  <a class="bbrand" href="/blog/"><img src="/assets/logo.png" alt=""><span>Rapid<b>+</b> Blog</span></a>
+  <nav class="bnav-cats" aria-label="Categories"><a href="/blog/category/cybersecurity">Cybersecurity</a><a href="/blog/category/privacy-data">Privacy & Data</a><a href="/blog/category/browsers-ai">Browsers & AI</a><a href="/blog/category/web-technology">Web Technology</a><a href="/blog/category/online-safety">Online Safety</a><a href="/blog/category/speed-productivity">Speed & Productivity</a></nav>
+  <div class="bnav-r">
+
+    <button type="button" class="bicon" id="bsearch" aria-label="Search articles" title="Search (press /)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg></button>
+    <a class="btn primary sm bnav-dl" href="/download">Download</a>
+    <button type="button" class="bicon bburger" id="bburger" aria-label="Menu" aria-expanded="false" aria-controls="bmenu"><svg class="ib-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="ib-close" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+  </div>
+</div>
+<nav class="bmenu" id="bmenu" aria-label="Menu">
+  <div class="bmenu-in">
+    <p class="bmenu-h">Browse</p>
+    <a href="/blog/">All articles<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/category/cybersecurity">Cybersecurity<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/category/privacy-data">Privacy & Data<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/category/browsers-ai">Browsers & AI<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/category/web-technology">Web Technology<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/category/online-safety">Online Safety<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/category/speed-productivity">Speed & Productivity<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/search">Search<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <p class="bmenu-h">Rapid+ Blog</p>
+    <a href="/blog/about">About<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/contact">Contact<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/advertise">Advertise<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/blog/rss">RSS feed<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <p class="bmenu-h">Rapid+ Browser</p>
+    <a href="/">About Rapid+ Browser<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/download">Download the app<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/privacy">Privacy Policy<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="/terms">Terms of Use<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="https://www.facebook.com/rapidplusbrowser" target="_blank" rel="noopener">Facebook page<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+  </div>
+</nav></header>
+<main>
+<article>
+<header class="post-head">
+  <div class="crumbs"><a href="/blog/">Rapid+ Blog</a> / <a href="/blog/category/cybersecurity">Cybersecurity</a></div>
+  <a class="chip" href="/blog/category/cybersecurity">Cybersecurity</a>
+  <h1>Microsoft Entra Connect Health Breach: Admin Emails Exposed, What It Means and What to Do</h1>
+  <p class="dek">A July bug, a November fix and a list of admin addresses in the wrong hands. What was exposed and how administrators should respond.</p>
+  <div class="byline"><img src="/assets/logo.png" alt=""><div><span><b>Rapid+ Team</b> · 24 Nov 2026 · 5 min read</span></div></div>
+</header>
+<figure class="post-hero"><img src="/assets/blog/microsoft-entra-connect-health-breach.jpg" width="1200" height="630" alt="A tenant contacts list with blurred admin email addresses marked exposed beside the Microsoft logo and notes that passwords were not exposed" fetchpriority="high"></figure>
+<div class="post-layout">
+  <nav class="post-toc" aria-label="On this page"><h4>On this page</h4><a href="#short-version">The short version</a><a href="#what-is">What Entra Connect Health is</a><a href="#timeline">Timeline</a><a href="#data">What the attackers could read</a><a href="#why-matters">Why metadata matters</a><a href="#who">Who was affected</a><a href="#admins">What administrators should do</a><a href="#staff">What staff and customers should know</a><a href="#pattern">A familiar pattern</a><a href="#faq">FAQ</a><a href="#sources">Sources</a></nav>
+  <div class="prose">
+<div class="note"><b>Written on 24 November 2026.</b> This is based on BleepingComputer's report of 21 November, which cites a Microsoft admin notification sent on 20 November. We did not read the notification itself. Microsoft declined to give further details, and it has not named the attackers or said how many organisations were affected.</div>
+
+<p class="lede">Microsoft has told administrators that attackers exploited a flaw in Entra Connect Health, a monitoring service for company identity systems, and read information about their organisations. The data includes the email addresses of administrators and technical contacts. Microsoft says it found no changes to configurations and that passwords were not exposed. The flaw is fixed on Microsoft's side. The risk that remains is targeted phishing aimed at the people whose addresses were taken.</p>
+
+<h2 id="short-version">The short version</h2>
+<ul>
+<li>The flaw was in the Entra Connect Health API. It was introduced on 23 July 2026, found by Microsoft on 9 November and fixed on 19 November. Microsoft finished its investigation on 20 November.</li>
+<li>Attackers had unauthorised read-only access to tenant-level metadata. Microsoft says it found no unauthorised configuration changes.</li>
+<li>Exposed: administrator and technical contact email addresses, tenant IDs, display names, domain names, country codes, licence tiers and sync status.</li>
+<li>Not exposed, per Microsoft: passwords, password hashes, authentication tokens, valid cryptographic keys, on-premises server and Active Directory layouts, and Azure subscription information.</li>
+<li>Microsoft says no software updates or customer action are required to close the hole, and recommends watching for phishing.</li>
+</ul>
+
+<h2 id="what-is">What Entra Connect Health is</h2>
+<p>BleepingComputer describes Entra Connect Health as a cloud-based service that lets administrators monitor the health, performance and alerts of their on-premises identity systems from the Microsoft Entra admin center. Many companies use Microsoft's cloud for sign-in and also keep their own servers. This service helps them watch the link between the two.</p>
+
+<h2 id="timeline">Timeline</h2>
+<div class="tablewrap"><table class="cmp" style="min-width:0">
+<thead><tr><th>Date (2026)</th><th>Event</th></tr></thead>
+<tbody>
+<tr><td>23 July</td><td>The vulnerable code is introduced</td></tr>
+<tr><td>9 November</td><td>Microsoft discovers the flaw</td></tr>
+<tr><td>19 November</td><td>Server-side fix deployed</td></tr>
+<tr><td>20 November</td><td>Investigation complete; customers notified through Azure Service Health</td></tr>
+<tr><td>21 November</td><td>BleepingComputer reports the notice, shared by admins on Reddit</td></tr>
+</tbody></table></div>
+<p>The reporting does not say when attackers first used the flaw, so the exposure window could be anywhere from July to November.</p>
+
+<h2 id="data">What the attackers could read</h2>
+<p>According to Microsoft's list, as reported:</p>
+<ul>
+<li>Email addresses of tenant technical contacts and administrator accounts.</li>
+<li>Tenant IDs, display names, initial domain names, country codes and regional information.</li>
+<li>Entra licence tiers and directory sync status, including whether sync was on and the time of the last sync.</li>
+<li>Connect Health onboarding status.</li>
+<li>An expired certificate that had been used to register Connect Health agents with a Microsoft internal service decommissioned in late 2024. It was no longer in use but was still returned by the API.</li>
+</ul>
+<p>The article says the flaw could have allowed changes to Connect Health monitoring settings, but Microsoft found none.</p>
+
+<h2 id="why-matters">Why metadata matters</h2>
+<p>Names and domains do not sound dangerous, but they are what a convincing scam is made from. An attacker who knows who your administrators are, which licence tier you use and when your directory last synced can write an email that sounds like it comes from Microsoft support. Administrators have powerful accounts, so a single successful phish can lead to a full takeover. That is why Microsoft's main advice is about phishing, not about fixing a hole.</p>
+
+<h2 id="who">Who was affected</h2>
+<p>Microsoft has not said how many organisations were affected or who exploited the flaw. BleepingComputer says more than a dozen administrators posted on Reddit that they had received the notice, and some managed service providers reported notices for several customer tenants. If you administer a Microsoft 365 tenant that uses Connect Health, look in the Azure Service Health notifications for your tenant.</p>
+
+<h2 id="admins">What administrators should do</h2>
+<ol>
+<li><b>Read the notice</b> in Azure Service Health, and tell your security team.</li>
+<li><b>Use phishing-resistant multi-factor authentication</b> for privileged accounts, such as passkeys or hardware security keys. See <a href="/blog/passkeys-state-2026">our passkey guide</a>.</li>
+<li><b>Review your Connect Health configuration</b> and check for anything you did not set.</li>
+<li><b>Check Entra audit and sign-in logs</b> for suspicious activity.</li>
+<li><b>Warn the people whose addresses were exposed.</b> Tell technical contacts to expect fake support messages.</li>
+<li><b>Use Microsoft's script</b> at aka.ms/ConnectHealth/scripts to see which types of tenant metadata could have been exposed. It shows current values, not what was actually read.</li>
+</ol>
+
+<h2 id="staff">What staff and customers should know</h2>
+<ul>
+<li>Do not trust a message just because it knows your company name or domain.</li>
+<li>Microsoft will not ask for your password or a code by email or phone. Treat any such request as a scam.</li>
+<li>If an "administrator" asks you to approve a sign-in or install software, check through another channel first.</li>
+</ul>
+
+<h2 id="pattern">A familiar pattern</h2>
+<p>This follows the same story as the <a href="/blog/microsoft-365-outage-november-2026">Microsoft 365 outage earlier in the month</a>: a change made in July sat unnoticed until November. It also shows why a flaw in a vendor's service can reach many customers at once, as in <a href="/blog/vendor-breaches-infoblox-tsmc-maersk">the supplier breaches we covered</a>. Microsoft's own November updates also fixed <a href="/blog/outlook-flaw-cve-2026-124194">an Outlook flaw under attack</a>.</p>
+
+<h2 id="faq">Frequently asked questions</h2>
+<details><summary>What was exposed in the Entra Connect Health breach?</summary><p>Administrator and technical contact email addresses, tenant IDs, display names, domain names, country codes, licence tiers and directory sync status. Microsoft says passwords, hashes, tokens and keys were not exposed.</p></details>
+<details><summary>Has it been fixed?</summary><p>Yes. Microsoft says it deployed a server-side fix on 19 November and that no software updates or customer remediation are needed.</p></details>
+<details><summary>Who was behind it?</summary><p>Microsoft has not said. It also has not said how many tenants were affected.</p></details>
+<details><summary>Were configurations changed?</summary><p>Microsoft says it did not identify any unauthorised configuration changes. The attackers had read-only access.</p></details>
+<details><summary>What is the real risk now?</summary><p>Targeted phishing and social engineering aimed at the exposed administrators and contacts. Microsoft recommends alerting security teams and using phishing-resistant multi-factor authentication.</p></details>
+
+<h2 id="sources">Sources</h2>
+<ol class="sources">
+<li><a href="https://www.bleepingcomputer.com/news/security/microsoft-entra-connect-health-flaw-exploited-to-steal-tenant-data/" target="_blank" rel="noopener">BleepingComputer: Microsoft Entra Connect Health flaw exploited to steal tenant data (21 Nov 2026)</a></li>
+</ol>
+<div class="post-end"><img src="/assets/logo.png" alt=""><p><b>Written by the Rapid+ Team</b>. We build Rapid+ Browser for Android and Windows. Spotted a mistake or have a question? Email us at <a href="mailto:admin@rapidplusbrowser.online">admin@rapidplusbrowser.online</a>.</p></div>
+
+  </div>
+</div>
+</article>
+<section class="alt"><div class="wrap">
+  <h2 class="title">Keep reading</h2>
+  <div class="postgrid"><a class="postcard" href="/blog/artex-ai-hacking-tool-fbi-warning"><div class="thumb"><img src="/assets/blog/artex-ai-hacking-tool-fbi-warning.jpg" width="1200" height="630" alt="A friendly robot head with glowing red eyes beside the text 3 hours and cards for ConnectWise, Barracuda and South Korea" loading="lazy"></div><div class="txt"><span class="chip">Browsers &amp;amp; AI</span><h3>Artex: The AI Hacking Tool the FBI Says Breaches Networks in Under Three Hours</h3><p>ConnectWise, Barracuda and South Korean banks were hit. The FBI warning on an AI tool that finds simple weaknesses faster than people can respond.</p><div class="postmeta"><span>24 Nov 2026</span><span class="dot">·</span><span>5 min read</span></div></div></a><a class="postcard" href="/blog/black-friday-2026-fake-domains-check-point"><div class="thumb"><img src="/assets/blog/black-friday-2026-fake-domains-check-point.jpg" width="1200" height="630" alt="Rows of suspicious web addresses flagged with warning triangles beside the number 4,000 plus and the FedEx, DHL and AliExpress logos" loading="lazy"></div><div class="txt"><span class="chip">Online Safety</span><h3>Black Friday 2026: 4,000 Fake Shopping Domains, 10,000 Fake Stores and How to Avoid Them</h3><p>Fake shops, fake refund pages and fake parcel alerts are everywhere before 27 November. The numbers, the tricks and what to check before you pay.</p><div class="postmeta"><span>24 Nov 2026</span><span class="dot">·</span><span>6 min read</span></div></div></a><a class="postcard" href="/blog/cisa-kev-cisco-expressway-vmware-sap-apache"><div class="thumb"><img src="/assets/blog/cisa-kev-cisco-expressway-vmware-sap-apache.jpg" width="1200" height="630" alt="Four product cards for Cisco Expressway, VMware vCenter, Apache Roller and SAP NetWeaver with CVE numbers and red Exploited stamps" loading="lazy"></div><div class="txt"><span class="chip">Cybersecurity</span><h3>CISA Adds Four Exploited Flaws: Cisco Expressway, VMware vCenter, Apache Roller and SAP NetWeaver</h3><p>A hardcoded password in Cisco Expressway, a spy group's VMware zero-day and two more. The four flaws attackers are using right now.</p><div class="postmeta"><span>24 Nov 2026</span><span class="dot">·</span><span>5 min read</span></div></div></a></div>
+</div></section>
+</main>
+<footer class="bfoot"><div class="wrap">
+  <div class="bfoot-top">
+    <div><a class="bbrand" href="/blog/"><img src="/assets/logo.png" alt=""><span>Rapid<b>+</b> Blog</span></a><p>Researched guides on privacy, browsers and the web, from the team behind Rapid+ Browser.</p></div>
+    <div class="bfoot-links"><a href="/blog/">All articles</a><a href="/blog/about">About</a><a href="/blog/contact">Contact</a><a href="/blog/advertise">Advertise</a><a href="/blog/rss">RSS feed</a><a href="/">Rapid+ Browser</a><a href="/download">Download</a><a href="/privacy">Privacy Policy</a><a href="/terms">Terms of Use</a><a href="/privacy#analytics" data-privacy-choice>Privacy choices</a><a href="https://www.facebook.com/rapidplusbrowser" target="_blank" rel="noopener">Facebook</a><a href="mailto:admin@rapidplusbrowser.online">admin@rapidplusbrowser.online</a></div>
+  </div>
+  <div class="copy">© 2026 HM Dev Studio · Rapid+ Blog</div>
+</div></footer>
+<div class="dlbar"><img src="/assets/logo.png" alt=""><div><b>Rapid+ Browser</b>Free, always</div><a class="btn primary" href="/download">Get app</a></div>
+<script>
+if(/\.html$/.test(location.pathname)){var cp=location.pathname.replace(/index\.html$/,'').replace(/\.html$/,'')||'/';history.replaceState(null,'',cp+location.search+location.hash)}
+</script>
+<script src="/firebase-config.js"></script>
+<script type="module" src="/analytics.js"></script>
+<script type="module" src="/blog.js"></script>
+</body></html>
