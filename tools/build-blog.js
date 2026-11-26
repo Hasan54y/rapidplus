@@ -8,14 +8,16 @@ const PUSH_ON = fs.existsSync(path.join(__dirname, 'push-enabled')); // create t
 const root = path.join(__dirname, '..'), dir = path.join(root, 'blog'), SITE = 'https://rapidplusbrowser.online';
 
 const CATS = [
-  ["Cybersecurity", 'cybersecurity', "Breaches, zero-days and threats: what happened, what it means and how to stay protected."],
-  ["Privacy & Data", 'privacy-data', "Tracking, fingerprinting, VPNs and data laws, explained with sources."],
-  ["Browsers & AI", 'browsers-ai', "AI assistants in the browser, browser news and what it means for you."],
-  ["Web Technology", 'web-technology', "How the web works: the protocols, standards and plumbing behind every page."],
-  ["Online Safety", 'online-safety', "Scams, passwords and everyday habits that keep your accounts safe."],
-  ["Speed & Productivity", 'speed-productivity', "Faster pages and a tidier workflow in your browser."],
-  ["Phones & Apps", 'phones-apps', "Android and iPhone tips, phone news and the apps worth installing, explained in plain words."]
+  ["Tech News", 'tech-news', "The biggest tech stories of the week, outages, shutdowns and big moves, explained in plain words."],
+  ["AI", 'ai', "AI tools, AI browsers and AI threats: what they do, what can go wrong and how to use them safely."],
+  ["Hacks & Breaches", 'hacks-breaches', "Hacks, data breaches and zero-days: what happened, who is affected and what to do now."],
+  ["Scams & Safety", 'scams-safety', "Scams, fake shops and phishing tricks, and the simple habits that keep your money and accounts safe."],
+  ["Privacy & VPN", 'privacy-vpn', "VPNs, tracking, fingerprinting and surveillance: how to stay private online, with sources."],
+  ["Phones & Gadgets", 'phones-gadgets', "Android and iPhone tips, phone deals, updates and gadget news, explained in plain words."],
+  ["How-To", 'how-to', "Step by step guides to get more out of your browser, phone and apps."]
 ];
+// old category addresses keep working: each one redirects to its new home
+const LEGACY = { cybersecurity: 'hacks-breaches', 'privacy-data': 'privacy-vpn', 'browsers-ai': 'ai', 'web-technology': 'tech-news', 'online-safety': 'scams-safety', 'speed-productivity': 'how-to', 'phones-apps': 'phones-gadgets', security: 'hacks-breaches', privacy: 'privacy-vpn', productivity: 'how-to', performance: 'how-to', 'how-the-web-works': 'tech-news' };
 const catSlug = name => (CATS.find(c => c[0] === name) || [name, name.toLowerCase().replace(/[^a-z0-9]+/g, '-')])[1];
 
 // ---------- helpers
@@ -160,7 +162,7 @@ const AD_ICONS = {
 const adHouse = `<a class="adbanner" href="/blog/advertise" aria-label="Advertise your brand, business or service on Rapid+ Blog. See how it works.">
   <span class="adtag">Ad space</span>
   <div class="adb-txt">
-    <h2><span class="sr">Advertise your brand, business or service here</span><span aria-hidden="true">Advertise your <span class="adwords"><b>Brand</b><b>Business</b><b>Service</b></span> here</span></h2>
+    <h2><span class="sr">Advertise your brand, business or service here</span><span aria-hidden="true">Advertise your<br class="mbr"> <span class="adwords"><b>Brand</b><b>Business</b><b>Service</b></span> here</span></h2>
     <p>Put your name in front of readers who care about browsers, privacy and security. Tap to see the requirements and get in touch.</p>
     <span class="adcta">See how it works<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></span>
   </div>
@@ -177,20 +179,59 @@ const adSlot = slot => { const live = liveAds(slot).slice(0, 2); return `<sectio
 
 // ---------- home (all posts)
 const top = posts[0];
+// Magazine home: a hero, then one section per category, each in its own layout.
+const CAT_COLOR = { 'tech-news': '#2563eb', ai: '#8b5cf6', 'hacks-breaches': '#e11d48', 'scams-safety': '#d97706', 'privacy-vpn': '#059669', 'phones-gadgets': '#0284c7', 'how-to': '#ff6b00' };
+const HOME_ORDER = ['hacks-breaches', 'phones-gadgets', 'tech-news', 'scams-safety', 'privacy-vpn', 'ai', 'how-to'];
+const img = (p, eager) => `<img src="/assets/blog/${p.slug}.jpg" width="1200" height="630" alt="${eager ? p.alt : ''}"${eager ? ' fetchpriority="high"' : ' loading="lazy"'}>`;
+const catChip = p => `<a class="chip" href="/blog/category/${p.cs}" style="--cc:${CAT_COLOR[p.cs] || '#ff6b00'}">${esc(p.cat)}</a>`;
+const card = (p, cls = '') => `<article class="hcard ${cls}" data-slug="${p.slug}"><a class="hthumb" href="/blog/${p.slug}" tabindex="-1" aria-hidden="true">${img(p)}</a><div class="htxt">${catChip(p)}<h3><a href="/blog/${p.slug}">${esc(p.title)}</a></h3>${cls.includes('big') ? `<p>${esc(p.desc)}</p>` : ''}${meta(p)}</div></article>`;
+const row = (p, n) => `<article class="hrow" data-slug="${p.slug}">${n ? `<span class="hnum">${n}</span>` : ''}<a class="hthumb" href="/blog/${p.slug}" tabindex="-1" aria-hidden="true">${img(p)}</a><div class="htxt"><h3><a href="/blog/${p.slug}">${esc(p.title)}</a></h3>${meta(p)}</div></article>`;
+const over = p => `<article class="hovc" data-slug="${p.slug}"><a href="/blog/${p.slug}">${img(p)}<span class="hovc-txt"><span class="chip" style="--cc:${CAT_COLOR[p.cs] || '#ff6b00'}">${esc(p.cat)}</span><span class="hovc-h">${esc(p.title)}</span></span></a></article>`;
+const LAYOUTS = {
+  grid: ps => `<div class="lay-grid">${ps.slice(0, 3).map(p => card(p)).join('')}</div>`,
+  lead: ps => `<div class="lay-lead">${card(ps[0], 'big')}<div class="lay-side">${ps.slice(1, 5).map(p => row(p)).join('')}</div></div>`,
+  overlay: ps => `<div class="lay-over">${ps.slice(0, 2).map(over).join('')}</div>${ps.length > 2 ? `<div class="lay-under">${ps.slice(2, 5).map(p => row(p)).join('')}</div>` : ''}`,
+  rail: ps => `<div class="lay-rail">${ps.slice(0, 6).map(p => card(p)).join('')}</div>`,
+  numbered: ps => `<div class="lay-num">${ps.slice(0, 6).map((p, i) => row(p, i + 1)).join('')}</div>`
+};
+const LAYOUT_FOR = ['lead', 'grid', 'overlay', 'rail', 'numbered', 'grid', 'lead'];
+function homeHero() {
+  const [a, ...rest] = posts;
+  return `<section class="hhero"><div class="wrap"><div class="hhero-in">
+  <a class="hhero-main" href="/blog/${a.slug}" data-slug="${a.slug}">${img(a, true)}<span class="hhero-txt"><span class="chip" style="--cc:${CAT_COLOR[a.cs] || '#ff6b00'}">${esc(a.cat)}</span><span class="hhero-h">${esc(a.title)}</span><span class="hhero-p">${esc(a.desc)}</span></span></a>
+  <div class="hhero-side"><h2 class="hlabel">Top stories</h2>${rest.slice(0, 4).map(p => row(p)).join('')}</div>
+</div></div></section>`;
+}
+function homeSections() {
+  const shown = new Set(posts.slice(0, 5).map(p => p.slug));
+  return HOME_ORDER.map(s => CATS.find(c => c[1] === s)).filter(Boolean).map(([name, s, blurb], i) => {
+    const all = posts.filter(p => p.cs === s); if (!all.length) return '';
+    const fresh = all.filter(p => !shown.has(p.slug)); const ps = fresh.length >= 3 ? fresh : all;
+    let lay = LAYOUT_FOR[i % LAYOUT_FOR.length];
+    if (lay === 'rail' && ps.length < 5) lay = 'grid';
+    if (lay === 'numbered' && ps.length < 4) lay = 'grid';
+    return `<section class="hsec" style="--cc:${CAT_COLOR[s] || '#ff6b00'}" aria-labelledby="h-${s}"><div class="wrap">
+  <div class="hsec-h"><div><h2 id="h-${s}"><a href="/blog/category/${s}">${esc(name)}</a></h2><p>${esc(blurb)}</p></div><a class="hsec-all" href="/blog/category/${s}">See all ${all.length}${CHEV}</a></div>
+  ${LAYOUTS[lay](ps)}
+</div></section>`;
+  }).join('\n');
+}
 write(path.join(dir, 'index.html'), shell({
   title: 'Rapid+ Blog (Rapid Plus Blog): Browser Privacy and Security',
   desc: 'Rapid Plus Blog from the team behind Rapid+ Browser: researched guides on browser privacy, security news, VPNs, fingerprinting, passkeys and how the web works.',
   canonical: '/blog/', ogImage: OG_DEFAULT, ogAlt: OG_DEFAULT_ALT, bodyClass: 'hub',
   ld: [{ '@context': 'https://schema.org', '@type': 'Blog', name: 'Rapid+ Blog', alternateName: ['Rapid Plus Blog', 'RapidPlus Blog'], description: 'Researched guides on browser privacy, security and how the web works, from the team behind Rapid+ Browser.', inLanguage: 'en', url: SITE + '/blog/', publisher, blogPost: posts.map(p => ({ '@type': 'BlogPosting', headline: p.title, url: `${SITE}/blog/${p.slug}` })) }, crumbLd(['Home', '/'], ['Blog', '/blog/'])],
   body: `<section class="blogtop slim"><div class="wrap">
-  <h1 class="sr-only">Latest articles</h1>
+  <h1 class="sr-only">Rapid+ Blog: latest articles</h1>
   ${chipsNav(null)}
 </div></section>
+${homeHero()}
 ${adSlot('home-top')}
+${homeSections()}
 <section class="bloglist"><div class="wrap homegrid">
   <div class="homemain">
-    ${featured(top)}
-    ${posts.length > 1 ? `<h2 class="listh">More articles</h2>\n    ${list(posts.slice(1))}` : ''}
+    <h2 class="listh" id="all">All articles</h2>
+    ${list(posts)}
   </div>
   ${side(null)}
 </div></section>`
@@ -218,6 +259,10 @@ for (const [name, s, blurb] of usedCats) {
 </div></section>`
   }));
 }
+// old category pages become redirects to their new category
+for (const [old, now] of Object.entries(LEGACY)) if (!CATS.some(c => c[1] === old)) write(path.join(dir, 'category', old + '.html'), `<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Moved | Rapid+ Blog</title><meta name="robots" content="noindex"><link rel="canonical" href="${SITE}/blog/category/${now}"><meta http-equiv="refresh" content="0;url=/blog/category/${now}"></head><body><p>This category moved to <a href="/blog/category/${now}">/blog/category/${now}</a>.</p></body></html>
+`);
 
 // ---------- search page
 write(path.join(dir, 'search.html'), shell({
@@ -370,6 +415,8 @@ for (const f of files) {
 // ---------- sitemap: blog URLs
 const smPath = path.join(root, 'sitemap.xml'); let sm = read(smPath); const crlf = sm.includes('\r\n'); sm = sm.split('\r\n').join('\n');
 const today = '2026-11-01';
+// redirected (old) category pages do not belong in the sitemap
+for (const old of Object.keys(LEGACY)) sm = sm.replace(new RegExp(`  <url><loc>${SITE.replace(/[.+]/g, '\\$&')}/blog/category/${old}</loc>[^\\n]*\\n`, 'g'), '');
 for (const [, s] of usedCats) {
   const loc = `${SITE}/blog/category/${s}`;
   if (!sm.includes(loc)) sm = sm.replace(`  <url><loc>${SITE}/blog/about</loc>`, () => `  <url><loc>${loc}</loc><lastmod>${today}</lastmod><priority>0.6</priority></url>\n  <url><loc>${SITE}/blog/about</loc>`);
