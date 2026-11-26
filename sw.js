@@ -6,15 +6,20 @@ self.addEventListener("push", e => {
   let d = {};
   try { d = e.data ? e.data.json() : {}; } catch (err) { d = { body: e.data ? e.data.text() : "" }; }
   const title = String(d.title || "New on Rapid+ Blog").slice(0, 120);
+  const img = typeof d.image === "string" && d.image.startsWith("/") ? d.image : "";
+  const android = /Android/i.test(self.navigator.userAgent || "");
   const opts = {
     body: String(d.body || "").slice(0, 240),
-    icon: "/assets/favicon-192.png",
-    badge: "/assets/favicon-48.png",
+    // Android shows the icon beside the title even when the alert is collapsed, so use the article thumbnail there;
+    // desktops show the icon as a small square, so keep the logo and show the thumbnail as the large image.
+    icon: img && android ? img : "/assets/favicon-192.png",
+    badge: "/assets/notify-badge.png",
     tag: d.tag || "rapid-blog",
     data: { url: typeof d.url === "string" && d.url.startsWith("/") ? d.url : "/blog/" },
+    timestamp: Date.now(),
     renotify: false
   };
-  if (d.image && typeof d.image === "string" && d.image.startsWith("/")) opts.image = d.image;
+  if (img) opts.image = img;
   e.waitUntil(self.registration.showNotification(title, opts));
 });
 

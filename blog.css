@@ -498,3 +498,5 @@ body.noscroll{overflow:hidden}
 .npop p{margin:0 0 12px;font-size:14.5px;line-height:1.5;color:var(--muted)}
 .np-row{display:flex;gap:8px;margin-bottom:10px}
 .npop .np-f{margin:0;font-size:12.5px}
+.np-steps{margin:0 0 12px;padding-left:20px;font-size:14.5px;line-height:1.55;color:var(--text)}
+.np-steps b{display:inline;font-size:inherit;margin:0}

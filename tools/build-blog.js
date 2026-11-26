@@ -105,7 +105,7 @@ const shell = ({ title, desc, canonical, robots, ogImage, ogAlt, ld, current, bo
 <meta name="description" content="${esc(desc)}">
 <meta name="theme-color" content="#ff6b00">
 <link rel="canonical" href="${SITE}${canonical}">
-<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48.png"><link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48.png"><link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest">
 <meta property="og:type" content="website"><meta property="og:site_name" content="Rapid+ Blog">
 <meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(desc)}">
 <meta property="og:url" content="${SITE}${canonical}"><meta property="og:image" content="${SITE}${ogImage}">

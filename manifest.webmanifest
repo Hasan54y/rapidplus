@@ -1,0 +1,14 @@
+{
+  "name": "Rapid+ Blog",
+  "short_name": "Rapid+ Blog",
+  "description": "Browser privacy, security and phone guides from Rapid+.",
+  "start_url": "/blog/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ff6b00",
+  "icons": [
+    { "src": "/assets/favicon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/assets/logo.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

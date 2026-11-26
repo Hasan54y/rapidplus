@@ -8,8 +8,27 @@ const btn = document.getElementById("bnotify");
 const DOCS = `projects/${cfg.projectId}/databases/(default)/documents`;
 const store = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }, del(k) { try { localStorage.removeItem(k); } catch (e) {} } };
 
-if (btn && (!supported || !live)) btn.hidden = true;
+// iPhone and iPad allow web alerts only for a site added to the Home Screen (iOS 16.4 and later), so in a normal
+// Safari tab the bell explains how to do that instead of disappearing.
+const ios = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+const standalone = (window.matchMedia && matchMedia("(display-mode: standalone)").matches) || navigator.standalone === true;
+if (btn && live && !supported && ios && !standalone && "serviceWorker" in navigator) iosHint();
+else if (btn && (!supported || !live)) btn.hidden = true;
 else if (btn) init();
+
+function iosHint() {
+  btn.hidden = false;
+  const pop = document.createElement("div");
+  pop.className = "npop"; pop.hidden = true; pop.setAttribute("role", "dialog"); pop.setAttribute("aria-label", "Article alerts");
+  pop.innerHTML = '<b>New article alerts on iPhone</b><p class="np-t">On iPhone and iPad, alerts work once the blog is on your Home Screen:</p><ol class="np-steps"><li>Tap the <b>Share</b> button in Safari.</li><li>Tap <b>Add to Home Screen</b>, then <b>Add</b>.</li><li>Open <b>Rapid+ Blog</b> from your Home Screen and tap this bell.</li></ol><div class="np-row"><button type="button" class="btn sm np-x">Close</button></div><p class="np-f">Needs iOS 16.4 or later. No account or email.</p>';
+  document.body.appendChild(pop);
+  const open = o => { pop.hidden = !o; btn.setAttribute("aria-expanded", String(o)); };
+  btn.setAttribute("aria-haspopup", "dialog"); btn.setAttribute("aria-expanded", "false");
+  btn.addEventListener("click", e => { e.stopPropagation(); open(pop.hidden); });
+  pop.querySelector(".np-x").addEventListener("click", () => open(false));
+  document.addEventListener("click", e => { if (!pop.hidden && !pop.contains(e.target) && !btn.contains(e.target)) open(false); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") open(false); });
+}
 
 function b64ToBytes(s) { const p = "=".repeat((4 - s.length % 4) % 4), r = atob((s + p).replace(/-/g, "+").replace(/_/g, "/")); return Uint8Array.from(r, c => c.charCodeAt(0)); }
 function toB64Url(buf) { let s = ""; new Uint8Array(buf).forEach(b => { s += String.fromCharCode(b); }); return btoa(s).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, ""); }

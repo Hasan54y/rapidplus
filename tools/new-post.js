@@ -83,7 +83,7 @@ fs.mkdirSync(path.dirname(heroOut), { recursive: true });
 <meta name="description" content="${esc(spec.description)}">
 <meta name="theme-color" content="#ff6b00">
 <link rel="canonical" href="${URL}">
-<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48.png"><link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48.png"><link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest">
 <meta property="og:type" content="article"><meta property="og:site_name" content="Rapid+ Blog">
 <meta property="og:title" content="${esc(tagTitle)} | Rapid+ Blog"><meta property="og:description" content="${esc(spec.description)}">
 <meta property="og:url" content="${URL}"><meta property="og:image" content="${SITE}${IMG}">

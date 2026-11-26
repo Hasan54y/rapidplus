@@ -45,7 +45,8 @@ async function jfetch(url, init, token) {
     console.log(`${BASE ? 'baseline requested' : 'no saved state yet'}: marking ${posts.length} articles as announced, sending nothing`);
     if (!DRY) await saveState(); return;
   }
-  let fresh = TEST ? [{ title: 'Test notification', slug: '', desc: 'If you can read this, article alerts work in this browser.', cat: 'Rapid+ Blog' }] : posts.filter(p => !known.has(p.slug)).reverse();
+  // a test looks exactly like a real alert, using the newest article
+  let fresh = TEST ? [posts[0]] : posts.filter(p => !known.has(p.slug)).reverse();
   if (!fresh.length) { console.log('nothing new'); return; }
   console.log('new:', fresh.map(p => p.slug || '(test)').join(', '));
 
@@ -65,9 +66,8 @@ async function jfetch(url, init, token) {
   } while (pageToken);
   console.log(subs.length + ' subscribers');
 
-  const messages = !TEST && fresh.length > 3
-    ? [{ title: `${fresh.length} new articles on Rapid+ Blog`, body: fresh.slice(-3).reverse().map(p => p.title).join(' | ').slice(0, 200), url: '/blog/', tag: 'rapid-blog-batch' }]
-    : fresh.map(p => ({ title: p.title, body: p.desc, url: p.slug ? `/blog/${p.slug}` : '/blog/', image: p.slug ? `/assets/blog/${p.slug}.jpg` : undefined, tag: 'rapid-blog-' + (p.slug || 'test') }));
+  // every article gets its own alert with its title and thumbnail; a big batch sends only the 5 newest
+  const messages = fresh.slice(-5).map(p => ({ title: p.title, body: p.desc, url: `/blog/${p.slug}`, image: `/assets/blog/${p.slug}.jpg`, tag: 'rapid-blog-' + p.slug + (TEST ? '-test-' + Date.now() : '') }));
   if (DRY) { console.log('dry run, would send:', JSON.stringify(messages, null, 1)); return; }
 
   const webpush = require('web-push');
