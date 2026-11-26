@@ -94,6 +94,7 @@ if(/\\.html$/.test(location.pathname)){var cp=location.pathname.replace(/index\\
 <script type="module" src="/analytics.js"></script>
 <script type="module" src="/blog.js"></script>${PUSH_ON ? `
 <script type="module" src="/push.js"></script>` : ''}`;
+const OG_DEFAULT = '/assets/blog/og-default.jpg', OG_DEFAULT_ALT = 'Rapid+ Blog: a phone and a browser window showing the blog over a city skyline at sunset, with topics Cybersecurity, Privacy, Browsers and AI, Online Safety and Phones and Apps';
 const RSS_LINK = '<link rel="alternate" type="application/rss+xml" title="Rapid+ Blog" href="/blog/feed.xml">';
 
 const shell = ({ title, desc, canonical, robots, ogImage, ogAlt, ld, current, body, bodyClass }) => `<!doctype html>
@@ -110,7 +111,7 @@ const shell = ({ title, desc, canonical, robots, ogImage, ogAlt, ld, current, bo
 <meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(desc)}">
 <meta property="og:url" content="${SITE}${canonical}"><meta property="og:image" content="${SITE}${ogImage}">
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">${ogAlt ? `<meta property="og:image:alt" content="${ogAlt}">` : ''}
-<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${esc(title)}"><meta name="twitter:description" content="${esc(desc)}">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${esc(title)}"><meta name="twitter:description" content="${esc(desc)}"><meta name="twitter:image" content="${SITE}${ogImage}">
 <meta name="robots" content="${robots || 'index, follow, max-image-preview:large'}">
 ${(ld || []).map(j => `<script type="application/ld+json">${JSON.stringify(j)}</script>`).join('\n')}
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -179,7 +180,7 @@ const top = posts[0];
 write(path.join(dir, 'index.html'), shell({
   title: 'Rapid+ Blog (Rapid Plus Blog): Browser Privacy and Security',
   desc: 'Rapid Plus Blog from the team behind Rapid+ Browser: researched guides on browser privacy, security news, VPNs, fingerprinting, passkeys and how the web works.',
-  canonical: '/blog/', ogImage: `/assets/blog/${top.slug}.jpg`, ogAlt: top.alt, bodyClass: 'hub',
+  canonical: '/blog/', ogImage: OG_DEFAULT, ogAlt: OG_DEFAULT_ALT, bodyClass: 'hub',
   ld: [{ '@context': 'https://schema.org', '@type': 'Blog', name: 'Rapid+ Blog', alternateName: ['Rapid Plus Blog', 'RapidPlus Blog'], description: 'Researched guides on browser privacy, security and how the web works, from the team behind Rapid+ Browser.', inLanguage: 'en', url: SITE + '/blog/', publisher, blogPost: posts.map(p => ({ '@type': 'BlogPosting', headline: p.title, url: `${SITE}/blog/${p.slug}` })) }, crumbLd(['Home', '/'], ['Blog', '/blog/'])],
   body: `<section class="blogtop slim"><div class="wrap">
   <h1 class="sr-only">Latest articles</h1>
@@ -201,7 +202,7 @@ for (const [name, s, blurb] of usedCats) {
   const ps = posts.filter(p => p.cs === s), lead = ps[0];
   write(path.join(dir, 'category', s + '.html'), shell({
     title: `${name} Articles | Rapid+ Blog`, desc: `${blurb} ${ps.length} ${ps.length === 1 ? 'article' : 'articles'} from the Rapid+ Blog.`,
-    canonical: `/blog/category/${s}`, ogImage: `/assets/blog/${lead.slug}.jpg`, ogAlt: lead.alt, current: s,
+    canonical: `/blog/category/${s}`, ogImage: OG_DEFAULT, ogAlt: OG_DEFAULT_ALT, current: s,
     ld: [crumbLd(['Home', '/'], ['Blog', '/blog/'], [name, `/blog/category/${s}`])],
     body: `<section class="blogtop"><div class="wrap">
   <div class="crumbs"><a href="/blog/">Rapid+ Blog</a> / ${esc(name)}</div>
@@ -221,7 +222,7 @@ for (const [name, s, blurb] of usedCats) {
 // ---------- search page
 write(path.join(dir, 'search.html'), shell({
   title: 'Search | Rapid+ Blog', desc: 'Search every Rapid+ Blog article by title and full text.', canonical: '/blog/search', robots: 'noindex, follow',
-  ogImage: `/assets/blog/${top.slug}.jpg`, ogAlt: top.alt,
+  ogImage: OG_DEFAULT, ogAlt: OG_DEFAULT_ALT,
   body: `<section class="pagebody searchpage"><div class="wrap wide">
   <div class="crumbs"><a href="/blog/">Rapid+ Blog</a> / Search</div>
   <h1>Search</h1>
@@ -246,7 +247,7 @@ write(path.join(dir, 'feed.xml'), rss);
 // A normal page that explains the feed (linked from the footer, menu and sidebar). Feed readers use feed.xml directly.
 write(path.join(dir, 'rss.html'), shell({
   title: 'RSS Feed | Rapid+ Blog', desc: 'Follow Rapid+ Blog in your news reader with the RSS feed.', canonical: '/blog/rss',
-  ogImage: `/assets/blog/${top.slug}.jpg`, ogAlt: top.alt,
+  ogImage: OG_DEFAULT, ogAlt: OG_DEFAULT_ALT,
   body: `<section class="pagebody"><div class="wrap">
   <div class="crumbs"><a href="/blog/">Rapid+ Blog</a> / RSS feed</div>
   <h1>RSS feed</h1>
@@ -269,7 +270,7 @@ write(path.join(dir, 'rss.html'), shell({
 // ---------- advertise page
 write(path.join(dir, 'advertise.html'), shell({
   title: 'Advertise | Rapid+ Blog', desc: 'Advertise your brand, business or service on the Rapid+ Blog. Ad formats, requirements, and a form to get in touch.', canonical: '/blog/advertise',
-  ogImage: `/assets/blog/${top.slug}.jpg`, ogAlt: top.alt, ld: [crumbLd(['Home', '/'], ['Blog', '/blog/'], ['Advertise', '/blog/advertise'])],
+  ogImage: OG_DEFAULT, ogAlt: OG_DEFAULT_ALT, ld: [crumbLd(['Home', '/'], ['Blog', '/blog/'], ['Advertise', '/blog/advertise'])],
   body: `<section class="pagebody adpage"><div class="wrap">
   <div class="crumbs"><a href="/blog/">Rapid+ Blog</a> / Advertise</div>
   <h1>Advertise on Rapid+ Blog</h1>
@@ -345,6 +346,9 @@ for (const f of files) {
   if (PUSH_ON && !s.includes('src="/push.js"')) s = s.replace('<script type="module" src="/blog.js"></script>', () => '<script type="module" src="/blog.js"></script>\n<script type="module" src="/push.js"></script>');
   if (!PUSH_ON) s = s.replace('\n<script type="module" src="/push.js"></script>', '');
   const p = posts.find(x => f.endsWith(path.sep + x.slug + '.html'));
+  if (!p && !s.includes('name="twitter:image"')) s = s.replace('<meta name="twitter:card" content="summary_large_image">', () => `<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="${SITE}${OG_DEFAULT}">`);
+  if (!p && !s.includes('og:image:width')) s = s.replace(/(<meta property="og:image" content="[^"]*">)/, (m, a) => `${a}\n<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="${OG_DEFAULT_ALT}">`);
+  if (!p) s = s.replace(/(<meta property="og:image" content=")[^"]*(">)/, (m, a, b) => a + SITE + OG_DEFAULT + b).replace(/(<meta name="twitter:image" content=")[^"]*(">)/, (m, a, b) => a + SITE + OG_DEFAULT + b);
   if (p) {
     s = s.replace(/(<header class="post-head">[\s\S]*?)<(?:span|a) class="chip"[^>]*>([^<]+)<\/(?:span|a)>/, (m, a, c) => `${a}<a class="chip" href="/blog/category/${p.cs}">${c}</a>`);
     s = s.replace(/<div class="crumbs"><a href="\/blog\/">Rapid\+ Blog<\/a> \/ (?:<a[^>]*>)?([^<]+)(?:<\/a>)?<\/div>/, (m, c) => `<div class="crumbs"><a href="/blog/">Rapid+ Blog</a> / <a href="/blog/category/${p.cs}">${c}</a></div>`);
