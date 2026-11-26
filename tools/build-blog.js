@@ -23,6 +23,9 @@ const LEGACY = { cybersecurity: 'hacks-breaches', 'privacy-data': 'privacy-vpn',
 const catSlug = name => (CATS.find(c => c[0] === name) || [name, name.toLowerCase().replace(/[^a-z0-9]+/g, '-')])[1];
 
 // ---------- helpers
+const VERSIONED = ['style.css', 'blog.css', 'blog.js', 'push.js', 'analytics.js', 'ads.js', 'firebase-config.js'];
+const ASSET_RE = new RegExp(`(href|src)="/(${VERSIONED.map(a => a.replace('.', '\\.')).join('|')})"`, 'g');
+const unversion = s => s.replace(new RegExp(`((?:href|src)="/(?:${VERSIONED.map(a => a.replace('.', '\\.')).join('|')}))\\?v=[0-9a-f]{8}"`, 'g'), '$1"');
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const dec = s => s.replace(/&nbsp;/g, ' ').replace(/&mdash;|&ndash;/g, ' ').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;|&apos;/g, "'").replace(/&#(\d+);/g, (_, n) => String.fromCharCode(+n));
 const strip = h => dec(h.replace(/<(script|style|svg|nav)[\s\S]*?<\/\1>/gi, ' ').replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').replace(/ ([.,;:!?)])/g, '$1').replace(/([.!?])\1+/g, '$1').trim();
@@ -175,7 +178,7 @@ const adHouse = `<a class="adbanner" href="/blog/advertise" aria-label="Advertis
 const adPaid = a => `<a class="adpaid" href="${esc(a.url)}" target="_blank" rel="sponsored nofollow noopener">${a.image ? `<span class="adp-img"><img src="${esc(a.image)}" width="1200" height="630" alt="" loading="lazy"></span>` : ''}<span class="adp-txt"><span class="adtag">Sponsored${a.sponsor ? ' · ' + esc(a.sponsor) : ''}</span><strong>${esc(a.title)}</strong>${a.text ? `<span class="adp-p">${esc(a.text)}</span>` : ''}<span class="adcta">${esc(a.cta || 'Learn more')}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></span></span></a>`;
 // house ads (our own apps) rotate through the slots listed in ads.json; a live paid ad for a slot replaces them
 const HOUSE = adsCfg.house || {}, SLOT_CFG = adsCfg.slots || {};
-const I_PLAY = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3.5v17l14-8.5L5 3.5z"/></svg>';
+const I_PLAY = '<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M5 3.5v17l14-8.5L5 3.5z"/></svg>';
 const houseFor = (slot, n) => { const list = SLOT_CFG[slot] || []; const id = list.length ? list[Math.abs(n) % list.length] : null; return id && HOUSE[id] ? [id, HOUSE[id]] : null; };
 const houseCard = (slot, id, h, fmt) => {
   const t = h.theme || {}, shots = h.shots || [];
@@ -404,6 +407,7 @@ write(path.join(dir, 'search.json'), JSON.stringify(posts.map(p => ({ slug: p.sl
 const files = [...fs.readdirSync(dir).filter(f => f.endsWith('.html') && !['index.html', 'search.html'].includes(f)).map(f => path.join(dir, f))];
 for (const f of files) {
   let s = read(f); const crlf = s.includes('\r\n'); s = s.split('\r\n').join('\n'); const before = s;
+  s = unversion(s);
   s = s.replace(/<header class="bnav"[\s\S]*?<\/header>/, () => header(null));
   s = s.replace(/<footer class="bfoot">[\s\S]*?<\/footer>/, () => footer);
   if (!s.includes('application/rss+xml')) s = s.replace('<link rel="stylesheet" href="/style.css">', () => RSS_LINK + '\n<link rel="stylesheet" href="/style.css">');
@@ -439,6 +443,20 @@ for (const f of files) {
     const block = '<!--latest-posts--><section><div class="wrap"><div class="center"><div class="eyebrow">Blog</div><h2 class="title">Latest from the Rapid+ Blog</h2><p class="sub">Researched guides on privacy, security and how the web works.</p></div><div class="grid">' + cards + '</div><div class="center"><a class="more" href="blog/">All articles</a></div></div></section><!--/latest-posts-->';
     h = h.replace(/<!--latest-posts-->[\s\S]*?<!--\/latest-posts-->/, () => block);
     fs.writeFileSync(hp, crlfH ? h.split('\n').join('\r\n') : h);
+  }
+}
+
+// ---------- cache busting: every blog page links its CSS/JS with ?v=<content hash>, so a changed file is fetched
+// at once instead of a stale cached copy breaking the new markup
+{
+  const ver = {};
+  for (const a of VERSIONED) { try { ver[a] = require('crypto').createHash('sha1').update(fs.readFileSync(path.join(root, a))).digest('hex').slice(0, 8); } catch (e) {} }
+  const pages = [...fs.readdirSync(dir).filter(f => f.endsWith('.html')).map(f => path.join(dir, f)), ...fs.readdirSync(path.join(dir, 'category')).filter(f => f.endsWith('.html')).map(f => path.join(dir, 'category', f))];
+  for (const f of pages) {
+    const raw = read(f), crlf = raw.includes('\r\n');
+    const s = unversion(raw.split('\r\n').join('\n')).replace(ASSET_RE, (m, attr, a) => ver[a] ? `${attr}="/${a}?v=${ver[a]}"` : m);
+    const out = crlf ? s.split('\n').join('\r\n') : s;
+    if (out !== raw) fs.writeFileSync(f, out);
   }
 }
 
