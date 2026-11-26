@@ -341,6 +341,9 @@ for (const f of files) {
   s = s.replace(/<header class="bnav"[\s\S]*?<\/header>/, () => header(null));
   s = s.replace(/<footer class="bfoot">[\s\S]*?<\/footer>/, () => footer);
   if (!s.includes('application/rss+xml')) s = s.replace('<link rel="stylesheet" href="/style.css">', () => RSS_LINK + '\n<link rel="stylesheet" href="/style.css">');
+  // article alerts run on every blog page, not only the home and category pages
+  if (PUSH_ON && !s.includes('src="/push.js"')) s = s.replace('<script type="module" src="/blog.js"></script>', () => '<script type="module" src="/blog.js"></script>\n<script type="module" src="/push.js"></script>');
+  if (!PUSH_ON) s = s.replace('\n<script type="module" src="/push.js"></script>', '');
   const p = posts.find(x => f.endsWith(path.sep + x.slug + '.html'));
   if (p) {
     s = s.replace(/(<header class="post-head">[\s\S]*?)<(?:span|a) class="chip"[^>]*>([^<]+)<\/(?:span|a)>/, (m, a, c) => `${a}<a class="chip" href="/blog/category/${p.cs}">${c}</a>`);

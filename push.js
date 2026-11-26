@@ -71,22 +71,48 @@ function init() {
   document.addEventListener("click", e => { if (!pop.hidden && !pop.contains(e.target) && e.target !== btn && !btn.contains(e.target)) open(false); });
   document.addEventListener("keydown", e => { if (e.key === "Escape" && !pop.hidden) open(false); });
 
+  // asks for permission (when ask is true), then subscribes this browser and stores its push address
+  async function enable(ask) {
+    const perm = ask ? await Notification.requestPermission() : Notification.permission;
+    if (perm !== "granted") return false;
+    const reg = await navigator.serviceWorker.register("/sw.js", { scope: "/" }); await navigator.serviceWorker.ready;
+    let sub = await reg.pushManager.getSubscription();
+    if (!sub) sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64ToBytes(VAPID_PUBLIC) });
+    await save(sub); store.set("rp_push", "1"); store.del("rp_push_off");
+    return true;
+  }
+
   go.addEventListener("click", async () => {
     if (busy) return; busy = true; go.disabled = true;
     try {
-      if (go.dataset.mode === "off") { const s = await current(); if (s) await s.unsubscribe(); store.del("rp_push"); text.textContent = "Alerts are off."; }
-      else {
-        const perm = await Notification.requestPermission();
-        if (perm !== "granted") { await paint(); return; }
-        const reg = await navigator.serviceWorker.register("/sw.js", { scope: "/" }); await navigator.serviceWorker.ready;
-        let sub = await reg.pushManager.getSubscription();
-        if (!sub) sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64ToBytes(VAPID_PUBLIC) });
-        await save(sub); store.set("rp_push", "1"); text.textContent = "Done. You will get a notification for each new article.";
-      }
+      if (go.dataset.mode === "off") { const s = await current(); if (s) await s.unsubscribe(); store.del("rp_push"); store.set("rp_push_off", "1"); text.textContent = "Alerts are off."; }
+      else if (await enable(true)) text.textContent = "Done. You will get a notification for each new article.";
+      else { await paint(); return; }
     } catch (err) { text.textContent = "Could not change alerts here. Check your connection and try again."; }
     finally { busy = false; go.disabled = false; setTimeout(paint, 1600); await (async () => { btn.classList.toggle("on", !!(await current())); })(); }
   });
-  // keep the bell state right on load, and renew a saved address that the browser rotated
   paint();
-  if (Notification.permission === "granted" && store.get("rp_push")) current().then(s => { if (s) save(s).catch(() => {}); });
+
+  // Automatic: the browser's own permission prompt appears without the bell. Chrome and Edge allow it shortly after
+  // the page opens; Firefox and Safari only show it after a tap, so there it waits for the reader's first tap.
+  // Nobody is asked again for 3 days after closing the prompt, never after blocking it, and never after turning
+  // alerts off with the bell.
+  if (store.get("rp_push_off")) return;
+  if (Notification.permission === "granted") { enable(false).then(ok => ok && paint()).catch(() => {}); return; }
+  if (Notification.permission !== "default") return;
+  const last = +store.get("rp_push_ask") || 0;
+  if (Date.now() - last < 3 * 864e5) return;
+  let asked = false;
+  const ask = () => {
+    if (asked || Notification.permission !== "default") return; asked = true;
+    store.set("rp_push_ask", String(Date.now()));
+    off();
+    enable(true).then(ok => ok && paint()).catch(() => {});
+  };
+  const onTap = e => { if (!e.target.closest || !e.target.closest("a, button, input, textarea, select, label, summary, .npop")) ask(); };
+  const off = () => { document.removeEventListener("pointerup", onTap, true); document.removeEventListener("keydown", onKey, true); };
+  const onKey = e => { if (e.key === "Enter" || e.key === " ") onTap(e); };
+  if (navigator.userAgentData) setTimeout(ask, 4000);
+  document.addEventListener("pointerup", onTap, true);
+  document.addEventListener("keydown", onKey, true);
 }
