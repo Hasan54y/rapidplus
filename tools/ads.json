@@ -1,5 +1,39 @@
 {
-  "_help": "Paid ads for the Rapid+ Blog. Add an object to the ads list, then run: node tools/build-blog.js and push. If no ad is live, the blog shows the 'Advertise here' banner instead. Fields: id, active (true/false), slot (home-top), sponsor (advertiser name), title (max 60 characters), text (max 120), cta (button text), url (https link), image (path like /assets/ads/name.jpg, 1200x630 or a GIF/WebP), from and to (YYYY-MM-DD, optional; the build checks them, so rebuild on the day an ad starts or ends).",
+  "_help": "Ads on the Rapid+ Blog. 'house' = our own products, shown in the slots listed under 'slots' (several names rotate across pages). 'ads' = paid ads; a live paid ad for a slot replaces the house ad there. Slots: home-top, home-mid, sidebar, category-top, article-mid, article-end. Paid ad fields: id, active, slot, sponsor, title (max 60), text (max 120), cta, url, image (1200x630 or GIF/WebP), from/to (YYYY-MM-DD). After editing run: node tools/build-blog.js and push.",
   "_example": { "id": "acme-2026-12", "active": true, "slot": "home-top", "sponsor": "Acme", "title": "Acme Cloud Backup", "text": "Encrypted backup for small teams. Try it free for 30 days.", "cta": "Visit Acme", "url": "https://example.com/?ref=rapidplus", "image": "/assets/ads/acme.jpg", "from": "2026-12-01", "to": "2026-12-31" },
+  "house": {
+    "memento": {
+      "name": "Memento",
+      "tagline": "More than a notepad. Your paperwork, remembered.",
+      "text": "Snap a receipt, warranty or ID. Memento fills in the details, finds it in seconds and reminds you before it is due.",
+      "chips": ["Scan any document", "Find it in seconds", "Due-date reminders"],
+      "cta": "Get it on Google Play",
+      "url": "https://play.google.com/store/apps/details?id=com.hmdevstudio.memento&referrer=utm_source%3Drapidplusbrowser.online%26utm_medium%3Dblog-ad%26utm_campaign%3D{slot}",
+      "site": "mementoapp.online",
+      "logo": "/assets/ads/memento-logo.png",
+      "shots": ["/assets/ads/memento-home.webp", "/assets/ads/memento-detail.webp"],
+      "theme": { "bg1": "#03140a", "bg2": "#0a3a1c", "accent": "#1fe05a", "ink": "#04130a" }
+    },
+    "rapidplus": {
+      "name": "Rapid+ Browser",
+      "tagline": "Fast, private browsing on Android.",
+      "text": "Separate profiles for work and personal life, a proxy and VPN mode and a built-in password manager. Free.",
+      "chips": ["Multiple profiles", "Proxy / VPN mode", "Password manager"],
+      "cta": "Get it on Google Play",
+      "url": "https://play.google.com/store/apps/details?id=com.rapidplus.browser&referrer=utm_source%3Drapidplusbrowser.online%26utm_medium%3Dblog-ad%26utm_campaign%3D{slot}",
+      "site": "rapidplusbrowser.online",
+      "logo": "/assets/logo.png",
+      "shots": ["/assets/ads/rapidplus-light.webp", "/assets/ads/rapidplus-dark.webp"],
+      "theme": { "bg1": "#190f33", "bg2": "#38207a", "accent": "#ff6b00", "ink": "#1b1330" }
+    }
+  },
+  "slots": {
+    "home-top": ["rapidplus"],
+    "home-mid": ["memento"],
+    "sidebar": ["memento", "rapidplus"],
+    "category-top": ["memento", "rapidplus"],
+    "article-mid": ["memento", "rapidplus"],
+    "article-end": ["rapidplus", "memento"]
+  },
   "ads": []
 }

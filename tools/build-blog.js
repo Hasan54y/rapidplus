@@ -16,6 +16,8 @@ const CATS = [
   ["Phones & Gadgets", 'phones-gadgets', "Android and iPhone tips, phone deals, updates and gadget news, explained in plain words."],
   ["How-To", 'how-to', "Step by step guides to get more out of your browser, phone and apps."]
 ];
+const CAT_COLOR = { 'tech-news': '#2563eb', ai: '#8b5cf6', 'hacks-breaches': '#e11d48', 'scams-safety': '#d97706', 'privacy-vpn': '#059669', 'phones-gadgets': '#0284c7', 'how-to': '#ff6b00' };
+const CAT_ICON = { 'tech-news': '<path d="M4 5h13v14H6a2 2 0 0 1-2-2V5z"/><path d="M17 9h3v8a2 2 0 0 1-2 2"/><path d="M8 9h5M8 13h5"/>', ai: '<path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/>', 'hacks-breaches': '<path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6l7-3z"/><path d="M12 8v5M12 16v.5"/>', 'scams-safety': '<path d="M12 3L2.5 20h19L12 3z"/><path d="M12 10v5M12 17.5v.5"/>', 'privacy-vpn': '<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>', 'phones-gadgets': '<rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/>', 'how-to': '<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>' };
 // old category addresses keep working: each one redirects to its new home
 const LEGACY = { cybersecurity: 'hacks-breaches', 'privacy-data': 'privacy-vpn', 'browsers-ai': 'ai', 'web-technology': 'tech-news', 'online-safety': 'scams-safety', 'speed-productivity': 'how-to', 'phones-apps': 'phones-gadgets', security: 'hacks-breaches', privacy: 'privacy-vpn', productivity: 'how-to', performance: 'how-to', 'how-the-web-works': 'tech-news' };
 const catSlug = name => (CATS.find(c => c[0] === name) || [name, name.toLowerCase().replace(/[^a-z0-9]+/g, '-')])[1];
@@ -44,7 +46,7 @@ for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.html') && !SKIP.has
   const alt = (h.match(/<figure class="post-hero">[\s\S]*?alt="([^"]*)"/) || [, ''])[1];
   if (!title || !body || !cat) { console.warn('skipped', f); continue; }
   const date = (meta.match(/\d{1,2} \w{3} \d{4}/) || [''])[0], mins = +((meta.match(/(\d+) min read/) || [, 0])[1]);
-  posts.push({ slug, title, desc, cat, cs: catSlug(cat), date, mins, ms: Date.parse(date + ' 08:00 UTC') || 0, alt, text: strip(body[1]) });
+  posts.push({ slug, title, desc, cat, cs: catSlug(cat), date, mins, ms: Date.parse(date + ' 08:00 UTC') || 0, alt, text: strip(body[1].replace(/<!--adx-->[\s\S]*?<!--\/adx-->/g, '')) });
 }
 posts.sort((a, b) => b.ms - a.ms || a.title.localeCompare(b.title));
 const usedCats = CATS.filter(c => posts.some(p => p.cs === c[1]));
@@ -63,21 +65,16 @@ ${PUSH_ON ? `<button type="button" class="bicon bnotify" id="bnotify" aria-label
 </div>
 <nav class="bmenu" id="bmenu" aria-label="Menu">
   <div class="bmenu-in">
-    <p class="bmenu-h">Browse</p>
-    <a href="/blog/">All articles${CHEV}</a>
-    ${usedCats.map(([l, s]) => `<a href="/blog/category/${s}">${l}${CHEV}</a>`).join('\n    ')}
-    <a href="/blog/search">Search${CHEV}</a>
+    <form class="bm-search" action="/blog/search" method="get" role="search">${I_SEARCH}<input type="search" name="q" placeholder="Search articles" aria-label="Search articles" autocomplete="off"></form>
+    <p class="bmenu-h">Topics</p>
+    <ul class="bm-list">
+      <li><a href="/blog/"><span class="bm-dot" style="--cc:var(--text)"></span>All articles<i>${posts.length}</i></a></li>
+      ${usedCats.map(([l, s]) => `<li><a href="/blog/category/${s}"${current === s ? ' aria-current="page"' : ''}><span class="bm-dot" style="--cc:${CAT_COLOR[s] || '#ff6b00'}"></span>${l}<i>${count(s)}</i></a></li>`).join('')}
+    </ul>
     <p class="bmenu-h">Rapid+ Blog</p>
-    <a href="/blog/about">About${CHEV}</a>
-    <a href="/blog/contact">Contact${CHEV}</a>
-    <a href="/blog/advertise">Advertise${CHEV}</a>
-    <a href="/blog/rss">RSS feed${CHEV}</a>
-    <p class="bmenu-h">Rapid+ Browser</p>
-    <a href="/">About Rapid+ Browser${CHEV}</a>
-    <a href="/download">Download the app${CHEV}</a>
-    <a href="/privacy">Privacy Policy${CHEV}</a>
-    <a href="/terms">Terms of Use${CHEV}</a>
-    <a href="https://www.facebook.com/rapidplusbrowser" target="_blank" rel="noopener">Facebook page${CHEV}</a>
+    <div class="bm-links"><a href="/blog/about">About</a><a href="/blog/contact">Contact</a><a href="/blog/advertise">Advertise</a><a href="/blog/rss">RSS feed</a></div>
+    <a class="bm-dl" href="/download"><img src="/assets/logo.png" width="26" height="26" alt="">Download Rapid+ Browser</a>
+    <div class="bm-foot"><a href="https://www.facebook.com/rapidplusbrowser" target="_blank" rel="noopener">Facebook</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a></div>
   </div>
 </nav></header>`;
 
@@ -141,6 +138,7 @@ const item = (p, hidden) => `<div class="pitem" data-slug="${p.slug}"${hidden ? 
 const PAGE = 8;
 const list = items => `<div class="plist" id="list">${items.map((p, i) => item(p, i >= PAGE)).join('')}</div>${items.length > PAGE ? `<div class="more" data-total="${items.length}"><div class="more-bar" aria-hidden="true"><i style="width:${Math.round(PAGE / items.length * 100)}%"></i></div><p class="more-count" data-count>Showing ${PAGE} of ${items.length} articles</p><button type="button" class="loadmore" data-more><span>Load more articles</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button></div>` : ''}`;
 const side = current => `<aside class="side" aria-label="Sidebar">
+  <div class="side-ad">${adUnit('sidebar', current ? usedCats.findIndex(c => c[1] === current) + 1 : 0, 'side')}</div>
   <form class="side-search" action="/blog/search" method="get" role="search"><input type="search" name="q" placeholder="Search articles…" aria-label="Search articles" autocomplete="off"><button type="submit" aria-label="Search">${I_SEARCH}</button></form>
   <section class="side-card"><h3>Categories</h3><ul class="side-cats">${usedCats.map(([l, s]) => `<li><a href="/blog/category/${s}"${current === s ? ' class="on"' : ''}>${l}<i>${count(s)}</i></a></li>`).join('')}</ul></section>
   <section class="side-card" id="popular"><h3>Popular articles</h3><ol class="side-pop">${posts.slice(0, 5).map(p => `<li data-slug="${p.slug}"><a href="/blog/${p.slug}">${esc(p.title)}</a><span class="sv"></span></li>`).join('')}</ol></section>
@@ -175,12 +173,33 @@ const adHouse = `<a class="adbanner" href="/blog/advertise" aria-label="Advertis
   </div>
 </a>`;
 const adPaid = a => `<a class="adpaid" href="${esc(a.url)}" target="_blank" rel="sponsored nofollow noopener">${a.image ? `<span class="adp-img"><img src="${esc(a.image)}" width="1200" height="630" alt="" loading="lazy"></span>` : ''}<span class="adp-txt"><span class="adtag">Sponsored${a.sponsor ? ' · ' + esc(a.sponsor) : ''}</span><strong>${esc(a.title)}</strong>${a.text ? `<span class="adp-p">${esc(a.text)}</span>` : ''}<span class="adcta">${esc(a.cta || 'Learn more')}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></span></span></a>`;
-const adSlot = slot => { const live = liveAds(slot).slice(0, 2); return `<section class="adslot" aria-label="Advertisement"><div class="wrap">${live.length ? live.map(adPaid).join('') : adHouse}</div></section>`; };
+// house ads (our own apps) rotate through the slots listed in ads.json; a live paid ad for a slot replaces them
+const HOUSE = adsCfg.house || {}, SLOT_CFG = adsCfg.slots || {};
+const I_PLAY = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3.5v17l14-8.5L5 3.5z"/></svg>';
+const houseFor = (slot, n) => { const list = SLOT_CFG[slot] || []; const id = list.length ? list[Math.abs(n) % list.length] : null; return id && HOUSE[id] ? [id, HOUSE[id]] : null; };
+const houseCard = (slot, id, h, fmt) => {
+  const t = h.theme || {}, shots = h.shots || [];
+  return `<a class="hx hx-${fmt}" href="${esc((h.url || '').replace('{slot}', slot))}" target="_blank" rel="noopener" data-ad="${id}-${slot}" style="--b1:${t.bg1};--b2:${t.bg2};--ac:${t.accent};--ink:${t.ink}">
+  <span class="hx-txt">
+    <span class="hx-brand"><img src="${h.logo}" width="40" height="40" alt=""><b>${esc(h.name)}</b></span>
+    <strong>${esc(h.tagline)}</strong>
+    <span class="hx-p">${esc(h.text)}</span>
+    <span class="hx-chips">${(h.chips || []).map(c => `<i>${esc(c)}</i>`).join('')}</span>
+    <span class="hx-cta">${I_PLAY}${esc(h.cta || 'Learn more')}</span>
+  </span>
+  <span class="hx-art" aria-hidden="true"><span class="hx-glow"></span>${shots.slice(0, fmt === 'banner' ? 2 : 1).map((src, i) => `<span class="hx-ph hx-ph${i + 1}"><img src="${src}" width="360" height="780" alt="" loading="lazy"></span>`).join('')}</span>
+</a>`;
+};
+const adUnit = (slot, n = 0, fmt = 'banner') => {
+  const live = liveAds(slot).slice(0, 1), hf = houseFor(slot, n);
+  const inner = live.length ? live.map(adPaid).join('') : hf ? houseCard(slot, hf[0], hf[1], fmt) : adHouse;
+  return `<aside class="adx adx-${fmt}" aria-label="Advertisement"><div class="adx-top"><span>Ad</span><a href="/blog/advertise">Advertise here</a></div>${inner}</aside>`;
+};
+const adSlot = (slot, n = 0, fmt = 'banner') => `<section class="adslot"><div class="wrap">${adUnit(slot, n, fmt)}</div></section>`;
 
 // ---------- home (all posts)
 const top = posts[0];
 // Magazine home: a hero, then one section per category, each in its own layout.
-const CAT_COLOR = { 'tech-news': '#2563eb', ai: '#8b5cf6', 'hacks-breaches': '#e11d48', 'scams-safety': '#d97706', 'privacy-vpn': '#059669', 'phones-gadgets': '#0284c7', 'how-to': '#ff6b00' };
 const HOME_ORDER = ['hacks-breaches', 'phones-gadgets', 'tech-news', 'scams-safety', 'privacy-vpn', 'ai', 'how-to'];
 const img = (p, eager) => `<img src="/assets/blog/${p.slug}.jpg" width="1200" height="630" alt="${eager ? p.alt : ''}"${eager ? ' fetchpriority="high"' : ' loading="lazy"'}>`;
 const catChip = p => `<a class="chip" href="/blog/category/${p.cs}" style="--cc:${CAT_COLOR[p.cs] || '#ff6b00'}">${esc(p.cat)}</a>`;
@@ -214,7 +233,7 @@ function homeSections() {
   <div class="hsec-h"><div><h2 id="h-${s}"><a href="/blog/category/${s}">${esc(name)}</a></h2><p>${esc(blurb)}</p></div><a class="hsec-all" href="/blog/category/${s}">See all ${all.length}${CHEV}</a></div>
   ${LAYOUTS[lay](ps)}
 </div></section>`;
-  }).join('\n');
+  }).map((h, i) => i === 2 ? h + '\n' + adSlot('home-mid', 0, 'banner') : h).join('\n');
 }
 write(path.join(dir, 'index.html'), shell({
   title: 'Rapid+ Blog (Rapid Plus Blog): Browser Privacy and Security',
@@ -251,6 +270,7 @@ for (const [name, s, blurb] of usedCats) {
   <p>${esc(blurb)} <span class="muted-count">${ps.length} ${ps.length === 1 ? 'article' : 'articles'}.</span></p>
   ${chipsNav(s)}
 </div></section>
+${adSlot('category-top', usedCats.findIndex(c => c[1] === s), 'banner')}
 <section class="bloglist"><div class="wrap homegrid">
   <div class="homemain">
     ${list(ps)}
@@ -397,6 +417,16 @@ for (const f of files) {
   if (p) {
     s = s.replace(/(<header class="post-head">[\s\S]*?)<(?:span|a) class="chip"[^>]*>([^<]+)<\/(?:span|a)>/, (m, a, c) => `${a}<a class="chip" href="/blog/category/${p.cs}">${c}</a>`);
     s = s.replace(/<div class="crumbs"><a href="\/blog\/">Rapid\+ Blog<\/a> \/ (?:<a[^>]*>)?([^<]+)(?:<\/a>)?<\/div>/, (m, c) => `<div class="crumbs"><a href="/blog/">Rapid+ Blog</a> / <a href="/blog/category/${p.cs}">${c}</a></div>`);
+  }
+  if (p) {
+    s = s.replace(/<!--adx-->[\s\S]*?<!--\/adx-->\n?/g, '');
+    const n = posts.indexOf(p), prose = s.indexOf('<div class="prose">');
+    if (prose > 0) {
+      const h2s = [...s.slice(prose).matchAll(/<h2 id="/g)].map(m => prose + m.index);
+      const endAt = s.indexOf('<h2 id="faq"', prose) > 0 ? s.indexOf('<h2 id="faq"', prose) : s.indexOf('<h2 id="sources"', prose);
+      if (endAt > 0) s = s.slice(0, endAt) + '<!--adx-->' + adUnit('article-end', n, 'banner') + '<!--/adx-->\n' + s.slice(endAt);
+      if (h2s.length >= 4 && h2s[2] < (endAt > 0 ? endAt : Infinity)) s = s.slice(0, h2s[2]) + '<!--adx-->' + adUnit('article-mid', n, 'inline') + '<!--/adx-->\n' + s.slice(h2s[2]);
+    }
   }
   if (s !== before) fs.writeFileSync(f, crlf ? s.split('\n').join('\r\n') : s);
 }

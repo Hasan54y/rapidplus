@@ -38,27 +38,16 @@
 </div>
 <nav class="bmenu" id="bmenu" aria-label="Menu">
   <div class="bmenu-in">
-    <p class="bmenu-h">Browse</p>
-    <a href="/blog/">All articles<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
-    <a href="/blog/category/tech-news">Tech News<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
-    <a href="/blog/category/ai">AI<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
-    <a href="/blog/category/hacks-breaches">Hacks & Breaches<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
-    <a href="/blog/category/scams-safety">Scams & Safety<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
-    <a href="/blog/category/privacy-vpn">Privacy & VPN<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
-    <a href="/blog/category/phones-gadgets">Phones & Gadgets<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
-    <a href="/blog/category/how-to">How-To<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
-    <a href="/blog/search">Search<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <form class="bm-search" action="/blog/search" method="get" role="search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg><input type="search" name="q" placeholder="Search articles" aria-label="Search articles" autocomplete="off"></form>
+    <p class="bmenu-h">Topics</p>
+    <ul class="bm-list">
+      <li><a href="/blog/"><span class="bm-dot" style="--cc:var(--text)"></span>All articles<i>43</i></a></li>
+      <li><a href="/blog/category/tech-news"><span class="bm-dot" style="--cc:#2563eb"></span>Tech News<i>6</i></a></li><li><a href="/blog/category/ai"><span class="bm-dot" style="--cc:#8b5cf6"></span>AI<i>3</i></a></li><li><a href="/blog/category/hacks-breaches"><span class="bm-dot" style="--cc:#e11d48"></span>Hacks & Breaches<i>16</i></a></li><li><a href="/blog/category/scams-safety"><span class="bm-dot" style="--cc:#d97706"></span>Scams & Safety<i>3</i></a></li><li><a href="/blog/category/privacy-vpn"><span class="bm-dot" style="--cc:#059669"></span>Privacy & VPN<i>7</i></a></li><li><a href="/blog/category/phones-gadgets"><span class="bm-dot" style="--cc:#0284c7"></span>Phones & Gadgets<i>5</i></a></li><li><a href="/blog/category/how-to"><span class="bm-dot" style="--cc:#ff6b00"></span>How-To<i>3</i></a></li>
+    </ul>
     <p class="bmenu-h">Rapid+ Blog</p>
-    <a href="/blog/about">About<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
-    <a href="/blog/contact">Contact<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
-    <a href="/blog/advertise">Advertise<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
-    <a href="/blog/rss">RSS feed<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
-    <p class="bmenu-h">Rapid+ Browser</p>
-    <a href="/">About Rapid+ Browser<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
-    <a href="/download">Download the app<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
-    <a href="/privacy">Privacy Policy<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
-    <a href="/terms">Terms of Use<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
-    <a href="https://www.facebook.com/rapidplusbrowser" target="_blank" rel="noopener">Facebook page<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    <div class="bm-links"><a href="/blog/about">About</a><a href="/blog/contact">Contact</a><a href="/blog/advertise">Advertise</a><a href="/blog/rss">RSS feed</a></div>
+    <a class="bm-dl" href="/download"><img src="/assets/logo.png" width="26" height="26" alt="">Download Rapid+ Browser</a>
+    <div class="bm-foot"><a href="https://www.facebook.com/rapidplusbrowser" target="_blank" rel="noopener">Facebook</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a></div>
   </div>
 </nav></header>
 <main>
@@ -93,6 +82,16 @@
 <p>Dynamic pricing is old and mostly accepted: airlines and hotels raise prices when demand is high. Surveillance pricing is different. The price depends on you, not on the market. A seller may use what it knows about your location, your device, your browsing history, your past purchases or a profile bought from a data broker to estimate how much you will pay, and then show you a number to match.</p>
 <p>The bill, as described by Route Fifty, bars businesses from using algorithms that draw on New Yorkers' personal data to set individualised prices. Menin said: "They can't mine people's personal data to charge them a different price for the exact same good." The Record gives examples of the data at issue: search history, what users hover over online and data broker profiles about spending habits and demographics.</p>
 
+<!--adx--><aside class="adx adx-inline" aria-label="Advertisement"><div class="adx-top"><span>Ad</span><a href="/blog/advertise">Advertise here</a></div><a class="hx hx-inline" href="https://play.google.com/store/apps/details?id=com.rapidplus.browser&amp;referrer=utm_source%3Drapidplusbrowser.online%26utm_medium%3Dblog-ad%26utm_campaign%3Darticle-mid" target="_blank" rel="noopener" data-ad="rapidplus-article-mid" style="--b1:#190f33;--b2:#38207a;--ac:#ff6b00;--ink:#1b1330">
+  <span class="hx-txt">
+    <span class="hx-brand"><img src="/assets/logo.png" width="40" height="40" alt=""><b>Rapid+ Browser</b></span>
+    <strong>Fast, private browsing on Android.</strong>
+    <span class="hx-p">Separate profiles for work and personal life, a proxy and VPN mode and a built-in password manager. Free.</span>
+    <span class="hx-chips"><i>Multiple profiles</i><i>Proxy / VPN mode</i><i>Password manager</i></span>
+    <span class="hx-cta"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3.5v17l14-8.5L5 3.5z"/></svg>Get it on Google Play</span>
+  </span>
+  <span class="hx-art" aria-hidden="true"><span class="hx-glow"></span><span class="hx-ph hx-ph1"><img src="/assets/ads/rapidplus-light.webp" width="360" height="780" alt="" loading="lazy"></span></span>
+</a></aside><!--/adx-->
 <h2 id="allowed">What stays allowed</h2>
 <p>The sponsors say the bill does not stop discounts. Menin said that any suggestion companies cannot offer discounts is "flatly incorrect". The Record reports that the bill carves out "bona fide discounts and rewards that are legitimate and transparent", including loyalty programs and veteran and student discounts. Ordinary price changes that apply to everyone, such as a weekend sale or a rise during a busy season, are a different thing from a price built for one person.</p>
 <p>Business groups did raise concerns. Route Fifty reports that Uber, whose services fall under the bill, objected, and a Times Union article it links says business groups have lobbied the governor to change the state version. Whether the city bill will cause problems for loyalty programs in practice is something regulators and courts will decide.</p>
@@ -119,6 +118,16 @@
 <li>Be careful with loyalty apps, which tie purchases to your identity.</li>
 </ol>
 
+<!--adx--><aside class="adx adx-banner" aria-label="Advertisement"><div class="adx-top"><span>Ad</span><a href="/blog/advertise">Advertise here</a></div><a class="hx hx-banner" href="https://play.google.com/store/apps/details?id=com.hmdevstudio.memento&amp;referrer=utm_source%3Drapidplusbrowser.online%26utm_medium%3Dblog-ad%26utm_campaign%3Darticle-end" target="_blank" rel="noopener" data-ad="memento-article-end" style="--b1:#03140a;--b2:#0a3a1c;--ac:#1fe05a;--ink:#04130a">
+  <span class="hx-txt">
+    <span class="hx-brand"><img src="/assets/ads/memento-logo.png" width="40" height="40" alt=""><b>Memento</b></span>
+    <strong>More than a notepad. Your paperwork, remembered.</strong>
+    <span class="hx-p">Snap a receipt, warranty or ID. Memento fills in the details, finds it in seconds and reminds you before it is due.</span>
+    <span class="hx-chips"><i>Scan any document</i><i>Find it in seconds</i><i>Due-date reminders</i></span>
+    <span class="hx-cta"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3.5v17l14-8.5L5 3.5z"/></svg>Get it on Google Play</span>
+  </span>
+  <span class="hx-art" aria-hidden="true"><span class="hx-glow"></span><span class="hx-ph hx-ph1"><img src="/assets/ads/memento-home.webp" width="360" height="780" alt="" loading="lazy"></span><span class="hx-ph hx-ph2"><img src="/assets/ads/memento-detail.webp" width="360" height="780" alt="" loading="lazy"></span></span>
+</a></aside><!--/adx-->
 <h2 id="faq">Frequently asked questions</h2>
 <details><summary>Is the New York City ban in force now?</summary><p>No. The council has voted, but reports say it takes effect after the bill becomes law, and they differ on whether the delay is 120 days or one year. Check the city's legislative records for the current status.</p></details>
 <details><summary>Does it ban all personalised pricing?</summary><p>No. It targets algorithmic prices set from personal data. Legitimate and transparent discounts and rewards, such as loyalty programs and student or veteran discounts, are allowed according to The Record.</p></details>
