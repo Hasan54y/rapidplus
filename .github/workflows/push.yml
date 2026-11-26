@@ -1,0 +1,32 @@
+name: Article alerts
+
+# Sends a browser notification for every article that is new since the last run.
+on:
+  push:
+    branches: [main]
+    paths: ['blog/feed.xml']
+  workflow_dispatch:
+
+concurrency:
+  group: article-alerts
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm i --no-save web-push
+      - run: node tools/send-push.js
+        env:
+          VAPID_PUBLIC_KEY: ${{ secrets.VAPID_PUBLIC_KEY }}
+          VAPID_PRIVATE_KEY: ${{ secrets.VAPID_PRIVATE_KEY }}
+          PUSH_BOT_EMAIL: ${{ secrets.PUSH_BOT_EMAIL }}
+          PUSH_BOT_PASSWORD: ${{ secrets.PUSH_BOT_PASSWORD }}
