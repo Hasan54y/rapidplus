@@ -8,7 +8,7 @@
 // Needs "sharp" only when the hero is an SVG:  npm i --no-save sharp
 const fs = require('fs'), path = require('path'), cp = require('child_process');
 const root = path.join(__dirname, '..'), blogDir = path.join(root, 'blog'), SITE = 'https://rapidplusbrowser.online';
-const CATEGORIES = { "Cybersecurity": 'cybersecurity', "Privacy & Data": 'privacy-data', "Browsers & AI": 'browsers-ai', "Web Technology": 'web-technology', "Online Safety": 'online-safety', "Speed & Productivity": 'speed-productivity' };
+const CATEGORIES = { "Cybersecurity": 'cybersecurity', "Privacy & Data": 'privacy-data', "Browsers & AI": 'browsers-ai', "Web Technology": 'web-technology', "Online Safety": 'online-safety', "Speed & Productivity": 'speed-productivity', "Phones & Apps": 'phones-apps' };
 const FILLER = ['delve', 'landscape', 'ever-evolving', 'in today\'s', 'it\'s important to note', 'it is important to note', 'navigate the', 'leverage', 'robust', 'seamless', 'unlock', 'game-changer', 'game changer', 'tapestry', 'realm of', 'crucial', 'comprehensive', 'moreover', 'furthermore', 'testament', 'embark', 'empower', 'harness', 'cutting-edge', 'revolutioniz', 'in conclusion', 'dive into', 'deep dive', 'at the end of the day', 'treasure trove', '—', '–'];
 
 const specPath = process.argv[2];

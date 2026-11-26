@@ -13,7 +13,8 @@ const CATS = [
   ["Browsers & AI", 'browsers-ai', "AI assistants in the browser, browser news and what it means for you."],
   ["Web Technology", 'web-technology', "How the web works: the protocols, standards and plumbing behind every page."],
   ["Online Safety", 'online-safety', "Scams, passwords and everyday habits that keep your accounts safe."],
-  ["Speed & Productivity", 'speed-productivity', "Faster pages and a tidier workflow in your browser."]
+  ["Speed & Productivity", 'speed-productivity', "Faster pages and a tidier workflow in your browser."],
+  ["Phones & Apps", 'phones-apps', "Android and iPhone tips, phone news and the apps worth installing, explained in plain words."]
 ];
 const catSlug = name => (CATS.find(c => c[0] === name) || [name, name.toLowerCase().replace(/[^a-z0-9]+/g, '-')])[1];
 
